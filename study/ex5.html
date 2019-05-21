@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>images on Canvas</title>
+  <style>
+    *{margin:0;padding:0;}
+    ul{text-align:center;}
+    li{list-style: none;background:#ccc;margin-bottom:10px;}
+    .box{width:300px;height:300px;background:red;position:absolute;overflow:scroll;}
+    .box div{width:1000px;height:1000px;margin:20px 0 0 20px;padding:15px;border:1px solid;background:blue;}
+    .box div p{height:30px;background:gold;margin-bottom:15px;}
+
+  </style>
+</head>
+<body>
+  <ul>
+    <!--comment-->
+    <li class="liClass"><span>hello</span></li>
+    <li class="liClass">big</li>
+    <li class="liClass">bad</li>
+    <li class="liClass" id="last">world</li>
+    <!--//comment-->
+  </ul>
+  <div class="box">
+    <div>
+      <p>1</p>
+      <p>2</p>
+      <p>3</p>
+      <p>4</p>
+      <p>5</p>
+    </div>
+  </div>
+  <script>
+    var ul = document.querySelector('ul')
+    var box = document.querySelector('.box div');
+    var box_offset = document.querySelector('.box div').getBoundingClientRect();  //getBoundingClientRect는 offset top,left,bottom,right,widht,height등을 얻을 수 있다 캬
+    // box.parentElement.scrollTop = 500;
+    // box.parentElement.scrollLeft = 50;
+    // box.children[4].scrollIntoView(true)
+    var ost = box.children[4].offsetTop;
+    box.parentElement.scrollTop = ost
+    console.log(box.offsetParent)
+    console.log("부모로 부터의 top = "+box.offsetTop)
+    console.log("절대적인 위치값 top = "+box.getBoundingClientRect().top)
+    console.log(box_offset.width, box_offset.height)
+    console.log(box.offsetWidth, box.offsetHeight)  //그러나 offsetWidth로 getBoundingClientRect와 똑같은 값을 얻을 수 있다 ㅡ,ㅡ;;
+    console.log(box.clientWidth, box.clientHeight)  //보더 값을 제외한 수치
+    console.log("box의 스트롤 가로 값= "+box.scrollWidth)
+    console.log(ul.children)
+    console.log(document.querySelector('li').textContent+" 쿼리 셀렉터는 첫 번째 노드의 element를 반환한다.")
+    console.log(document.getElementById('last').textContent+" getElementById은 querySelector에 비해 단순 하다 querySelector는 css의 셀렉터 > 형식이 가능하다")
+    console.log(document.querySelectorAll('li'))
+    console.log(document.getElementsByTagName('li'))
+    console.log(document.getElementsByClassName('liClass'))
+  </script>
+</body>
+</html>

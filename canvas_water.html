@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>canvas</title>
+  <style>
+    *{margin:0;padding:0;}
+    form{padding:50px;text-align: right;}
+    canvas{background:#000;}
+  </style>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+  <script>
+    var waterDrop = {
+      canvas : document.getElementById('canvas'),
+      context : canvas.getContext('2d'),
+      w : 500,
+      h : 300,
+      moveToX : null,
+      moveToY : null,
+      lineToX : null,
+      lineToY : null,
+      setRain : [],
+      maxRain : 8,
+      speed : 0.1,
+      spd : 10,  //중력 변수
+      init : function(x,y){
+        that = this;
+        canvas.width = this.w;
+        canvas.height = this.h;
+        for(var i=0;i<=that.maxRain;i++){
+          that.setRain.push({
+            moveToX : x,
+            moveToY : y,
+            lineToX : -4 + (Math.random() * 4) + 2,
+            lineToY : -2 + (Math.random() * 2)
+          });
+        }
+      },
+      drop : function(){
+        spd = this.spd;
+        ctx = this.context;
+        w = this.w;
+        h = this.h;
+        ctx.strokeStyle = "gray";
+        ctx.lineWidth = 1;
+        //그리기
+        function draw(){
+          ctx.clearRect(0,0,w,h);
+          ctx.beginPath();
+          for(var i=0;i<=that.maxRain;i++){
+            var p = that.setRain[i];
+            ctx.moveTo(p.moveToX, p.moveToY);
+            ctx.lineTo(p.moveToX + p.lineToX, p.moveToY + p.lineToY);
+          }
+          ctx.stroke();
+          ani = window.requestAnimationFrame(draw);
+          move();
+        }
+        function move(){
+          for(var i=0;i<=that.maxRain;i++){
+            var p = that.setRain[i];
+            p.moveToX += (p.lineToX*that.speed);
+            p.moveToY += (p.lineToY*that.speed*spd);
+            spd -= 0.1;
+            if(p.moveToY > 310 || p.moveToX >= 700 || p.moveToY <= 0 || p.moveToX <= 0){
+              p.moveToX = 250;
+              p.moveToY = 300;
+              p.lineToX = -6 + (Math.random() * 6) + 3;
+              p.lineToY = -2 + (Math.random() * 2);
+              this.spd = 10;
+              window.cancelAnimationFrame(ani);
+            }
+          }
+        }
+        draw();
+      }
+    }
+    waterDrop.init(250, 300);
+    waterDrop.drop();
+  </script>
+</body>
+</html>

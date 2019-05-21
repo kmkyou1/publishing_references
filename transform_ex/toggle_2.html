@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
+  <title>transform 3D</title>
+  <style>
+    body { font-size:62.5%;font-family:Arial,sans-serif;}
+    *{padding:0;margin:0;}
+    a{text-decoration:none;}
+    .switch_btn{
+      transition: background .8s;
+      position:relative;cursor:pointer;background-color:#ddd;
+      width:120px;height:60px;border:1px #ddd solid;border-radius:60px;
+    }
+    .switch_btn i{
+      transition:left .3s;
+      position:absolute;top:0px;left:0;
+      display:inline-block;width:60px;height:60px;border:1px #ccc solid;border-radius:60px;
+      background:#fff;box-shadow:1px 1px 2px #fff;box-sizing: border-box;
+    }
+    .switch_btn.on{background-color:#8ce196;}
+    .switch_btn.on i{left:calc(100% - 60px);}
+  </style>
+</head>
+<body>
+  <script>
+    $(document).ready(function(){
+      $(".switch_btn").click(function(){
+        $(this).toggleClass("on");
+      });
+    });
+  </script>
+  <div class="switch_btn">
+    <i></i>
+  </div>
+  <div class="switch_btn">
+    <i></i>
+  </div>
+</body>
+</html>

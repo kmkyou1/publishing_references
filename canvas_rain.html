@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>canvas</title>
+  <style>
+    *{margin:0;padding:0;}
+    form{padding:50px;text-align: right;}
+    canvas{background:#000;}
+  </style>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+  <script>
+    var rainDrop = {
+      canvas : document.getElementById('canvas'),
+      context : canvas.getContext('2d'),
+      w : 500,
+      h : 300,
+      moveToX : null,
+      moveToY : null,
+      lineToX : null,
+      lineToY : null,
+      setRain : [],
+      maxRain : 4,
+      speed : 0.5,
+      init : function(){
+        that = this;
+        canvas.width = this.w;
+        canvas.height = this.h;
+        for(var i=0;i<=that.maxRain;i++){
+          that.setRain.push({
+            moveToX : Math.random() * this.w,
+            moveToY : 0,
+            lineToX : -3 + (Math.random() * 3) + 1.5,
+            lineToY : Math.random() * (20-10)+10
+          });
+        }
+      },
+      drop : function(){
+        ctx = this.context;
+        w = this.w;
+        h = this.h;
+        ctx.strokeStyle = "gray";
+        ctx.lineWidth = 1;
+        //그리기
+        function draw(){
+          ctx.clearRect(0,0,w,h);
+          ctx.beginPath();
+          for(var i=0;i<=that.maxRain;i++){
+            var p = that.setRain[i];
+            ctx.moveTo(p.moveToX, p.moveToY);
+            ctx.lineTo(p.moveToX + p.lineToX, p.moveToY + p.lineToY);
+          }
+          ctx.stroke();
+          move();
+        }
+        function move(){
+          for(var i=0;i<=that.maxRain;i++){
+            var p = that.setRain[i];
+            p.moveToX += (p.lineToX*that.speed);
+            p.moveToY += (p.lineToY*that.speed);
+            if(p.moveToY > h){
+              p.moveToX = Math.random() * w;
+              p.moveToY = 0;
+              p.lineToX = -3 + (Math.random() * 3) + 1.5;
+              p.lineToY = Math.random() * (20-10)+10;
+            }
+          }
+          window.requestAnimationFrame(draw);
+        }
+        draw();
+      },
+      water : function(){
+        ctx = this.context;
+        var s = 0;  //동그라미 사이즈
+        var opc = 1;  //오퍼시티
+        function draw(){
+          ctx.strokeStyle = "rgba(255,255,255,"+opc+")";
+          ctx.lineWidth = 1;
+          ctx.save();
+          ctx.scale(2, 1);  //타원형으로 만들어줌
+          ctx.beginPath();
+          ctx.arc(100/2, 100, s, 0, Math.PI*2, false);
+          ctx.stroke();
+          ctx.fill();
+          ctx.closePath();
+          ctx.restore();
+          s++;
+          opc -= 0.1;
+          if(s <= 10){
+            window.requestAnimationFrame(draw);
+          }
+        }
+        draw();
+      }
+    }
+    rainDrop.init();
+    rainDrop.drop();
+    // rainDrop.water();
+  </script>
+</body>
+</html>

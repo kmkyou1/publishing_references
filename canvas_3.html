@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>canvas</title>
+  <style>
+    *{margin:0;padding:0;}
+    form{padding:50px;text-align: right;}
+    canvas{background:#000;}
+  </style>
+</head>
+<body>
+  <form oninput="rain_speed()">
+    <input type="range" id="speed" multiple value="0.5" min="0" max="3" step="0.1"/>
+  </form>
+    <canvas id="canvas2"></canvas>
+    <script>
+      var speed = document.getElementById("speed").value;  //비내리는 속도
+      function rain_speed(){
+        speed = document.getElementById("speed").value;
+      }
+
+      var canvas2 = document.getElementById("canvas2");
+      var ctx2 = canvas2.getContext("2d");
+      var cvsW = canvas2.width = 800;
+      var cvsH = canvas2.height = 300;
+
+      var moveToX = 100;  //그리기 시작 x축
+      var moveToY = 0;    //그리기 시작 y축
+      var lineToX = 7;    //끝나는 선 x축 끝 점이 100에서 5픽셀 더간 105
+      var lineToY = 15;   //끝나는 선 y축 끝 점이 0에서 15 내려간 15
+
+      ctx2.strokeStyle = "#fff";
+      ctx2.lineWidth = 1;
+
+      function drow(){
+        ctx2.clearRect(0,0,cvsW,cvsH);
+        ctx2.beginPath();
+        ctx2.moveTo(moveToX, moveToY);
+        ctx2.lineTo(moveToX+lineToX, moveToY+lineToY);
+        ctx2.stroke();
+        //이동
+        moveToX += (lineToX*speed);
+        moveToY += (lineToY*speed);
+
+        if(moveToY > cvsH || moveToX > cvsW){
+          moveToX = 100;
+          moveToY = 0;
+        }
+
+        window.requestAnimationFrame(drow);
+      }
+      drow();
+
+
+    </script>
+</body>
+</html>

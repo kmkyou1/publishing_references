@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"/>
+  <title>포트폴리오</title>
+  <link rel="stylesheet" type="text/css" href="css/common.css" />
+  <!--<script type="text/javascript" src="js/common.js"></script> -->
+</head>
+<body>
+<section class="top">
+  <div class="bg"></div>
+  <div class="gnbArea">
+    <div class="wp">
+      <h1><a href="#">PARIS Front End</a></h1>
+      <ul class="gnb">
+        <li><a href="#">Introduce</a></li>
+        <li><a href="#">Pc Web</a></li>
+        <li><a href="#">Mobile Web</a></li>
+      </ul>
+    </div>
+  </div>
+  <span class="title">
+    <em class="txt1">Web</em>
+    <em class="txt2">Site</em>
+    <em class="txt3">Making</em>
+  </span>
+</section>
+<section class="info_area">
+  <div class="info">
+    <h2>About Our Farm</h2>
+    <p>Kingdom Farms was founded by a first generation farmer with the belief that our local communities deserve access to healthy, non-GMO, Certified Naturally Grown foods. Rooted in this belief, Kingdom Farms was started in 2016 on the west side of Indianapolis. Our farm is a full service vegetable farm serving CSA memberships, farmers markets, and Indianapolis area restaurants.</p>
+  </div>
+</section>
+<div id="contents">
+  <section class="title_area bg1">
+    <p>PC WEB</p>
+  </section>
+  <section class="info_area">
+    <div class="info">
+      <h2>About Our Farm</h2>
+      <p>Kingdom Farms was founded by a first generation farmer with the belief that our local communities deserve access to healthy, non-GMO, Certified Naturally Grown foods. Rooted in this belief, Kingdom Farms was started in 2016 on the west side of Indianapolis. Our farm is a full service vegetable farm serving CSA memberships, farmers markets, and Indianapolis area restaurants.</p>
+    </div>
+  </section>
+  <section class="title_area bg2">
+    <p>MOBILE WEB</p>
+  </section>
+  <section class="info_area">
+    <div class="info">
+      <h2>About Our Farm</h2>
+      <p>Kingdom Farms was founded by a first generation farmer with the belief that our local communities deserve access to healthy, non-GMO, Certified Naturally Grown foods. Rooted in this belief, Kingdom Farms was started in 2016 on the west side of Indianapolis. Our farm is a full service vegetable farm serving CSA memberships, farmers markets, and Indianapolis area restaurants.</p>
+    </div>
+  </section>
+  <section class="title_area bg3">
+    <p>MOBILE WEB</p>
+  </section>
+  <section class="info_area">
+    <div class="info">
+      <h2>About Our Farm</h2>
+      <p>Kingdom Farms was founded by a first generation farmer with the belief that our local communities deserve access to healthy, non-GMO, Certified Naturally Grown foods. Rooted in this belief, Kingdom Farms was started in 2016 on the west side of Indianapolis. Our farm is a full service vegetable farm serving CSA memberships, farmers markets, and Indianapolis area restaurants.</p>
+    </div>
+  </section>
+</div>
+<script>
+window.onload = function(){
+  //텍스트 액션
+  text_event = function(){
+    var em = document.querySelectorAll(".title em");
+    var section01_txt = document.querySelector(".title_area p");
+    [].forEach.call(em, function(elem, idx){
+      elem.style.transform = "matrix(1,0,0,1,0,0)";
+    });
+    // section01_txt.style.transform = "matrix(1,0,0,1,0,0)";
+    // section01_txt.style.opacity = "1";
+  }
+  //마우스 이벤트
+  var mouseEvent = {
+    header : document.querySelector(".top"),
+    speed : 0.01,
+    action : function(){
+      var elem = document.querySelector(".top .bg");
+      var that = this;
+      this.header.addEventListener("mousemove", function move(e){
+        centerX = window.innerWidth/2;  //x축 중앙
+        centerY = window.innerHeight/2;  //y축 중앙
+        cursorX = e.pageX;
+        cursorY = e.pageY;
+        //배경 위치 변경
+        x = (centerX-cursorX) * that.speed;
+        y = (centerY-cursorY) * that.speed;
+        elem.style.top = y+"px";
+        elem.style.left = x+"px";
+      });
+    }
+  };
+  text_event();
+  mouseEvent.action();
+}
+//타이틀 배경 패럴렉스
+function BgScroll(){
+  var bs = {};
+  this.init = function(dom){
+    bs.titArea = dom;
+    bs.winHeight = window.innerHeight;
+    bs.speed = 0.2;
+  }
+  this.event = function(){
+    bgMove = function(e){
+      var winHi = bs.winHeight;
+      var elemBottom = bs.titArea.getBoundingClientRect().bottom;
+      var speed = bs.speed;
+      var top = elemBottom-winHi;
+      var mt = -300;
+      if(elemBottom-winHi <= 0){
+        bs.titArea.style.backgroundPosition = "50% "+(-top+mt)*speed+"px";
+      }
+    }
+    window.addEventListener("scroll", bgMove);
+  }
+}
+var title_areas = document.querySelectorAll(".title_area");
+[].forEach.call(title_areas, function(elem, idx){
+  var bgScroll = new BgScroll();
+  bgScroll.init(elem);
+  bgScroll.event();
+});
+//스크롤 이벤트 모음
+var mouseScr = {
+  elem : document.querySelector(".top .gnbArea"),
+  evGnb : function(){
+    function evScroll(e){
+      var top = document.documentElement.scrollTop;
+      console.log(top)
+    }
+    window.addEventListener("scroll", evScroll);
+  }
+}
+mouseScr.evGnb();
+</script>
+</body>
+</html>

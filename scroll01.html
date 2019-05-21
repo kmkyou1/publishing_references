@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, width=device-width, minimal-ui">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>images on Canvas</title>
+  <style>
+    *{margin:0;padding:0;}
+    body{
+      color:#fff;background-color: #000;
+      text-transform:uppercase;
+      font: normal normal 400 30px/1.375 "Lato",Arial,sans-serif;
+    }
+    li{list-style: none;}
+    a{text-decoration: none;}
+    section{
+      /*padding-top:1px;
+      margin-top:-1px;*/
+      height:800px;
+      overflow: hidden;
+      position:relative;
+      text-align: center;
+      border-bottom:1px solid;
+    }
+    section h1{
+      transition:margin 1s, opacity 2.5s;
+      position:absolute;top:800px;left:0;width:100%;
+      opacity:0;
+    }
+    section h1.go{margin-top:-500px;opacity:1;}
+    .cloud{z-index: 100;position:absolute;
+      transition: transform .3s;
+    }
+    .cloud:hover{transform:scale(1.1,1.1);}
+    .cloud img{width:200px;}
+    .cloud.c01{top:200px;left:15%;}
+    .cloud.c02{top:700px;left:35%;}
+    .cloud.c03{top:500px;left:65%;}
+    .cloud.c04{top:1000px;left:5%;}
+    .cloud.c05{top:1000px;left:45%;}
+    .cloud.c06{top:1000px;left:68%;}
+    .cloud.c07{top:2200px;left:10%;}
+    .cloud.c08{top:2700px;left:45%;}
+    .cloud.c09{top:2500px;left:75%;}
+  </style>
+  <script>
+    window.addEventListener( 'load' , function () {
+      // var sections ;
+      // var obj = [] ;
+      // function init () {
+      //   sections = document.querySelectorAll( 'section' ) ;
+      //   [].forEach.call( sections , function ( section ) {
+      //     // console.log( ` setion : ${section.offsetTop}`  ) ;
+      //     obj.push( section.offsetTop ) ;
+      //   }) ;
+      // }
+      // init() ;
+
+      // 0 , 751 , 1502 , 2253
+      // top > 0
+      // top > 751 && top < 1502
+
+      // DOM < top * 0.3
+      var cloud01 = document.querySelector(".cloud.c01");
+      var cloud02 = document.querySelector(".cloud.c02");
+      var cloud03 = document.querySelector(".cloud.c03");
+      var cloud04 = document.querySelector(".cloud.c04");
+      var cloud05 = document.querySelector(".cloud.c05");
+      var cloud06 = document.querySelector(".cloud.c06");
+      var cloud07 = document.querySelector(".cloud.c07");
+      var cloud08 = document.querySelector(".cloud.c08");
+      var cloud09 = document.querySelector(".cloud.c09");
+      var cloud01_top = cloud01.offsetTop;
+      var cloud02_top = cloud02.offsetTop;
+      var cloud03_top = cloud03.offsetTop;
+      var cloud04_top = cloud04.offsetTop;
+      var cloud05_top = cloud05.offsetTop;
+      var cloud06_top = cloud06.offsetTop;
+      var cloud07_top = cloud07.offsetTop;
+      var cloud08_top = cloud08.offsetTop;
+      var cloud09_top = cloud09.offsetTop;
+      window.addEventListener( 'scroll' , function (e) {
+        // console.log( `scrollTop : ${document.body.scrollTop}` ) ;
+        var top = document.documentElement.scrollTop ;
+        console.log(top);
+        cloud01.style.cssText = "top:"+(cloud01_top-(top*0.1))+"px";
+        cloud02.style.cssText = "top:"+(cloud02_top-(top*1))+"px";
+        cloud03.style.cssText = "top:"+(cloud03_top-(top*0.5))+"px";
+        cloud04.style.cssText = "top:"+(cloud04_top+(top*0.3))+"px";
+        cloud05.style.cssText = "top:"+(cloud05_top-(top*0.1))+"px";
+        cloud06.style.cssText = "top:"+(cloud06_top-(top*0.4))+"px";
+        cloud07.style.cssText = "top:"+(cloud07_top-(top*0.1))+"px";
+        cloud08.style.cssText = "top:"+(cloud08_top-(top*0.8))+"px";
+        cloud09.style.cssText = "top:"+(cloud09_top-(top*0.5))+"px";
+
+        // obj.forEach(function ( offsetTop , idx ){
+        //   // console.log( 'idx : ' , idx , ' :: ' , offsetTop , top , top , obj[idx + 1] ) ;
+        //   if ( offsetTop <= top && top < obj[idx + 1] ) {
+        //     // console.log( {idx} ) ;
+        //     sections[idx].querySelector("h1").classList.add('go');
+        //   }
+        //   if ( offsetTop >= top && top > obj[idx - 1] ) {
+        //     sections[idx].querySelector("h1").classList.remove('go');
+        //   }
+        //   if(obj[obj.length-1] < top){
+        //     // console.log( `마지막 : {idx}` ) ;
+        //     sections[idx].querySelector("h1").classList.add('go');
+        //   }
+        // }) ;
+      }) ;
+    }) ;
+
+
+
+
+  </script>
+</head>
+<body>
+  <span class="cloud c01"><img src="img/cloud.png"/></span>
+  <span class="cloud c02"><img src="img/cloud.png"/></span>
+  <span class="cloud c03"><img src="img/cloud.png"/></span>
+  <span class="cloud c04"><img src="img/cloud.png"/></span>
+  <span class="cloud c05"><img src="img/cloud.png"/></span>
+  <span class="cloud c06"><img src="img/cloud.png"/></span>
+  <span class="cloud c07"><img src="img/cloud.png"/></span>
+  <span class="cloud c08"><img src="img/cloud.png"/></span>
+  <span class="cloud c09"><img src="img/cloud.png"/></span>
+  <section>
+    <h1>transition</h1>
+  </section>
+  <section>
+    <h1>transform</h1>
+  </section>
+  <section>
+    <h1>animation</h1>
+  </section>
+  <section>
+    <h1>jquery</h1>
+  </section>
+</body>
+</html>

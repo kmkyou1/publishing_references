@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>images on Canvas</title>
+  <style>
+    *{margin:0;padding:0;}
+    li{list-style: none;border:1px solid;}
+  </style>
+</head>
+<body>
+  <ul>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+  </ul>
+  <a href="#">link</a>
+  <script>
+    var ul = document.querySelector('ul')
+    var ul_clone = ul.cloneNode(true)
+    var ulChildNode = ul.childNodes;
+    var li = document.createElement('li');
+    li.innerText = '4'
+    var a= document.querySelector('a');
+    a = Array.prototype.slice.call(a)
+    console.log(ul.lastElementChild.previousElementSibling)
+    console.log(Array.isArray(a))
+    Array.prototype.forEach.call(ulChildNode, function(item){
+      // console.log(item)
+    });
+    ul.insertBefore(li, ul.firstChild)
+    console.log(ul)
+    console.log(ulChildNode)
+    console.log(ul_clone)
+    console.log(ul_clone.innerHTML)
+  </script>
+</body>
+</html>

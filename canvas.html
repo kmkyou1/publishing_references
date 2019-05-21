@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>canvas</title>
+  <style>
+    *{margin:0;padding:0;}
+    li{list-style: none;}
+  </style>
+</head>
+<body>
+    <canvas id="canvas0ne" width="500" height="300">
+      your browser does not support HTML5 canvas.
+    </canvas>
+    <canvas id="canvas1" width="500" height="300">
+      your browser does not support HTML5 canvas.
+    </canvas>
+    <script>
+      function canvasApp(){
+        var theCanvas = document.getElementById('canvas0ne');
+        var context = theCanvas.getContext("2d");
+        function drowScreen(){
+          //캔버스 크기의 사각형 그리고 배경색 넣기
+          context.fillStyle = "#ffffaa";
+          context.fillRect(0,0,500,300);
+          //폰트 컬러 사이즈 정렬등을 설정하여 텍스트 출력
+          context.fillStyle = "#000";
+          context.font = "20px _sans";
+          context.textBaseline = "top";
+          context.fillText("Hello World", 195, 80);
+          //이미지 출력
+          var helloWorldImage = new Image();
+          helloWorldImage.src = "img/face2.gif";
+          helloWorldImage.onload = function(){
+            context.drawImage(helloWorldImage, 160,130)
+          }
+          //그냥 사각형 그리기
+          context.strokeStyle = "#000";
+          context.strokeRect(5,5,490,290);
+        }
+        drowScreen();
+      }
+      canvasApp();
+      var theCanvas1 = document.getElementById('canvas0ne');
+      var context1 = theCanvas1.getContext("2d");
+      context1.strokeStyle = 'black';
+      context1.lineWidth = 1;
+      context1.lineCap = 'round';
+      context1.beginPath();
+      context1.moveTo(10, 10);
+      context1.lineTo(3, 100);
+      context1.stroke();
+      context1.closePath();
+    </script>
+</body>
+</html>

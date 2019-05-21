@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+  em,i{font-style:normal;}
+  *{margin:0;padding:0;}
+  li{list-style: none;}
+  html, body{font-size: 12px;font-family:"맑은 고딕", sans-serif;}
+  ::selection {background:#fcfdf5; color:#000; text-shadow:none;}
+  a{text-decoration: none;}
+  .lottoWrap{height:100%;}
+  .lottoWrap:after{content:'';display:block;width:293px;height:102px;position:fixed;top:50%;left:50%;margin:-81px 0 0 -147px;background:url("http://kmug.co.kr/board/data/logo/1358498959/%B3%AA%B4%AE%B7%CE%B6%C7.jpg") no-repeat 0 0;opacity:.1;}
+  .lottoWrap .lotto{margin:2px;text-align: center;width:145px;height:343px;display:inline-block;vertical-align: top;}
+  .lottoWrap .lotto .moveBox{transition: top 1s, left 1s cubic-bezier(0,0,0.58,1);position:absolute;top:0;left:0;width:145px;height:343px;border:1px #db504d solid;background:#fcfdf5;}
+  .lottoWrap .lotto h1{font-size: 15px;font-weight:bold;background:#db504d;line-height: 25px;color:#fff;}
+  .lottoWrap .lotto ul{display:inline-block;padding:0 6px 20px 6px;overflow: hidden;}
+  .lottoWrap .lotto ul li{
+    font-size: 12px;color:#db504d;margin:10px 3px;list-style: none;float:left;
+    width:13px;line-height:20px;border-top:1px solid;border-bottom:1px solid;border-radius: 5px;
+  }
+  .lottoWrap .lotto ul li.checked{background:rgba(217,91,77,.9);color:#fff;font-size: 12px;letter-spacing: -1px;}
+  .lottoWrap .lotto ul li.luckNum{background:rgba(241,249,108,.9);color:#db504d;font-size: 12px;letter-spacing: -1px;}
+  /*당첨번호 중복 카운터*/
+  .result{z-index: 100;position:relative; background: #f8f8f8;}
+  .result .select{}
+  .result .select a{font-family: "맑은 고딕", sans-serif;text-align: center;padding:7px 0;font-size: 13px;display:inline-block;width:33%;color:#db504d;}
+  .result .select a:nth-child(2){width:34%;}
+  .result .select a.on{font-size: 15px;font-weight:bold;background:#db504d;color:#fff;}
+  .result ul{transition:height .5s;}
+  .result ul li{font-family: "맑은 고딕", sans-serif;padding:4px 0;float:left;text-align: center;width:10%;box-sizing: border-box;border-bottom:1px #dadada solid;border-right:1px #e7e9e8 dashed; vertical-align: middle;}
+  .result ul li:nth-child(1) em, .result ul li:nth-child(2) em, .result ul li:nth-child(3) em, .result ul li:nth-child(4) em, .result ul li:nth-child(5) em, .result ul li:nth-child(6) em,
+  .result ul li:nth-child(7) em, .result ul li:nth-child(8) em, .result ul li:nth-child(9) em, .result ul li:nth-child(10) em{background:#fcc43d;}
+  .result ul li:nth-child(11) em, .result ul li:nth-child(12) em, .result ul li:nth-child(13) em, .result ul li:nth-child(14) em, .result ul li:nth-child(15) em, .result ul li:nth-child(16) em, .result ul li:nth-child(17) em,
+  .result ul li:nth-child(18) em, .result ul li:nth-child(19) em, .result ul li:nth-child(20) em{background:#8cc6e7;}
+  .result ul li:nth-child(21) em, .result ul li:nth-child(22) em, .result ul li:nth-child(23) em, .result ul li:nth-child(24) em, .result ul li:nth-child(25) em, .result ul li:nth-child(26) em, .result ul li:nth-child(27) em,
+  .result ul li:nth-child(28) em, .result ul li:nth-child(29) em, .result ul li:nth-child(30) em{background:#f18d80;}
+  .result ul li:nth-child(31) em, .result ul li:nth-child(32) em, .result ul li:nth-child(33) em, .result ul li:nth-child(34) em, .result ul li:nth-child(35) em, .result ul li:nth-child(36) em,
+  .result ul li:nth-child(37) em, .result ul li:nth-child(38) em, .result ul li:nth-child(39) em, .result ul li:nth-child(40) em{background:#a7a2de;}
+  .result ul li:nth-child(41) em, .result ul li:nth-child(42) em, .result ul li:nth-child(43) em, .result ul li:nth-child(44) em, .result ul li:nth-child(45) em{background:#6bce9e;}
+  .result ul li:nth-child(41), .result ul li:nth-child(42), .result ul li:nth-child(43), .result ul li:nth-child(44), .result ul li:nth-child(45){border-bottom:0;}
+  .result ul li:nth-child(10n){border-right:0;}
+  /*공 번호 표시*/
+  .result .ball_wrap{position:relative;}
+  .result .ball_wrap.hide ul{height:0;}
+  .result ul.ball{height:170px;overflow: hidden;border-top:1px #dadada solid;border-bottom:1px #dadada solid;}
+  .result ul.ball li{vertical-align: top;text-align: center;}
+  .result ul.ball li em{color:#fff;font-weight:bold;display:inline-block;height:24px;width:24px;line-height: 24px;border-radius: 20px;font-size: 13px;}
+  .result ul.ball li i{display:inline-block;height:24px;width:24px;line-height: 24px;color:gray;font-size: 14px;}
+  /*그래프*/
+  .result .graph_wrap.hide ul{height:0;}
+  .result ul.graph{overflow: hidden;height:150px;}
+  .result ul.graph li{position:relative;float:left;width:2.2222222%;height:150px;text-align:center;border:0;}
+  .result ul.graph li:after{content:'';display:block;height:100%;border-right:1px #eeeff1 dashed;}
+  .result ul.graph li em,
+  .result ul.graph li i{position:absolute;left:0;width:100%;display:block;}
+  .result ul.graph li em{transition:height 1s;bottom:20px;}
+  .result ul.graph li i{bottom:0;line-height:20px;background:#db504d;color:#fff;}
+  /*펼침 버튼*/
+  .result .ball_wrap .btn{right:70px;}
+  .result .btn{z-index: 100;position:absolute;bottom:-22px;right:0;display:block;width:70px;line-height:22px;background:gold;text-align: center;}
+  .result .btn i{transition:transform .3s .5s;display:inline-block;}
+  .result .btn i:after{content:'';margin-bottom:-3px;transform:rotate(45deg);display:block;width:10px;height:10px;border-left:2px solid;border-top:2px solid;}
+  @media (max-width:510px) {
+    .result ul.ball{height:284px;}
+    .result ul.ball li i{display:block;width:auto;}
+    .result ul.graph{height:300px;}
+    .result ul.graph li{width:4%;}
+  }
+  </style>
+  <script>
+    window.onload = function(){
+      var btn = document.querySelectorAll(".btn");
+      var count = 0;
+      var nums_all = [];
+      var nums = [];  //1등 번호 6자리
+      var bonus = [];  //보너스 번호
+      //상단 당첨번호 카운터 화면 그리기
+      var ball = document.querySelector("ul.ball");
+      var graph = document.querySelector("ul.graph");
+      for(var i=0;i<=44;i++){
+        ball.innerHTML += "<li><em>"+(i+1)+"</em><i></i></li>";
+        graph.innerHTML += "<li><em></em><i>"+(i+1)+"</i></li>";
+      }
+      var ball_lis = ball.querySelectorAll("li");
+      var graph_lis = graph.querySelectorAll("li");
+      //중복 카운트
+      function Counter(){
+        //당첨 번호 하나의 배열에 담기
+        this.num_push = function(){
+          [].forEach.call(num, function(elem, idx){
+            for(var i=0;i<=num[idx].length-1;i++){ //전체 번호 담기
+              nums_all.push(num[idx][i]);
+            };
+            for(var i=0;i<=5;i++){
+              nums.push(num[idx][i]);  //6개 번호만 담기
+            };
+            bonus.push(num[idx][6]);  //마지막 보너스 번호만 담기
+          });
+          nums.sort();
+          bonus.sort();
+          nums_all.sort();
+        };
+        //구분 별 카운트 뿌리기
+        this.cnt = function(arr){
+          for(var i=0;i<=44;i++){
+            for(j=0;j<=arr.length-1;j++){
+              if(i+1 == arr[j]){
+                count++;
+              };
+            };
+            ball_lis[i].childNodes[1].innerHTML = count;
+            graph_lis[i].childNodes[0].style.cssText = "height:"+(count*7)+"px;";
+            count = 0;
+          };
+        };
+      };
+      //카운터 노출 구분
+      var counter = new Counter();
+      var select = document.querySelectorAll(".select a");
+      var active = null;
+      counter.num_push();
+      counter.cnt(nums);
+      [].forEach.call(select, function(elem, idx){
+        elem.addEventListener("click", function(e){
+          for(var i=0;i<=select.length-1;i++){
+            select[i].classList.remove('on');
+          }
+          this.classList.add('on');
+          if(idx == 0){
+            counter.cnt(nums);
+          }else if(idx == 1){
+            counter.cnt(bonus);
+          }else if(idx == 2){
+            counter.cnt(nums_all);
+          }
+        });
+      });
+      //==========위치 이동==========
+      var moveBox = document.querySelectorAll(".lotto .moveBox");
+      moving = function(){
+        [].forEach.call(lotto, function(elem, idx){
+          moveBox[idx].style.cssText = "top:"+lotto[idx].offsetTop+"px;left:"+lotto[idx].offsetLeft+"px";
+        });
+      };
+      window.addEventListener("resize", function(){
+        moving();
+      });
+      moving();
+      //상단 카운터 펼침 닫침
+      [].forEach.call(btn, function(elem, idx){
+        elem.addEventListener("click", function(){
+          var height = this.parentNode.querySelector('ul').offsetHeight;
+          // document.querySelector("ul.ball").style.height = height+"px";
+          // var This = this ;
+          this.parentNode.classList.toggle("hide");
+          setTimeout(function(){
+            moving();
+          },500);
+          if(height > 1){
+            this.childNodes[0].style.cssText = "transform:rotate(180deg)";
+          }else{
+            this.childNodes[0].style.cssText = "transform:rotate(0deg)";
+          }
+        });
+      });
+    }
+  </script>
+</head>
+<body>
+  <div class="result">
+    <div class="select">
+      <a href="#" class="on">1등 번호</a><a href="#">보너스 번호</a><a href="#">전체 번호</a>
+    </div>
+    <div class="ball_wrap">
+      <a href="#" class="btn"><i></i></a>
+      <ul class="ball"></ul>
+    </div>
+    <div class="graph_wrap">
+      <a href="#" class="btn"><i></i></a>
+      <ul class="graph"></ul>
+    </div>
+  </div>
+  <div class="lottoWrap"></div>
+  <script>
+    var seq = 740;
+    var lotto = document.querySelectorAll(".lotto");
+    var maxNum = 45;
+    var num = [];
+    //1등 번호 입력
+    num[0]=[12,14,24,26,34,45,41]//749
+    num[1]=[3,10,13,22,31,32,29]
+    num[2]=[7,9,12,14,23,28,17]
+    num[3]=[3,12,33,36,42,45,25]
+    num[4]=[1,2,3,9,12,23,10]
+    num[5]=[10,15,18,21,34,41,43]
+    num[6]=[15,19,21,34,41,44,10]
+    num[7]=[8,10,13,36,37,40,6]
+    num[8]=[5,21,27,34,44,45,16]
+    num[9]=[4,8,9,16,17,19,31]
+    num[10]=[1,2,15,19,24,36,12];
+    num[11]=[3,4,16,20,28,44,17];
+    num[12]=[4,16,20,33,40,43,7];
+    num[13]=[2,17,19,24,37,41,3];
+    num[14]=[2,8,17,26,29,31,32];
+    num[15]=[13,14,26,28,30,36,37];
+    num[16]=[10,14,16,18,27,28,4];
+    num[17]=[6,7,11,17,33,44,1];
+    num[18]=[5,9,12,30,39,43,24];
+    num[19]=[9,33,36,40,42,43,32];
+    num[20]=[10,22,27,31,42,43,12];
+    //===========================로또용지 그리기=================================
+    function Lotto(){
+      for(var i=0;i<=num.length-1;i++){
+        document.querySelector(".lottoWrap").innerHTML += "<div class='lotto'><div class='moveBox'><h1></h1><ul></ul></div></div>";
+      };
+      (function(){
+        //로또 용지 그리기
+        num.reverse();  //역순
+        lotto = document.querySelectorAll(".lotto");
+        [].forEach.call(lotto, function(elem, idx){
+          for(var i=0;i<=maxNum-1;i++){
+            elem.querySelector("ul").innerHTML += "<li>"+(i+1)+"</li>";
+            for(var j=0;j<=num[idx].length-1;j++){  //입력한 숫자 색칠
+              if(i+1 == num[idx][j]){
+                lis = elem.querySelectorAll("ul li");
+                  luckNum = num[idx][6]; //보너스 번호 7번 지정
+                  if(i+1 == luckNum){
+                    lis[i].classList.add("luckNum");
+                  }
+                lis[i].classList.add("checked");
+              }
+            }
+          }
+        });
+        //==========회차 뿌리기 역순==========
+        var arr = [];
+        for(var i=0;i<=lotto.length-1;i++){
+          arr.push(seq);
+          seq+=1;  //회차
+        };
+        arr.reverse();
+        for(var i=0;i<=lotto.length-1;i++){
+          lotto[i].querySelector("h1").innerText = arr[i]+"회";
+        };
+      })();
+    }
+    //===========================로또용지 그리기 end=================================
+    Lotto();
+  </script>
+</body>
+</html>

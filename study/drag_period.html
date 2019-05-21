@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>연습</title>
+  <style>
+    *{padding:0;margin:0;}
+    img{vertical-align: top;}
+    #a, #b {float:left; width:80px; height:80px; margin:10px;padding:10px;border:10px solid #ffaaaa;}
+    .dragwrap{position:relative;}
+    .period{position:relative;width:571px;height:147px;background:url(img/month.jpg) no-repeat 0 0;overflow: hidden;}
+    .period li{z-index:9;position:relative;margin:52px 0 0 59px;list-style:none;float:left;width:40px;height:40px;border-radius:20px;text-indent: -9999px;}
+    .period li:first-child{margin-left:18px;}
+    .arrow{position:absolute;top:1px;left:0px;display:block;width:47px;height:45px;cursor:pointer;}
+    .arrow.first{background:url(img/left.png) no-repeat 0 0;}
+    .arrow.last{background:url(img/right.png) no-repeat 0 0;}
+    .line{display:block;height:4px;background:#641e43;position:absolute;margin-top:-3px;top:50%;left:40px;width:100px;}
+    /*.drop{background:#ddd;opacity: .5;}*/
+  </style>
+  <script>
+  window.onload = function(){
+    var line = null;
+    var line_wd, line_left;
+    var line_offset = [];
+    var bt = null;
+    var dropArea;
+    var zIndex = 10;
+
+    var lis = document.querySelectorAll(".period li");
+    var dragwrap = document.querySelector(".dragwrap");
+    var crntIdx = 0 ;
+    var elem_arr = null ;
+
+
+
+    //인댁스 구해오기
+    var firstIdx, lastIdx;
+    getIndex = function(dom){
+      lis = document.querySelectorAll(".period li");
+      [].forEach.call(lis, function(elem, idx){
+        index = [].indexOf.call(lis, dom);
+      });
+      return index;
+    }
+    setLine = function(){
+      line = document.querySelector(".line");
+      line_wd = line.offsetWidth;
+      line_left = line.offsetLeft;
+    }
+    //이벤트 주기
+    var drop_area = document.querySelectorAll(".drop");
+    [].forEach.call(drop_area, function(elem, idx){
+      elem.addEventListener('dragstart', function(ev){
+
+        elem_arr = ev.target ;
+
+        ev.dataTransfer.dropEffect = "copy";
+        ev.dataTransfer.setData("text", ev.target.id);
+        var img = new Image();
+        ev.dataTransfer.setDragImage(img, 10, 10);
+        // firstIdx = getIndex(ev.target.parentNode);
+        setLine();
+      });
+      //드래그 중
+      elem.addEventListener('drag', function(e){
+        // console.log( e.clientX , e ) ;
+        // dragwrap.appendChild( elem_arr ) ;
+        elem_arr.style.left = e.clientX + 'px' ;
+
+        [].forEach.call( lis , function ( elem_li , idx ) {
+          // console.log( `left : ${elem_li.offsetLeft} , width : ${elem_li.offsetWidth} , target left : ${e.clientX}` ) ;
+          if ( idx != 0 ) {
+            // console.log( {idx} , lis[idx-1].offsetLeft , e.clientX , lis[idx].offsetLeft ) ;
+            if ( lis[idx-1].offsetLeft < e.clientX && e.clientX <= lis[idx].offsetLeft ) {
+                console.log(idx - 1) ;
+                crntIdx = idx - 1 ;
+            }
+          } else {
+          }
+        }) ;
+      });
+
+      // elem.addEventListener('drag', function(ev){
+      //   arrow = ev.target.id;
+      //   if(arrow == "last"){
+      //     document.querySelector(".line").style.cssText = "left:"+line_left+"px;width:"+(ev.clientX-line_left)+"px";
+      //   }else if(arrow == "first"){
+      //     document.querySelector(".line").style.cssText = "left:"+(ev.clientX)+"px;width:"+(line_wd-(ev.clientX-line_left))+"px";
+      //   }
+      //   dropArea = ev.target.parentNode.offsetLeft;
+      //   bt = ev.target;
+      //
+      //   bt.style.cssText = "left:"+(ev.clientX-dropArea)+"px;"
+      // });
+
+      elem.addEventListener('dragover', function(ev){
+        ev.preventDefault();
+        // ev.dataTransfer.dropEffect = "move";
+        this.style.cssText = "background:yellow;"
+      });
+      elem.addEventListener('dragleave', function(ev){
+        // console.log("de")
+        // this.style.cssText = "border:0;opacity:1;"
+      });
+      elem.addEventListener('drop', function(ev){
+
+        var c = ev.dataTransfer.getData("text");
+        var elem_arr = document.getElementById(c);
+        console.log( {crntIdx} , lis[crntIdx] , elem_arr ) ;
+
+        lis[crntIdx].appendChild( elem_arr ) ;
+        return ;
+
+        ev.preventDefault();
+        var c = ev.dataTransfer.getData("text");
+        ev.target.appendChild(document.getElementById(c));
+        firstIdx = getIndex(document.querySelector("#first").parentNode);
+        lastIdx = getIndex(ev.target);
+        setLine();
+        this.style.cssText = "border:0;opacity:1";
+        // overlap = function(){
+        //   a = getIndex(document.querySelector("#first").parentNode);
+        //   b = getIndex(document.querySelector("#last").parentNode);
+        // }
+        // overlap();
+        var bt = document.querySelectorAll(".arrow");
+        // console.log(bt[1])
+          bt[0].style.cssText = "left:0px";
+          bt[1].style.cssText = "left:0px";
+      });
+    });
+  }
+  </script>
+</head>
+<body>
+  <div class="dragwrap">
+    <ul class="period">
+      <li class="drop" id="today">오늘
+        <span class="arrow first" draggable="true" id="first">시작</span>
+      </li>
+      <li class="drop" id="one_month">1개월
+        <span class="arrow last" draggable="true" id="last">끝</span>
+      </li>
+      <li class="drop" id="tow_month">2개월</li>
+      <li class="drop" id="three_month">3개월</li>
+      <li class="drop" id="six_month">6개월</li>
+      <li class="drop" id="six_later">~6개월 이후</li>
+      <span class="line"></span>
+    </ul>
+  </div>
+</body>
+</html>

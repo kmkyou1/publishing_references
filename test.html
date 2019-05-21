@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>images on Canvas</title>
+  <style>
+  *{margin:0;padding:0;}
+  li{list-style: none;}
+  a{text-decoration: none;}
+  .tab > li{float:left;position:relative;width:200px;padding:10px 0;border:1px solid;}
+  .tab > li h2{text-align: center;display:block;cursor:pointer;}
+  .tab > li > ul{dis play:none;position:absolute;top:40px;left:0;width:100%;}
+  .tab > li > ul li{padding:10px;}
+  .tab > li > ul li a:hover{text-decoration: underline;}
+  </style>
+  <script>
+  var foo = {
+    aa : 1,
+    bb : 2,
+    sum : function(){
+      console.log(foo.aa+foo.bb)
+    }
+  }
+  //foo.sum();
+  function kmk(ag1, ar2){
+    this.name = ag1;
+    this.age = ar2;
+  }
+
+  kmk.prototype.func = function(){
+    alert("aa")
+  }
+
+  var a = new kmk("seokjiwoo", 33)
+  var b = new kmk("seokjiwoo", 33)
+  var c = new kmk("seokjiwoo", 33)
+  //a.func()
+
+  var testModule = (function () {
+    var counter = 0;
+    return {
+      incrementCounter: function () {
+        return counter++;
+      },
+      resetCounter: function () {
+        console.log( "counter value prior to reset: " + counter );
+        counter = 0;
+      }
+    };
+  })();
+  // console.log(testModule.incrementCounter())
+  // console.log(testModule.incrementCounter())
+  // console.log(testModule.incrementCounter())
+  // console.log(testModule.incrementCounter())
+  var product = {
+      name: '7D 건조 망고',
+      kind: '당절임',
+      ingredient: '망고, 설탕, 메타중아황산나트륨, 치자황색소',
+      origin: '필리핀'
+  };
+  var output='';
+  for(var key in product) {
+      output += key + ': ' + product[key] + '\n';
+  }
+  //alert('dd' in product);
+  function Member(name, age, weight){
+    this.name = name;
+    this.age = age;
+    this.weight = weight;
+    this.fnc = function(){
+      return this.name +", "+this.age+", "+this.weight;
+    }
+  }
+  Member.prototype.ssum = function(){
+    return this.name+", "+this.age+", "+this.weight;
+  }
+  var member = new Member("김명교",24,60);
+  var member1 = new Member("박지성",34,70);
+  //console.log(member.ssum())
+
+  //DOM 연습
+  window.onload=function(){
+    var btn = document.querySelector(".btn");
+    var box = document.querySelector(".box");
+    var li = document.querySelectorAll("ul li");
+    li_length = li.length-1;
+    console.log(li.length-1)
+    for (var i=0;i<=li_length;i++){
+      li[i].addEventListener("click", hi);
+    }
+    //btn.addEventListener("click", hi);
+    function hi(){
+      console.log("ok")
+      this.setAttribute("class","on");
+      // alert(this.nextElementSibling)
+      this.previousElementSibling.removeAttribute("class");
+      this.nextElementSibling.removeAttribute("class");
+      // alert(this.nodeType)
+    }
+    // window.onscroll = function(){
+    //   console.log("d")
+    // }
+  }
+  </script>
+  <style>
+  #myDIV {
+    margin:10px;width:100px;height:100px;
+    background-color:lightblue;
+    transition: transform .3s;
+  }
+  #myDIV:hover{transform:scale(1.1,1.1);}
+  .box{height:100px;background:#eee;}
+  ul{overflow: hidden;}
+  ul li{float:left;width:33.333%;}
+  ul li:before{
+    content:'';
+    display:block;
+    width:100%;
+    height:100px;
+    border:1px solid;
+    margin:-1px 0 0 -1px;
+  }
+  ul li:nth-of-type(3n){
+    background:#ccc;
+  }
+  /*ul li:nth-child(3n){
+    background:#ccc;
+  }*/
+  .txt{display:inline-block;overflow:hidden; white-space:nowrap; text-overflow:ellipsis; width:200px;}
+   p:nth-of-type(2) { color: red; }
+   p:nth-child(2) { color: blue; }
+   p:nth-child(4) { color: green; }
+   span:nth-child(1) { color: orange; }
+   span:nth-of-type(1) { color: yellow; }
+  </style>
+</head>
+<body>
+  <div>
+     <p>test line 1</p>
+     <span>test line 2</span>
+     <p>test line 3</p>
+     <p>test line 4</p>
+     <span>test line 5</span>
+  </div>
+  <div id="myDIV"></div>
+  <span class="txt">말줄임 말줄임입니다.말줄임 말줄임입니다.말줄임 말줄임입니다.말줄임 말줄임입니다.말줄임 말줄임입니다.</span>
+<a href="#" class="btn">Click!</a>
+<div class="box">
+  박스입니다.
+</div>
+<ul>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+</ul>
+</body>
+</html>

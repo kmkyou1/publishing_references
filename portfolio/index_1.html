@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>포트폴리오</title>
+  <!-- <link rel="stylesheet" type="text/css" href="css/common.css" />
+  <script type="text/javascript" src="js/common.js"></script> -->
+  <style>
+    *{margin:0;padding:0;}
+    html, body{height:100%;overflow: hidden;}
+    .bgwrap{position:relative;height:100%;perspective:300px;}
+    .bgwrap .bg{
+      z-index: 20;position:absolute;top:0;left:0;
+      width:100%;height:100%;
+      background:url(img/anthony-delanoix-28851.jpg) no-repeat;
+      background-size:cover/*contain*/;
+      transform:scale(1.04);
+    }
+  </style>
+</head>
+<body>
+  <div class="bgwrap">
+    <div class="bg"></div>
+  </div>
+  <script>
+    var mouse = {
+      speed : 0.05,
+      deg : 0.01,
+      action : function(){
+        bg = document.querySelector(".bg");
+        that = this;
+        window.addEventListener("mousemove", function move(e){
+          centerX = window.innerWidth/2;  //x축 중앙
+          centerY = window.innerHeight/2;  //y축 중앙
+          cursorX = e.pageX;
+          cursorY = e.pageY;
+          //배경 위치 변경
+          x = (centerX-cursorX) * that.speed;
+          y = (centerY-cursorY) * that.speed;
+          bg.style.top = y+"px";
+          bg.style.left = x+"px";
+          //배경 기울기 변경
+          y = y * that.deg;
+          x = x * that.deg;
+          bg.style.transform = "scale(1.04) rotateX("+(-y)+"deg) rotateY("+x+"deg)";
+        });
+      }
+    };
+    mouse.action();
+  </script>
+</body>
+</html>

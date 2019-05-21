@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>scroll</title>
+  <style>
+    *{margin:0;padding:0;}
+    li{list-style: none;}
+    html, body{font-family: arial,sans-serif;}
+    .div{height:900px;}
+    .div:nth-child(1){background:#fa8128;}
+    .div:nth-child(2){background:#e3dc0f;}
+    .div:nth-child(3){background:#55e30f;}
+    .div:nth-child(4){background:#0fc3e3;}
+    .div:nth-child(5){background:#730fe3;}
+    .cloud{
+      position:absolute;width:150px;height:70px;background:#fff;border-radius:70px;
+      animation: cloud 4s linear infinite alternate;
+    }
+    .cloud:nth-child(1){top:200px;left:100px;}
+    .cloud:nth-child(2){top:500px;left:300px;}
+    .cloud:nth-child(3){top:100px;right:100px;}
+    @keyframes cloud{
+      100%{
+        top:250px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="div section01">
+    <div class='cloud'></div>
+    <div class='cloud'></div>
+    <div class='cloud'></div>
+  </div>
+  <div class="div section02">
+  </div>
+  <div class="div section03"></div>
+  <div class="div section04"></div>
+  <div class="div section05"></div>
+  <script>
+  window.onload = function(){
+    window.addEventListener('scroll', function(){
+      var scroll_top = document.body.scrollTop;
+      var section02 = document.querySelector('.section02').offsetTop;
+      if(scroll_top >= section02){
+        console.log(section02)
+      }
+    });
+  }
+
+  </script>
+
+</body>
+</html>

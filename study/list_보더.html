@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script type="text/javascript" src="http://kmkyou.cafe24.com/web/my/js/jquery-1.10.2.min.js"></script>
+  <title>연습</title>
+  <style>
+    *{margin:0;padding:0;}
+    li{list-style: none;}
+    .list{margin:50px;width:440px;}
+    .list ul:after{content:'';display:block;clear:both;}
+    .list ul li{float:left;width:102px;margin:0 5px 15px 0;}
+    .list ul li a{overflow: hidden;display:block;height:148px;text-decoration: none;border:1px #eee solid;}
+    .list ul li a img{width:100px;height:100px;}
+    .list ul li a p{padding-left:5px;font-size: 12px;color:#16181a;}
+    .list ul li.on a{width:98px;height:146px;border:2px #f27935 solid;}
+    .list ul li.on a img{margin:-1px 0 0 -1px;}
+    .list ul li.on a p{margin-left:-1px;}
+    .list ul li:hover a{width:98px;height:146px;border:2px #f27935 solid;}
+    .list ul li:hover a img{margin:-1px 0 0 -1px;}
+    .list ul li:hover a p{margin-left:-1px;}
+    p{
+      width:50%;
+    -webkit-line-clamp: 1;
+  	-webkit-box-orient: vertical;
+  	display: -webkit-box;
+  	overflow: hidden;
+  	text-overflow: ellipsis;
+
+    }
+  </style>
+</head>
+<body>
+  <p>말줄임말줄임말줄임말줄임말줄임말줄임말줄임말줄임말줄임말줄임말줄임말줄임말줄임말줄임말줄임</p>
+<div class="list">
+  <ul>
+    <li><a href="#"><img src="img/Lighthouse.jpg" /><p>사진1</p></a></li>
+    <li><a href="#"><img src="img/Desert.jpg" /><p>사진2</p></a></li>
+    <li><a href="#"><img src="img/Hydrangeas.jpg" /><p>사진3<br/>안녕하세요</p></a></li>
+    <li class="on"><a href="#"><img src="img/Jellyfish.jpg" /><p>사진4</p></a></li>
+    <li><a href="#"><img src="img/Tulips.jpg" /><p>사진5</p></a></li>
+    <li><a href="#"><img src="img/Lighthouse.jpg" /><p>사진6</p></a></li>
+    <li><a href="#"><img src="img/Lighthouse.jpg" /><p>사진7</p></a></li>
+    <li><a href="#"><img src="img/Lighthouse.jpg" /><p>사진8</p></a></li>
+    <li><a href="#"><img src="img/Lighthouse.jpg" /><p>사진6</p></a></li>
+    <li><a href="#"><img src="img/Lighthouse.jpg" /><p>사진7</p></a></li>
+    <li><a href="#"><img src="img/Lighthouse.jpg" /><p>사진8</p></a></li>
+  </ul>
+</div>
+</body>
+</html>

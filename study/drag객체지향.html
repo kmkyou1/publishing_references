@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
+  <title>연습</title>
+  <style>
+    #msg{text-align:center;margin-top:400px;}
+    .drag{z-index:1;position:absolute;top:0;left:0;width:150px;height:150px;border:1px solid;border-radius:80px;}
+    .box1{background:#eee;}
+    .box2{background:gold;}
+    .box3{background:blue;}
+  </style>
+  <script>
+  	$(document).ready(function() {
+      var domLeft;
+      var domTop;
+      var touchX = null;
+      var touchY = null;
+      var moveStartLeft = null;
+      var moveStartTop = null;
+      var x = null
+      var y = null;
+      //모바일 터치 컨트롤
+  		$(".drag").bind('touchstart', function(e) {
+        domLeft = $(this).offset().left;
+        domTop = $(this).offset().top;
+        touchX = event.touches[0].clientX;
+        touchY = event.touches[0].clientY;
+        moveStartX = touchX - domLeft;  //left 무빙 시작 위치
+        moveStartY = touchY - domTop;  //top 무빙 시작 위치
+  			// $("#msg").html("터치가 시작되었어요. 손가락 좌표는"+domLeft+"="+ty);
+        $(this).css("z-index","100");
+        // alert(e.currentTarget.tagName)
+  			e.preventDefault();	//	이벤트취소
+  		});
+  		$(".drag").bind('touchmove', function(e) {
+  			var event = e.originalEvent;
+  			// $('#msg').html('touch 이벤트 중입니다.');
+  			// $('#msg').append('<div>' + event.touches[0].clientX + ',' + event.touches[0].clientY + '</div>'); //screenx, clientx
+  			event.preventDefault();
+        x = event.touches[0].clientX - moveStartX;
+        y = event.touches[0].clientY - moveStartY;
+        $(this).css({
+          "left":x+"px",
+          "top":y+"px"
+        });
+        $(this).css({"z-index":"100"});
+        $(".drag").not(this).css({"z-index":"1"});
+  		});
+  		$(".drag").bind('touchend', function(e) {
+        tx = event.touches[0].clientX;
+        ty = event.touches[0].clientY;
+  			// $("#msg").append("<div>터치이벤트가 종료되었어요" + tx+", "+ty+ "</div>");
+  		});
+      /////////////////////////////////마우스 컨트롤////////////////////////////////
+      $(".drag").bind('mousedown', function(e) {
+        domLeft = $(this).offset().left;
+        domTop = $(this).offset().top;
+        touchX = event.clientX;
+        touchY = event.clientY;
+        moveStartX = touchX - domLeft;  //left 무빙 시작 위치
+        moveStartY = touchY - domTop;  //top 무빙 시작 위치
+  			// $("#msg").html("터치가 시작되었어요. 손가락 좌표는"+domLeft+"="+ty);
+        // alert(e.currentTarget.tagName)
+  			e.preventDefault();	//	이벤트취소
+        $(window).bind('mousemove', function(e) {
+    			var event = e.originalEvent;
+    			// $('#msg').html('touch 이벤트 중입니다.');
+    			// $('#msg').append('<div>' + event.touches[0].clientX + ',' + event.touches[0].clientY + '</div>'); //screenx, clientx
+    			event.preventDefault();
+          x = event.clientX - moveStartX;
+          y = event.clientY - moveStartY;
+          $(this).css({
+            "left":x+"px",
+            "top":y+"px"
+          });
+          $(this).css({"z-index":"100"});
+          $(".drag").not(this).css({"z-index":"1"});
+          console.log($(this).css('z-index'))
+    		});
+        $(window).bind('mouseup', function(e) {
+          tx = event.clientX;
+          ty = event.clientY;
+          $('.drag').unbind('mousemove');
+          // $("#msg").append("<div>터치이벤트가 종료되었어요" + tx+", "+ty+ "</div>");
+        });
+      });
+      /////////////////////////////////마우스 컨트롤 end////////////////////////////////
+  	});
+  </script>
+</head>
+<body>
+  <h2>모바일용 홈페이지 입니다.</h2>
+  <!--
+  		스마트폰의 브라우저 : 마우스 이벤트와는 별도로 터치 이벤트를 지원함
+  		touchstart : 터치가 시작될때
+  		touchend : 터치가 종료될때
+  		touchmove : 터치한 상태로 이동할때
+  		touchenter : 터치한 요소의 경계외부에서 내부로 이동할때
+  		touchleave : 터치한 요소의 경계내부에서 외부로 이동할때
+   -->
+  <div class="drag box1"></div>
+  <div class="drag box2"></div>
+  <div class="drag box3"></div>
+  <div id="msg"></div>
+</body>
+</html>

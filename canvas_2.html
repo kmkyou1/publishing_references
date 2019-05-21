@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>canvas</title>
+  <style>
+    *{margin:0;padding:0;}
+    li{list-style: none;}
+  </style>
+</head>
+<body>
+    <canvas id="canvas0ne" style="border:1px gray solid;background:#000">
+      your browser does not support HTML5 canvas.
+    </canvas>
+    <script>
+      var canvas = document.getElementById('canvas0ne');
+      canvas.width = 800;
+      canvas.height = 500;
+      var ctx = canvas.getContext("2d");
+      var w = canvas.width;
+      var h = canvas.height;
+      var handle = 0;
+      var maxParts = 500;
+      ctx.strokeStyle = 'gray';
+      ctx.lineWidth = 1;
+      ctx.lineCap = 'square';
+      var init = [];
+      for(var i=0;i<=maxParts;i++){
+        init.push({
+          lineX : Math.random() * (10-5)-5,
+          lineY : Math.random() * (20-10)+15,
+          x : Math.random() * w,
+          y : Math.random() * h
+        });
+      }
+      function draw() {
+        ctx.clearRect(0, 0, w, h);
+        for(var i=0;i<=maxParts;i++){
+          var po = init[i];
+          ctx.beginPath();
+          ctx.moveTo(po.x, po.y);
+          ctx.lineTo(po.x+po.lineX, po.y+po.lineY);
+          ctx.stroke();
+        }
+        handle = window.requestAnimationFrame(draw);
+        move();
+      }
+      function move() {
+        for(var i=0;i<=maxParts;i++){
+          var po = init[i];
+          po.x += po.lineX*0.6;
+          po.y += po.lineY*0.6;
+          if(po.x > w || po.y > h){
+            po.lineX = -4 + (Math.random() * 4) + 2;
+            po.lineY = Math.random() * (20-10)+18;
+            po.x = Math.random() * w;
+            po.y = -20;
+            // window.cancelAnimationFrame(handle);
+          }
+        }
+      }
+      draw();
+    </script>
+</body>
+</html>

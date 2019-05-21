@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>연습</title>
+  <style>
+  body{height:4000px;}
+  .bar{z-index: 10;display:block;position:fixed;bottom:0;left:0;height:10px;width:100%;background:#eee;}
+  .bar span{content:'';display:block;background:red;width:0;height:10px;transition: width .3s;}
+    *{padding:0;margin:0;}
+    img{vertical-align: top;}
+    #a, #b {float:left; width:80px; height:80px; margin:10px;padding:10px;border:10px solid #ffaaaa;}
+    .periodWrap{position:relative;}
+    .period{position:relative;width:571px;height:147px;background:url(img/month.jpg) no-repeat 0 0;overflow: hidden;}
+    .period li{background:rgba(0, 0, 0, 0.1);position:relative;margin:32px 0 0 18px;list-style:none;float:left;width:80px;height:80px;text-indent: -9999px;}
+    .period li:first-child{margin-left:0px;}
+    .arrow{z-index: 10;position:absolute;top:50%;left:50%;margin:-20px 0 0 -23px;display:block;width:47px;height:45px;cursor:pointer;}
+    .arrow.first{background:url(img/left.png) no-repeat 0 0;}
+    .arrow.last{background:url(img/right.png) no-repeat 0 0;}
+    .line{display:none;height:4px;background:#641e43;position:absolute;margin-top:-3px;top:50%;left:40px;width:100px;}
+    /*.drop{background:#ddd;opacity: .5;}*/
+  </style>
+  <script>
+  window.onload = function(){
+
+    var pMenu = {};
+    var dragX = null;
+    var dropX = null;
+    var targetX = null;
+    var target = null;
+    var elem_arr = null ;
+    function Period(){
+      this.init = function(dom){
+        pMenu.dragWrap = dom;
+        pMenu.dragElem = pMenu.dragWrap.querySelectorAll(".arrow");
+        pMenu.dropArea = pMenu.dragWrap.querySelectorAll("ul li");
+        dragEvent();
+      }
+      dragEvent = function(){
+        [].forEach.call(pMenu.dragElem, function(elem, idx){
+          elem.addEventListener("mousedown", down);
+        });
+      }
+      down = function(e){
+        target = e.target;
+        targetX = target.offsetLeft;
+        dropX = target.parentNode.offsetLeft;
+        window.addEventListener("mousemove", move);
+        window.addEventListener("mouseup", up);
+      }
+      move = function(e){
+        e.preventDefault();
+        dragX = e.clientX;
+        dorpArea = pMenu.dropArea;
+        target.style.cssText = "left:"+(dragX-dropX)+"px";
+        [].forEach.call(pMenu.dropArea, function(elem, idx){
+          if ( idx != 0 ) {
+            if ( dorpArea[idx-1].offsetLeft < e.clientX && e.clientX <= dorpArea[idx].offsetLeft ) {
+              crntIdx = idx - 1 ;
+              console.log(crntIdx) ;
+            }
+          }else if(dorpArea[dorpArea.length-1].offsetLeft < e.clientX){
+            console.log(dorpArea.length-1)
+          }
+        });
+      }
+      up = function(e){
+        console.log("end");
+        window.removeEventListener("mousemove", move);
+        window.removeEventListener("mouseup", up);
+      }
+    }
+    var period = new Period();
+    period.init(document.querySelector(".periodWrap"));
+  }
+  </script>
+</head>
+<body>
+  <div class="bar"><span></span></div>
+  <div class="periodWrap">
+    <ul class="period">
+      <li id="today">오늘<span class="arrow first" draggable="true" id="first">시작</span></li>
+      <li id="one_month">1개월<span class="arrow last" draggable="true" id="last">끝</span></li>
+      <li id="tow_month">2개월</li>
+      <li id="three_month">3개월</li>
+      <li id="six_month">6개월</li>
+      <li id="six_later">~6개월 이후</li>
+    </ul>
+    <span class="line"></span>
+  </div>
+  <script>
+  var Gage = (function(){
+      function Gage(){
+        var winHeight = window.innerHeight;
+        var scrollTop = document.body.scrollTop;
+        var conHeight = document.body.offsetHeight;
+        var scrollHeight = conHeight - winHeight;
+        window.addEventListener("resize", function(){
+          winHeight = window.innerHeight;
+          conHeight = document.body.offsetHeight;
+          scrollHeight = conHeight - winHeight;
+        });
+        window.addEventListener("scroll", function(){
+          scrollTop = document.body.scrollTop;
+          document.querySelector('.bar span').style.cssText = "width:"+Math.floor((scrollTop/scrollHeight)*100)+"%";
+        });
+      }
+    return Gage;
+  })();
+  Gage();
+  </script>
+</body>
+</html>

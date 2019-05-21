@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>GNB</title>
+  <style>
+    *{margin:0;padding:0;}
+    body{color:#000;font-family:Arial,sans-serif;letter-spacing: -1px;}
+    a{text-decoration: none;color:#000;}
+    li{list-style: none;}
+    .header{position:relative;margin:0 auto;width:1000px;}
+    .header h1{height:50px;}
+    h2{font-weight:normal;}
+    ul.gnb{padding:0 10px;background:#2355b4;}
+    ul:after{content:'';display:block;clear:both;}
+    ul li.menu{float:left;position:relative;height:43px;}
+    ul li.menu a{display:block;margin:10px 0;padding:3px 0;width:100px;text-align: center;font-size:11px;color:#fff;}
+    ul li.menu a.on{border-top-left-radius:10px;border-top-right-radius:10px; background:#103e95;}
+    /*ul li.menu:hover ul{display:block;}*/
+    ul li.menu .sub{display:none;position:absolute;top:43px;left:0;background:#2355b4;}
+    ul li.menu .sub a:hover{text-decoration: underline;}
+    /*ul li.menu:hover h2 a{background:#103e95;}*/
+    /*ul li.menu h2 a:focus {background:#103e95;}*/
+    /*ul li.menu:hover .sub{display:block;}*/
+    input{
+      position:absolute;top:59px;right:10px;width:130px;padding:5px;border-radius:15px;text-indent:5px;color:#fff;
+      border:0;background:#15449d url(img/btn_search_v3.png) no-repeat 100% 50%;
+      transition:width .5s;
+    }
+    .search.on{width:300px;}
+  </style>
+</head>
+<body>
+  <script>
+  window.onload = function(){
+    var search = document.querySelector('.search');
+    var cname = null;
+    search.onfocus = function(){
+      // search.classList.add('on');
+      search.className += ' on';
+      cname = search.className;
+    };
+    search.onblur = function(){
+      // search.classList.remove('on');
+      var n = cname.lastIndexOf('on');
+      var cl = cname.substring(0,n-1);
+      search.setAttribute('class',cl);
+    };
+    //지앤비
+    var gnbElem = document.querySelector('.gnb');
+    var gnb = new Gnb();
+    gnb.init(gnbElem);
+  }
+  
+  function Gnb(){
+    this.gnb = null;
+    this.mMenu = null;
+    this.init = function(gnb){
+      this.gnb = gnb;
+      this.mMenu = gnb.children;
+      this.initEvent();
+    };
+    this.initEvent = function(){
+      mMenu = this.mMenu;
+      active = null;
+      sub = null;
+      [].forEach.call(mMenu, function(elem, idx){
+        m = elem.querySelector('a');
+        over = function(){
+          if(active){
+            active.removeAttribute('class');
+            if(sub){
+              sub.style = 'display:none';
+            }
+          }
+          active = this;
+          active.setAttribute('class','on');
+          sub = elem.querySelector('.sub');
+          if(sub){
+            sub.style = 'display:block';
+          }
+        };
+        m.addEventListener('focus', over);
+      });
+
+//.attachEvent
+    };
+  }
+  </script>
+  <div class="header">
+    <h1><a href="#">스포츠 홈</a></h1>
+    <ul class="gnb">
+      <li class="menu">
+        <h2><a href="#">야구</a></h2>
+        <ul class="sub">
+          <li><a href="#">야구1</a></li>
+          <li><a href="#">야구2</a></li>
+          <li><a href="#">야구3</a></li>
+          <li><a href="#">야구4</a></li>
+        </ul>
+      </li>
+      <li class="menu">
+        <h2><a href="#">해외야구</a></h2>
+        <ul class="sub">
+          <li><a href="#">해외야구1</a></li>
+          <li><a href="#">해외야구2</a></li>
+          <li><a href="#">해외야구3</a></li>
+        </ul>
+      </li>
+      <li class="menu">
+        <h2><a href="#">축구</a></h2>
+        <ul class="sub">
+          <li><a href="#">축구1</a></li>
+          <li><a href="#">축구2</a></li>
+          <li><a href="#">축구3</a></li>
+          <li><a href="#">축구4</a></li>
+        </ul>
+      </li>
+      <li class="menu"><h2><a href="#">해외축구</a></h2></li>
+      <li class="menu">
+        <h2><a href="#">농구</a></h2>
+        <ul class="sub">
+          <li><a href="#">농구1</a></li>
+          <li><a href="#">농구2</a></li>
+        </ul>
+      </li>
+    </ul>
+    <input type="text" class="search"/>
+  </div>
+  <div class="contents">
+
+  </div>
+</body>
+</html>

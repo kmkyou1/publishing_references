@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
+  <title>transform 3D</title>
+  <style>
+    body { font-size:62.5%;font-family:Arial,sans-serif;}
+    *{padding:0;margin:0;}
+    a{text-decoration:none;}
+    .range_area{text-align:center;padding:15px 0;}
+    .box_area{
+      perspective:1000px;
+      border:1px red solid;padding:150px;
+    }
+    .box_area .box{
+      transform-style:preserve-3d;
+      transition:transform .1s;
+      position:relative;margin:0 auto;width:300px;height:300px;
+    }
+    .box_area .box a{position:absolute;top:0;left:0;display:block;width:100%;height:100%;color:#000;text-align:center;line-height:300px;font-size:80px;font-weight:bold;border:1px solid;background-color: rgba( 255, 255, 255, 0.5 );}
+    .box_area .box a.up{transform: rotateX(90deg) translateZ(150px);}
+    .box_area .box a.front{transform: rotateX(0deg) translateZ(150px);}
+    .box_area .box a.back{transform: rotateX(180deg) translateZ(150px);}
+    .box_area .box a.down{transform: rotateX(-90deg) translateZ(150px);}
+    .box_area .box a.left{transform: rotateY(-90deg) translateZ(150px);}
+    .box_area .box a.right{transform: rotateY(90deg) translateZ(150px);}
+  </style>
+</head>
+<body>
+  <script>
+    $(document).ready(function(){
+      var x;
+      var y;
+      var click_x = 0;
+      var click_y = 0;
+      var moveStartX = null;
+      var moveStartY = null;
+      var last_x = 0;
+      var last_y = 0;
+      $(".box_area .box").onselectstart=function(){return false;} // 드래그 방지
+      //x = event.pageX; //오리지날 위치값
+      //y = event.pageY;
+      
+
+      $(".box_area a").bind("mousedown", function(e){
+
+        e.preventDefault();
+        if(last_x != 0){
+          click_x = last_x;
+          click_y = last_y;
+        }else{
+          click_x = e.clientX;
+          click_y = e.clientY;
+        }
+                
+        
+        console.log("down" , click_x)
+
+        $(window).bind("mousemove", function(e){
+          
+            moveStartX = e.clientX - click_x - last_x;
+            moveStartY = e.clientY - click_y - last_x;
+          
+          console.log("move", moveStartX)
+          $(".box").css({"transform":"rotateX("+(-moveStartY)+"deg) rotateY("+(moveStartX)+"deg)"});
+        });
+        
+        $(window).mouseup(function(){
+          last_x = moveStartX;
+          last_y = moveStartY;
+          console.log("up", moveStartX)
+          $(window).unbind("mousemove");
+        });
+
+      });
+      
+
+    });
+    //range 적용
+    var rangeX, rangeY;
+    function range_input() {
+      rangeX = $(".rangeX").val();
+      rangeY = $(".rangeY").val();
+      $(".box").css({"transform":"rotateX("+rangeX+"deg) rotateY("+rangeY+"deg)"});
+    }
+    //초기화
+    function reset1() {
+      $(".box").css({"transform":"rotateX(0deg) rotateY(0deg)"});
+    }
+
+    $("body").click(function (event) {
+
+    });
+  </script>
+  <div class="range_area">
+    <form oninput="range_input()">
+      X : <input type="range" multiple class="rangeX" value="0" min="-360" max="360" step="5">
+      Y : <input type="range" multiple class="rangeY" value="0" min="-360" max="360" step="5">
+      <input type="button" value="초기화" onclick="reset(), reset1()">
+    </form>
+  </div>
+  <div class="box_area">
+    <div class="box">
+      <a href="#none" class="up">위</a>
+      <a href="#none" class="front">앞</a>
+      <a href="#none" class="back">뒤</a>
+      <a href="#none" class="down">아래</a>
+      <a href="#none" class="left">좌</a>
+      <a href="#none" class="right">우</a>
+    </div>
+  </div>
+</body>
+</html>

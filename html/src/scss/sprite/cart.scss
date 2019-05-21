@@ -1,0 +1,46 @@
+@charset "UTF-8";
+
+%sp-cart {
+    background: url('../im/sp-cart.png?v=#{timestamp()}') no-repeat;
+    display: inline-block;
+    overflow: hidden;
+}
+
+@mixin sp-cart($filename, $padding-top:0, $padding-right:0, $padding-bottom:0, $padding-left:0){
+	$dimension-map: map-get($sp-cart, $filename);
+    @extend %sp-cart;
+	@include sp-mosaic($dimension-map, $filename, $padding-top, $padding-right, $padding-bottom, $padding-left);
+}
+
+$sp-cart: (
+    spritesheet_name: sp-cart,
+    bg_pick_up: (offset_x: -396px, offset_y: -204px, width: 10px, height: 6px),
+    bt_continue: (offset_x: 0, offset_y: -68px, width: 276px, height: 64px),
+    bt_del: (offset_x: -444px, offset_y: -51px, width: 26px, height: 26px),
+    bt_layer_close: (offset_x: -56px, offset_y: -294px, width: 23px, height: 23px),
+    bt_minus: (offset_x: -444px, offset_y: -102px, width: 24px, height: 24px),
+    bt_plus: (offset_x: 0, offset_y: -294px, width: 24px, height: 24px),
+    bt_submit: (offset_x: 0, offset_y: 0, width: 276px, height: 64px),
+    bu_right_arrow: (offset_x: -463px, offset_y: -81px, width: 4px, height: 7px),
+    bu_welfare_line: (offset_x: -463px, offset_y: -92px, width: 6px, height: 1px),
+    cart_step_01_off: (offset_x: -195px, offset_y: -218px, width: 77px, height: 19px),
+    cart_step_01_on: (offset_x: -195px, offset_y: -195px, width: 77px, height: 19px),
+    cart_step_02_off: (offset_x: 0, offset_y: -246px, width: 112px, height: 19px),
+    cart_step_02_on: (offset_x: -280px, offset_y: -204px, width: 112px, height: 19px),
+    cart_step_03_off: (offset_x: -363px, offset_y: -176px, width: 87px, height: 19px),
+    cart_step_03_on: (offset_x: -363px, offset_y: -153px, width: 87px, height: 19px),
+    chk_on: (offset_x: -83px, offset_y: -294px, width: 22px, height: 22px),
+    ico_help: (offset_x: -444px, offset_y: -130px, width: 18px, height: 18px),
+    ico_help_arrow: (offset_x: -454px, offset_y: -176px, width: 12px, height: 10px),
+    icon_important_org: (offset_x: -454px, offset_y: -153px, width: 14px, height: 14px),
+    icon_mart: (offset_x: 0, offset_y: -269px, width: 30px, height: 21px),
+    icon_time: (offset_x: -444px, offset_y: -81px, width: 15px, height: 15px),
+    img_speech_bubble: (offset_x: 0, offset_y: -136px, width: 276px, height: 55px),
+    prod_option_arrow: (offset_x: -28px, offset_y: -294px, width: 24px, height: 24px),
+    tit_cart_1: (offset_x: -280px, offset_y: -153px, width: 79px, height: 47px),
+    tit_cart_2: (offset_x: -280px, offset_y: 0, width: 191px, height: 47px),
+    tit_cart_3: (offset_x: -280px, offset_y: -51px, width: 160px, height: 47px),
+    tit_order: (offset_x: 0, offset_y: -195px, width: 191px, height: 47px),
+    tit_payment: (offset_x: -280px, offset_y: -102px, width: 160px, height: 47px),
+    tmon_pick_up: (offset_x: -280px, offset_y: -227px, width: 122px, height: 14px),
+);

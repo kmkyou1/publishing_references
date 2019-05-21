@@ -1,0 +1,37 @@
+body { font-family: Arial,sans-serif; background: #ddd; }
+
+* { margin: 0; padding: 0; }
+
+header { height: 100px; line-height: 100px; background: #000; text-align: center; }
+header h1 { font-weight: bold; color: #fff; }
+
+div.box { width: 500px; height: 100px; opacity: 0.4; filter: alpha(opacity=40); background: gold; border: 1px solid; }
+
+input[type="text"], input[type="password"] { width: 100px; height: 30px; border: 1px red solid; }
+
+ul li:nth-child(1) { background: #dd1010; }
+
+ul li:nth-child(2) { background: #dd2020; }
+
+ul li:nth-child(3) { background: #dd3030; }
+
+ul li:nth-child(4) { background: #dd4040; }
+
+ul li:nth-child(5) { background: #dd5050; }
+
+ul li:nth-child(6) { background: #dd6060; }
+
+ul li:nth-child(7) { background: #dd7070; }
+
+ul li:nth-child(8) { background: #dd8080; }
+
+ul li:nth-child(9) { background: #dd9090; }
+
+ul li:nth-child(10) { background: #dd100100; }
+
+.door { position: relative; margin: 0 auto; width: 400px; height: 200px; border: 10px solid; background: url(../img/Tulips.jpg) no-repeat 0 0; background-size: cover; perspective: 1900px; }
+.door div { position: absolute; top: 0; border: 1px solid; opacity: .8; box-sizing: border-box; transform-style: preserve-3d; transition: transform .8s; }
+.door .left { left: 0; width: 200px; height: 100%; background: #aaa; transform-origin: center left; }
+.door .right { right: 0; width: 200px; height: 100%; background: #bbb; transform-origin: center right; }
+.door:hover .left { transform: rotateY(-130deg); }
+.door:hover .right { transform: rotateY(130deg); }

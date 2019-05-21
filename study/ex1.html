@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>images on Canvas</title>
+  <style>
+    *{margin:0;padding:0;}
+    li{list-style: none;}
+    a{text-decoration: none;}
+  </style>
+  <script>
+    window.onload = function(){
+      var kmk = new Grade(95,86,66);
+      var kkl = new Grade(80,56,80);
+      var sjw = new Grade(85,65,90);
+      // console.log(kmk.eng)
+      // console.log(kkl.everage())
+      // console.log(sjw.everage())
+    }
+    function Grade(kor, eng, chi){
+      this.kor = kor;
+      this.eng = eng;
+      this.chi = chi;
+    }
+    Grade.prototype.sum = function(){
+      return this.kor + this.eng + this.chi;
+    }
+    Grade.prototype.everage = function(){
+      return (this.kor + this.eng + this.chi)/3;
+    }
+    var Name = {
+      first : 'Myoung kyo',
+      last : 'Kim',
+      fnc : function(){
+        console.log(Name.last+" "+Name.first)
+      }
+    }
+    //Name.fnc();
+    function Output(){
+      this.text = null;
+      this.btn = null;
+      this.box = null;
+    }
+    Output.prototype.init = function(click_btn){
+    console.log(click_btn)
+      this.btn = $(click_btn);
+      this.box = this.btn.next();
+    }
+    Output.prototype.initevent = function(){
+      this.btn.on("click", function(){
+        this.box.innerText = text;
+        console.log(text)
+      });
+    }
+    Output.prototype.out1 = function(){
+      this.box.innerText = "text";
+    }
+    var output1 = new Output();
+    output1.init(".btn");
+    output1.initevent();
+  </script>
+</head>
+<body>
+  <a href="#" class="btn">Click!</a>
+  <div class="box"></div>
+  <a href="#" class="btn1">두번째 Click!</a>
+  <div class="box"></div>
+</body>
+</html>

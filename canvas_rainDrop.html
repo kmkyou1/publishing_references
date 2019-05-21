@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>canvas</title>
+  <style>
+    *{margin:0;padding:0;}
+    form{padding:50px;text-align: right;}
+    canvas{background:#000;}
+  </style>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+  <script>
+    var rainDrop = {
+      canvas : document.getElementById('canvas'),
+      context : canvas.getContext('2d'),
+      w : 500,
+      h : 300,
+      moveToX : null,
+      moveToY : null,
+      lineToX : null,
+      lineToY : null,
+      setRain : [],
+      setDrop : [],
+      maxRain : 2,  //비 개수
+      maxDrop : 4,  //튀기는 물방울 개수
+      speed : 0.3,
+      spd : 10,
+      init : function(){
+        that = this;
+        canvas.width = this.w;
+        canvas.height = this.h;
+        //비 셋팅
+        for(var i=0;i<=that.maxRain;i++){
+          that.setRain.push({
+            moveToX : Math.random() * this.w,
+            moveToY : 0,
+            lineToX : -3 + (Math.random() * 3) + 1.5,
+            lineToY : Math.random() * (20-10)+10
+          });
+        }
+      },
+      rain : function(){
+        ctx = this.context;
+        w = this.w;
+        h = this.h;
+        ctx.strokeStyle = "gray";
+        ctx.lineWidth = 1;
+        //비 그리기
+        function draw(){
+          ctx.clearRect(0,0,w,h);
+          ctx.beginPath();
+          for(var i=0;i<=that.maxRain;i++){
+            var p = that.setRain[i];
+            ctx.moveTo(p.moveToX, p.moveToY);
+            ctx.lineTo(p.moveToX + p.lineToX, p.moveToY + p.lineToY);
+          }
+          ctx.stroke();
+          ani = window.requestAnimationFrame(draw);
+          move();
+        }
+        function move(){
+          for(var i=0;i<=that.maxRain;i++){
+            var p = that.setRain[i];
+            p.moveToX += (p.lineToX*that.speed);
+            p.moveToY += (p.lineToY*that.speed);
+            if(p.moveToY > h){
+              drop(p.moveToX, p.moveToY);  //물방울 그리기
+              // window.cancelAnimationFrame(ani);
+              p.moveToX = Math.random() * w;
+              p.moveToY = 0;
+              p.lineToX = -3 + (Math.random() * 3) + 1.5;
+              p.lineToY = Math.random() * (20-10)+10;
+            }
+          }
+        }
+        //물방울 표현
+        var moveToX = null;
+        var moveToY = null;
+        var spd = this.spd;
+        function drop(endX, endY){
+          moveToX = endX;
+          moveToY = endY;
+          //물방울 셋팅
+          for(var i=0;i<=that.maxDrop;i++){
+            that.setDrop.push({
+              lineToX : -6 + (Math.random() * 6) + 3,
+              lineToY : -2 + (Math.random() * 2)
+            });
+          }
+          draw1();
+        }
+        function draw1(){
+          ctx.beginPath();
+          // for(var i=0;i<=that.maxDrop;i++){
+          //   var p = that.setDrop[i];
+          //   ctx.moveTo(moveToX, moveToY);
+          //   ctx.lineTo(moveToX-p.lineToX, moveToY-p.lineToY);
+          // }
+          ctx.moveTo(moveToX, moveToY);
+          ctx.lineTo(moveToX-3, moveToY-10);
+          ctx.stroke();
+
+          dd = window.requestAnimationFrame(draw1);  //물방울 그리기
+          // move1();
+        }
+        function move1(){
+          moveToX -= (3*0.1);
+          moveToY -= (10*0.1);
+          spd -= 0.1;
+          if(spd < -3){
+            spd = 10;
+          }
+          // for(var i=0;i<=that.maxDrop;i++){
+          //   var p = that.setDrop[i];
+          //   moveToX += (p.lineToX*that.speed);
+          //   moveToY += (p.lineToY*that.speed*spd);
+          //   spd -= 0.1;
+          //
+          //   if(spd < -3){
+          //     // p.splice(i,0);
+          //     spd = 10;
+          //   }
+          //   // console.log(spd)
+          // }
+        }
+        draw();  //비 그리기
+      }
+    }
+    rainDrop.init();
+    rainDrop.rain();
+  </script>
+</body>
+</html>

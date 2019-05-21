@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>canvas</title>
+  <style>
+    *{margin:0;padding:0;}
+    li{list-style: none;}
+    canvas{display:block;}
+    #canvas2{border-top:1px #fff solid;background:#000;}
+  </style>
+</head>
+<body>
+    <canvas id="canvas0ne" style="background:#000">
+      your browser does not support HTML5 canvas.
+    </canvas>
+    <canvas id="canvas2"></canvas>
+    <canvas id="canvas"></canvas>
+    <script>
+      var canvas = document.getElementById('canvas0ne');
+      var canvas1 = document.getElementById('canvas');
+      canvas.width = 800;
+      canvas.height = 300;
+      var ctx = canvas.getContext("2d");
+      var w = canvas.width;
+      var h = canvas.height;
+      var handle = 0;
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = 1;
+      ctx.lineCap = 'square';
+
+      lineX = -4 + (Math.random() * 4) + 2;
+      lineY = Math.random() * (20-10)+10;
+      x = Math.random() * w;
+      y = 0;
+
+      draw();
+      function draw() {
+        ctx.clearRect(0, 0, w, h);
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x + lineX, y + lineY);
+        ctx.stroke();
+        handle = window.requestAnimationFrame(draw);
+        move();
+      }
+      function move() {
+        // console.log(Math.floor(x),Math.floor(y));
+        x += (lineX*0.5);
+        y += (lineY*0.5);
+        if(y > 250){
+          // circle1();
+          // window.cancelAnimationFrame(handle);
+          // console.log(x,y,Math.floor(lineY*0.5));
+          lineX = -4 + (Math.random() * 4) + 2;
+          lineY = Math.random() * (20-10)+5;
+          x = Math.random() * w;
+          y = 0;
+        }
+      }
+      //물튀기는효과
+      var k = 0;
+      var j = 1;
+      function circle1(){
+        ctx.strokeStyle = '#fff';
+        ctx.lineWidth = 1;
+        ctx.save();
+        ctx.scale(2, 1);
+        ctx.beginPath();
+        ctx.arc((x/2), y, 5, 0, Math.PI*2, false);
+        ctx.stroke();
+        ctx.fill();
+        ctx.closePath();
+        ctx.restore();
+        k++;
+        j -= 0.1;
+        if(k <= 10){
+          window.requestAnimationFrame(circle1);
+        }
+      }
+
+      //캔버스 2////////////////////////////////////////////////////////////////////////////
+      var canvas2 = document.getElementById("canvas2");
+      var ctx2 = canvas2.getContext("2d");
+      canvas2.width = 800;
+      canvas2.height = 200;
+      var cvsW = canvas2.width;
+      var cvsH = canvas2.height;
+      // ctx2.fillStyle = "#000";    배경색 지정
+      // ctx2.fillRect(0,0,800,200);
+      ctx2.strokeStyle = "#fff";
+      ctx2.lineWidth = 1;
+
+      var mtoX = 100;  //그리기 시작 x축
+      var mtoY = 0;    //그리기 시작 y축
+      var ltoX = 5;    //끝나는 선 x축 끝 점이 100에서 5픽셀 더간 105
+      var ltoY = 15;   //끝나는 선 y축 끝 점이 0에서 15 내려간 15
+
+      drow2();
+      function drow2(){
+        ctx2.clearRect(0,0,cvsW,cvsH);
+        ctx2.beginPath();
+        ctx2.moveTo(mtoX, mtoY);
+        ctx2.lineTo(mtoX+ltoX, mtoY+ltoY);
+        ctx2.stroke();
+        //이동
+        mtoX += (ltoX*0.2);
+        mtoY += (ltoY*0.2);
+        window.requestAnimationFrame(drow2);
+      }
+
+      //캔버스 3 원 그리기///////////////////////////////////////////////////////////////////
+      canvas1.width = 300;
+      canvas1.height = 300;
+      var context = canvas1.getContext("2d");
+      context.fillStyle = "#ffffaa";
+      context.fillRect(0,0,300,300);
+      context.strokeStyle = "#000";
+      context.strokeRect(0,0,300,300);
+
+      var i=0;
+      var j=1;
+      function circle(){
+        context.strokeStyle = 'rgba(0,0,0,'+j+')';
+        context.lineWidth = 1;
+        context.save();
+        context.scale(2, 1);
+        context.beginPath();
+        context.arc(50, 100, i, 0, Math.PI*2, false);
+        context.stroke();
+        context.fill();
+        context.restore();
+        i++;
+        j -= 0.1;
+        if(i <= 10){
+          window.requestAnimationFrame(circle);
+        }
+      }
+      circle();
+    </script>
+</body>
+</html>

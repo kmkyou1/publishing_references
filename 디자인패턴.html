@@ -1,0 +1,92 @@
+<script>
+function up () {
+  var rsltElem = null ;
+  if () {
+    rsltElem  = a ;
+  } else {
+    rsltElem  = b ;
+  }
+  drpo_elem( rsltElem ) ;
+}
+
+function drpo_elem ( elem ) {
+
+}
+
+function origin_postion_return ( elem ) {
+
+}
+
+
+Class DragDrop {
+  constructor () {
+    this.elements = [] ;
+  }
+
+  down () {}
+  move () {}
+  up () {}
+  drop_elem ( elem ) {}
+}
+
+var DragDrop = function () {
+  elemts = [] ;
+
+  var that = {} ;
+  that = {
+    move : function () {
+    } ,
+    down : function () {} ,
+    up : function () {} ,
+    drpo_elem : function () {}
+  } ;
+
+  return that ;
+}
+
+var aaa = (function(){
+  return {
+    move : function(){
+      console.log("move");
+    },
+    down : function(){
+      console.log("down");
+    }
+  }
+})();
+var asd1 =aaa.move(''gjhg)
+
+//변수형
+var drag = {
+  move : function(){
+    console.log("move");
+  },
+  down : function(){
+    console.log("down");
+  }
+}
+drag.move();
+
+//리턴형
+function Drag(){
+  this.move = function(){
+    console.log("move");
+  }
+  this.down = function(){
+    console.log("down");
+  }
+  // var that = {
+  //   move : function(){
+  //     console.log("move");
+  //   },
+  //   down : function(){
+  //     console.log("down");
+  //   }
+  // }
+  // return that;
+}
+var drag = new Drag();
+var drag1 = new Drag();
+drag.move();
+
+</script>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
+  <title>로딩 css</title>
+  <style>
+    body { font-size:62.5%;font-family:Arial,sans-serif;}
+    *{padding:0;margin:0;}
+    a{text-decoration:none;}
+    .loading{
+      display:inline-block;
+      width:48px;height:48px;
+      background:url(img/loading.png) no-repeat 0 0;
+      /*animation: loading 1s linear infinite;*/
+    }
+    /*@keyframes loading{
+      100%{
+	      transform: rotate(360deg)
+      }
+    }*/
+  </style>
+</head>
+<body>
+  <script>
+    $(document).ready(function(){
+      var bg_position = 0;
+      function loading(){
+        if(bg_position >= 384){
+          bg_position = 0;
+        }
+        $('.loading').css("background-position",-bg_position+"px 0");
+        bg_position+=48;
+        setTimeout(loading, 100);
+      };
+      loading();
+    });
+  </script>
+  <span class="loading"></span>
+</body>
+</html>

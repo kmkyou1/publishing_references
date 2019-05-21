@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>scroll</title>
+  <style>
+    *{margin:0;padding:0;}
+    li{list-style: none;}
+    html, body{font-family: arial,sans-serif;}
+
+  </style>
+</head>
+<body>
+
+<script>
+function Ex(){
+  wheel = function(){
+    if ( Ex.isWheelFlag ) return;
+    Ex.isWheelFlag = true ;
+    console.log('d')
+  }
+  window.addEventListener("mousewheel", wheel, false);
+}
+var ex = new Ex();
+
+
+</script>
+
+</body>
+</html>

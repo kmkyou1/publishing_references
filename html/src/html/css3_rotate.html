@@ -1,0 +1,129 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<title> CSS - animation </title>
+<meta charset="utf-8">
+<script type="text/javascript" src="../js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="../js/matrixcalc.js"></script>
+<style>
+  *{margin:0;padding:0;}
+  li{list-style:normal;}
+  .roulette{position:relative;float:left;width:534px;height:568px;overflow:hidden;}
+  .roulette #image{position:absolute;top:0;left:0;z-index:50;}
+  .roulette #roll{
+    position:absolute;top:52px;left:19px;
+    transform:rotate(0deg);
+  }
+  #start_btn{
+    position:absolute;z-index:100;top:252px;left:216px;display:block;width:100px;height:100px;
+    border-radius:100px;border:0;background:#e84947;font-weight:bold;color:#fff;
+    font-size:15px;
+  }
+  .roulette #roll.ani{
+    animation: roll 8s cubic-bezier(.48,.16,0,1) forwards;/*ease-out, (.48,.16,0,1.05)*/
+  }
+  .btn{z-index:100;position:absolute;top:20px;left:20px;display:inline-block;padding:5px 10px;background:#000;color:#fff;text-decoration: none;border-radius:20px;}
+  .ul{float:left;margin-left:50px;}
+</style>
+<script>
+$(document).ready(function(){
+  //램덤 추출
+  function makeRandom(min, max){
+  	var RandVal = Math.random() * (max- min) + min;
+  	return Math.floor(RandVal);
+  }
+  var arr = ["500포인트","다음기회에","10포인트","다음기회에","50포인트","다음기회에","100포인트","다음기회에"];
+  var arr_index = arr.length; //룰렛 항목 수
+  var pick_index = 0; //선택된 인댁스
+  var result_arr = [];
+  var click = 0; //광클릭 방지용 변수
+  var action = 0; //게임 횟수
+  var turn = 7200;  //기본 회전 각도
+  var start_rotation = 0;
+  var end_rotation = 0;
+  var more_rotation = 0;
+  arr_index = 360/arr_index;
+  //롤링 시작 클릭
+  $("#start_btn").bind("click", function(){
+    action++; //카운트
+    //console.log(arr_index);
+    if(click == 0){
+      $("#roll").addClass("ani");
+      //추가 회전 적용
+      more_rotation = makeRandom(1,360);  //랜덤 출력 영역 설정
+      if(more_rotation%arr_index == 0){
+        more_rotation += 1;
+      }
+      end_rotation = turn;
+      end_rotation += more_rotation;
+      //추가 회전 적용 끝
+      var style = document.createElement('style');
+      style.setAttribute("id","keyframes_style");
+      style.type = 'text/css';
+      style.innerHTML += '@keyframes roll {';
+      style.innerHTML += '0%{';
+      style.innerHTML += 'transform: rotate('+start_rotation+'deg)';
+      style.innerHTML += '}100%{';
+      style.innerHTML += 'transform: rotate('+end_rotation+'deg)';
+      style.innerHTML += '}}';
+      document.getElementsByTagName('head')[0].appendChild(style);
+      this.stylesheet = document.styleSheets[document.styleSheets.length-1];
+      click=1;
+      //console.log("start="+start_rotation+", end="+end_rotation)
+    }
+  });
+  //롤링 종료 액션
+  $('.roulette').bind( 'animationend' , function () {
+    $("#roll").removeClass("ani");
+    click=0; //광클릭 방지용
+    start_rotation = end_rotation-turn;
+    pick_index = (start_rotation/arr_index) % 8;
+    //if(start_rotation > 360){
+      //pick_index = pick_index%8;
+    //}
+    result_arr.push(arr[Math.floor(pick_index)])
+    console.log(result_arr)
+    $("#keyframes_style").remove();
+    $("#roll").css("transform","rotate("+start_rotation+"deg)");
+    $(".ul").append("<li>"+arr[Math.floor(pick_index)]+"</li>");
+    //console.log(arr[Math.floor(pick_index)]+"=="+Math.floor(pick_index));
+  });
+});
+var rouletteRemote = {};
+var RouletteRemote = function () {
+  function yaho () {}
+};
+RouletteRemote.prototype = {
+  start : function () {
+    //console.log( $("#start_btn") ) ;
+    $("#start_btn")[0].click() ;
+  }
+};
+
+$(function () {
+  //rouletteRemote = new RouletteRemote ;
+  //rouletteRemote.start();
+  //rouletteRemote.yaho();
+});
+
+$(function(){
+  rouletteRemote = new RouletteRemote ;
+  //rouletteRemote.start();
+  //rouletteRemote.yaho();
+})();
+
+var $btn = $(".btn")
+
+</script>
+</head>
+<body>
+<div class="roulette">
+  <img src="../img/roulette_img01.png" id="image"/>
+  <img src="../img/roulette.png" id="roll"/>
+  <input type='button' value='START' id='start_btn'></input>
+</div>
+<a href="#" class="btn" onclick="javascript:rouletteRemote.start();">리모콘</a>
+<ol class="ul">
+</ol>
+</body>
+</html>

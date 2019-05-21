@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title></title>
+
+    </head>
+    <script src="../libs/jquery-1.11.0.min.js"></script>
+    <script>
+        /*
+         예제: 사용자 이름, 아이디, 별명, 나이, 주소를 매개변수 값으로
+         받아 출력하는 함수를 만들어주세요.
+         */
+        var userInfo = {
+            userName : "김춘경",
+            id : "ddandongne"
+        }
+
+        // 기본 사용자 정보 값
+        var defaults = {
+            age : 0,
+            address : "서울시 금천구",
+            nickName : ""
+        }
+
+        // 함수 호출
+        showInfo(userInfo);
+        // 함수에서 데이터 사용
+        function showInfo(userInfo) {
+            // 기본 사용자 정보와 신규 사용자 정보를 합치키
+            userInfo = $.extend({}, defaults, userInfo);
+            document.write("name = " + userInfo.userName, "id = " + userInfo.id, "nickName = " + userInfo.nickName, "age = " + userInfo.age, "address = " + userInfo.address);
+        }
+
+    </script>
+
+    <body>
+
+    </body>
+</html>

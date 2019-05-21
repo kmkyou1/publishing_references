@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>canvas</title>
+  <style>
+    *{margin:0;padding:0;}
+    form{padding:50px;text-align: right;}
+    canvas{background:#000;}
+  </style>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+  <script>
+    var firework = {
+      canvas : document.querySelector("#canvas"),
+      ctx : canvas.getContext("2d"),
+      w : 700,
+      h : 500,
+      fireArr : [],
+      fire : [],
+      mCount :9,  //불꽃 개수
+      count : 69,  //불꽃 낱개 개수
+      seq : 0,
+      init : function(){
+        canvas.width = this.w;
+        canvas.height = this.h;
+        that = this;
+        tmp = [];
+        for(var j=0;j<=that.mCount;j++){
+          that.fire = [];
+          x = Math.random() * that.w;
+          y = Math.random() * that.h;
+          speed = 0.5;//Math.random() * (0.8-0.4)+0.4;
+          opc = 5;//1 + (Math.random() * 3);
+          console.log(opc)
+          for(var i = 0; i <= that.count; i++) {
+            that.fire.push({
+              lineX : -16 + (Math.random() * 16) + 8,
+              lineY : -16 + (Math.random() * 16) + 8,
+              moveX : x,
+              moveY : y,
+              speed : speed,
+              opc : opc
+            });
+          }
+          that.fireArr[j] = that.fire;
+        }
+        console.log(that.fireArr)
+        // console.log(Math.random(1))
+      },
+      action : function(){
+        fireArr = that.fireArr;
+        fire = this.fire;
+        ctx = this.ctx;
+        count = this.count;
+        that = this;
+        ctx.lineWidth = 1;
+        function draw(){
+          ctx.clearRect(0,0,that.w,that.h);
+          ctx.beginPath();
+          for(var j=0;j<=that.mCount;j++){
+            motherArr = fireArr[j];
+            for(var i = 0; i <= count; i++) {
+              ctx.moveTo(motherArr[i].moveX, motherArr[i].moveY);
+              ctx.lineTo(motherArr[i].moveX+motherArr[i].lineX, motherArr[i].moveY+motherArr[i].lineY);
+            }
+          }
+          ctx.stroke();
+          move();
+        }
+        function move(){
+          var opc;
+          for(var j=0;j<=that.mCount;j++){
+            motherArr = fireArr[j];
+            for(var i = 0; i <= count; i++) {
+              motherArr[i].moveX += motherArr[i].lineX*motherArr[i].speed;
+              motherArr[i].moveY += motherArr[i].lineY*motherArr[i].speed;
+              ctx.strokeStyle = "rgba(251,246,222,"+motherArr[0].opc+")";
+            }
+          }
+          motherArr[0].opc -= 0.5;
+          // opc -= 0.1;
+          handle = window.requestAnimationFrame(draw);
+        }
+        draw();
+      }
+    }
+    firework.init();
+    firework.action();
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>canvas</title>
+  <style>
+    *{margin:0;padding:0;}
+    <style>
+      *{margin:0;padding:0;}
+      body{padding-top:500px;}
+      div{padding:20px;background:#000}
+      div div{background:#fff}
+      div div div{padding:10px;background:#000}
+    </style>
+  </head>
+<body>
+  <a href="http://www.naver.com/">
+    <div>
+      <span>버튼</span>
+    </div>
+  </a>
+  <script>
+    var div = document.querySelectorAll("div");
+    [].forEach.call(div, function(elem, idx){
+      elem.addEventListener("mouseover", function(e){
+        console.log(e.currentTarget)
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>2장. Docuemtn 노드</title>
+  <style>
+    *{margin:0;padding:0;}
+    ul{text-align:center;}
+    li{list-style: none;background:#ccc;margin-bottom:10px;}
+    img{vertical-align: top;}
+    a{text-decoration: none;}
+    div{text-align: center;height:30px;background: gold;margin-bottom:10px;}
+    span{display:inline-block;padding:10px;background:red;}
+  </style>
+</head>
+<body>
+
+
+  <script>
+  var textarea = document.createElement('textarea')
+  document.body.appendChild(textarea)
+  console.log(document.querySelector('textarea').tagName)
+    // document.querySelector('textarea').focus()
+    // setTimeout(function(){
+    //   console.log(document.hasFocus())
+    // },5000)
+    //document의 속성 확인
+    // console.log(document.activeElement.nodeName)
+    // console.log(window.document.constructor)
+    // console.log(document.title)
+    // console.log(document.URL)
+    // console.log(document.referrer)
+    // console.log(document.lastModified)
+    // console.log(document.compatMode)
+    // console.log(document.implementation.hasFeature('Core','2.0'))
+  </script>
+</body>
+</html>

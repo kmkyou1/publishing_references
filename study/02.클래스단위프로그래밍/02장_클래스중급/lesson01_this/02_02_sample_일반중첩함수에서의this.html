@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title></title>
+
+    
+<script>
+    var data=10;
+    function outer(){
+        
+        // 중첩함수
+        function inner(){
+        
+            this.data=20;
+            data=30;
+            
+            document.write("1. data1 = "+data,"<br>");
+            document.write("2. this.data = "+this.data,"<br>");
+            document.write("3. window.data = "+window.data,"<br>");
+                
+        }
+        
+        inner();
+    }
+    
+    outer();    
+</script>
+
+</head>
+    
+    <body>
+        
+    </body>
+</html>

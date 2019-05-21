@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>images on Canvas</title>
+  <style>
+    *{margin:0;padding:0;}
+    li{list-style: none;}
+    a{text-decoration: none;}
+  </style>
+  <script>
+    //The Class
+    function Person(gender){ //클래스. 펑션 정의
+      this.gender = gender; //The Property (object attribute)
+      this.name = "audry";
+      //console.log("The Class")
+    }
+    Person.prototype.sayHello = function(){
+      console.log('hi : Person의 프로토타입 펑션'+this.gender);
+    }
+    Person.prototype.sayGender = function(){
+      console.log('person의 gender = '+this.gender);
+    }
+    function Student(a, b){  //Class 생성, 펑션, 오브젝트
+      Person.apply(this, [b]); //해당 오브젝트의 프로퍼티를 상속 받음
+      // this.name = 'kmk';
+    }
+    Student.prototype = new Person(); //상속
+    // Student.prototype.sayHello = function(){
+    //   console.log('Student에서 펑션 변경 캡슐화?'+this.name)
+    // }
+    var person = new Person('Male'); //인스턴스 생성
+    var student = new Student('Male','d');
+    //The Object (Class Instance)
+    // console.log(student.sayHello)
+    student.sayHello();
+function sum(num1, num2) {
+    return num1;
+}
+function callSum1(num1, num2, num3) {
+  console.log(sum.apply(this, [num3]))
+  return sum.apply(this, arguments);  // arguments 객체를 넘깁니다.
+}
+function callSum2(num1, num2) { // 배열을 넘깁니다.
+    return sum.apply(this, [num1, num2]);
+}
+callSum1(10, 10, 5)
+// alert(callSum1(10, 10));    // 20
+// alert(callSum2(10, 10));    // 20
+
+  </script>
+</head>
+<body>
+  <div class="nav"></div>
+  <div class="new-search-section"></div>
+<a href="#" class="btn">Click!</a>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
+  <title>연습</title>
+  <style>
+    *{margin:0;padding:0;}
+    ul li{
+      list-style: none;
+      transition: transform .5s, opacity .9s;
+      opacity: 0;
+      transform: matrix(1, 0, 0, 1, 0, 12);
+    }
+    ul li.show{
+      opacity: 1;
+      transform: matrix(1, 0, 0, 1, 0, 0);
+    }
+  </style>
+</head>
+<body>
+  <button type="button">SHOW</button>
+  <ul>
+    <li>transform matrix test</li>
+    <li>transform matrix test</li>
+    <li>transform matrix test</li>
+    <li>transform matrix test</li>
+    <li>transform matrix test</li>
+    <li>transform matrix test</li>
+  </ul>
+  <script>
+    btn = document.querySelector('button');
+    lis = document.querySelectorAll('ul li');
+
+    // function Test(){
+    //   this.init = function(elem){
+    //     dom = elem;
+    //     idx = 0;
+    //   }
+    //   this.action = function(){
+    //     function show(){
+    //       dom[idx].classList.add('show');
+    //       idx++;
+    //       if(idx <= dom.length-1){
+    //         setTimeout(show, 100);
+    //       }
+    //     }
+    //     show();
+    //   }
+    // }
+    // var test = new Test();
+
+    test = {
+      init : function(elem){
+        dom = elem;
+        idx = 0;
+      },
+      action : function(){
+        function show(){
+          dom[idx].classList.add('show');
+          idx++;
+          if(idx <= dom.length-1){
+            setTimeout(show, 100);
+          }
+        }
+        show();
+      }
+    }
+    btn.addEventListener("click", function(){
+      test.init(lis);
+      test.action();
+    });
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>canvas</title>
+  <style>
+    *{margin:0;padding:0;}
+    form{padding:50px;text-align: right;}
+    canvas{background:#000;}
+  </style>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+  <script>
+    var waterDrop = {
+      canvas : document.getElementById('canvas'),
+      context : canvas.getContext('2d'),
+      w : 700,
+      h : 300,
+      moveToX : null,
+      moveToY : null,
+      lineToX : null,
+      lineToY : null,
+      setRain : [],
+      maxRain : 0,
+      speed : 0.5,
+      spd : 1,
+      init : function(){
+        that = this;
+        canvas.width = this.w;
+        canvas.height = this.h;
+        for(var i=0;i<=that.maxRain;i++){
+          that.setRain.push({
+            moveToX : 700,
+            moveToY : 10,
+            lineToX : -15,
+            lineToY : 1
+          });
+        }
+      },
+      drop : function(){
+        spd = this.spd;
+        ctx = this.context;
+        w = this.w;
+        h = this.h;
+        ctx.strokeStyle = "gray";
+        ctx.lineWidth = 1;
+        //그리기
+        function draw(){
+          ctx.clearRect(0,0,w,h);
+          ctx.beginPath();
+          for(var i=0;i<=that.maxRain;i++){
+            var p = that.setRain[i];
+            ctx.moveTo(p.moveToX, p.moveToY);
+            ctx.lineTo(p.moveToX + p.lineToX, p.moveToY + p.lineToY);
+          }
+          ctx.stroke();
+          move();
+        }
+        function move(){
+          if(spd <= 100){
+            spd += 0.01;
+          }
+          for(var i=0;i<=that.maxRain;i++){
+            var p = that.setRain[i];
+            p.moveToX += (p.lineToX*that.speed);
+            p.moveToY += (p.lineToY*that.speed*spd);
+            if(p.moveToY > 200 || p.moveToX < 0){
+              p.moveToX = 700;
+              p.moveToY = 10;
+              spd = 1;
+            }
+          }
+          window.requestAnimationFrame(draw);
+        }
+        draw();
+      }
+    }
+    waterDrop.init();
+    waterDrop.drop();
+  </script>
+</body>
+</html>

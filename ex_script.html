@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script type="text/javascript" src="http://kmkyou.cafe24.com/web/my/js/jquery-1.10.2.min.js"></script>
+  <title>연습</title>
+  <style>
+    *{margin:0;padding:0;}
+    li{list-style:none;}
+    .slider{position: relative;overflow: hidden;margin:0 auto;width:300px;height:200px;border:1px solid;}
+    .slider ul{position:absolute;top:0;left:0;width:500%;}
+    .slider ul li{float:left;width:300px;border:1px solid;}
+    .slider ul li a img{width:100%;vertical-align: top;}
+    .slider .btn{position:absolute;top:0;left:0;}
+  </style>
+  <script>
+    window.onload = function(){
+      var slider = document.querySelector(".slider ul");
+      var handle = 0;
+      var left = 0;
+      // renderLoop();  // call animation frame to start
+      function renderLoop() {
+        slider.style.left = ((left += 5) % 300) + "px";
+        if ( left >= 300 ) {
+          console.log(left);
+          slider.style.left = left+'px';
+          return false;
+        }else{
+          handle = window.requestAnimationFrame(renderLoop);
+        }
+      }
+
+      // click the box to stop the animation
+      document.querySelector(".slider").addEventListener("click", function () {
+        if (handle) {
+          window.cancelAnimationFrame(handle);
+          handle = null;
+        } else {
+          renderLoop();
+        }
+      }, false);
+
+    }
+  </script>
+</head>
+<body>
+  <div class="slider">
+    <ul>
+      <li><a href="#"><img src="img/Chrysanthemum.jpg" /></a></li>
+      <li><a href="#"><img src="img/Jellyfish.jpg" /></a></li>
+      <li><a href="#"><img src="img/Desert.jpg" /></a></li>
+      <li><a href="#"><img src="img/Lighthouse.jpg" /></a></li>
+      <li><a href="#"><img src="img/Tulips.jpg" /></a></li>
+    </ul>
+    <div class="btn">
+      <a href="#">이전</a>
+      <a href="#">다음</a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+  <title>연습</title>
+  <style>
+    *{margin:0;padding:0;}
+    li{list-style: none;}
+    .roll{margin:0 auto;width:200px;height:150px;border:1px solid;position:relative;}
+    .roll ul{position:relative;}
+    .roll ul li{position:absolute;top:0;left:0;transition: left 0.3s;}
+    .roll ul li:nth-child(1){z-index:10;}
+    .roll ul li a img{width:100%;vertical-align: top;}
+    .roll .btn{position: absolute;top:40%;width:100%;}
+    .roll .btn button{position:absolute;bottom:-120px;padding:5px 10px;}
+    .roll .btn button.prev{left:0;}
+    .roll .btn button.next{right:0;}
+  </style>
+</head>
+<body>
+  <div class="roll">
+    <ul>
+      <li><a href="#"><img src="img/Chrysanthemum.jpg"/></a></li>
+      <li><a href="#"><img src="img/Hydrangeas.jpg"/></a></li>
+      <li><a href="#"><img src="img/Tulips.jpg"/></a></li>
+    </ul>
+    <div class="btn">
+      <button class="prev">&lt;</button>
+      <button class="next">&gt;</button>
+    </div>
+  </div>
+  <script>
+    $(".prev").click(function(){
+
+    });
+  </script>
+</body>
+</html>

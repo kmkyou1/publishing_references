@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script type="text/javascript" src="http://kmkyou.cafe24.com/web/my/js/jquery-1.10.2.min.js"></script>
+  <title>연습</title>
+  <style>
+    *{margin:0;padding:0;}
+    ul li{margin-bottom:10px;line-height:50px;text-align: center;list-style: none;border:1px #ddd solid;cursor: pointer;}
+    ul li.on{font-weight:bold;background:#ccc;}
+  </style>
+</head>
+<body>
+  <a href="#" onfocus="this.blur();">하하하하</a>
+  <input type="text" readonly onfocus="this.blur();"/>
+  <ul>
+    <li class='on'>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+  </ul>
+  <script>
+  var li = document.querySelectorAll('ul li');
+  [].forEach.call(li, function(elem, idx){
+    elem.addEventListener('click', function(){
+      this.classList.add('on');
+      [].forEach.call( this.siblings() , function ( elem ) {
+         elem.classList.remove('on');
+      }) ;
+    });
+  });
+  //siblings
+   Element.prototype.siblings = function () {
+      var elem = this , arr = [] ;
+      [].forEach.call( this.parentNode.children , function ( find_elem ) {
+         if ( find_elem.tagName == elem.tagName && find_elem != elem ) {
+            arr.push( find_elem ) ;
+         }
+      }) ;
+      return arr ;
+   } ;
+  </script>
+</body>
+</html>

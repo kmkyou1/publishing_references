@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>연습</title>
+  <style>
+    body{font-size:62.5%;}
+    *{padding:0;margin:0;}
+    img{vertical-align: top;}
+    li{list-style:none;}
+    a{color:#000;text-decoration: none;}
+    .dragArea{vertical-align: top;display:inline-block;position:relative;margin:50px 0 0 25px;padding:25px;width:200px;font-size: 1.2em;box-shadow:#ccc 1px 1px 1px 3px;}
+    .dragArea ul li{position:relative;margin-top:25px;height:35px;border:1px #f4f4f3 solid;background:#fefeef;border-radius:10px;box-sizing: border-box;}
+    .dragArea ul li.leave{border:1px gray dashed;/*-webkit-box-shadow: inset 0px 0px 2px 2px rgba(212,205,212,1);*/}
+    .dragArea ul li:first-child{margin-top:0;}
+    .dragArea a{
+      position:absolute;top:0;left:0;width:200px;display: block;height:35px;line-height: 35px;
+      color:#444;text-align: center;box-sizing: border-box;
+      border:1px #dbdbd9 solid;background:#f5f5f5;border-radius:10px;
+      background: linear-gradient(#f5f5f5, #ddd);
+    }
+    .dragArea a.trans{transition:top .2s;}
+    .dragArea a.moveUp{top:-100px;}
+    .dragArea a.moveDown{top:100px;}
+    .dragArea a.click{z-index: 2;border:1px #2883fe solid;}
+  </style>
+</head>
+<body>
+<div class="dragArea">
+  <ul>
+    <li><a href="#none">1. 참똑똑한 A+통장</a></li>
+    <li><a href="#none">2. 주식/펀트 개미 투자</a></li>
+    <li><a href="#none">3. 씨티 클리어카드</a></li>
+    <li><a href="#none">4. 예금 적금 플러스</a></li>
+  </ul>
+</div>
+<div class="dragArea">
+  <ul>
+    <li><a href="#none">1. 참똑똑한 A+통장</a></li>
+    <li><a href="#none">2. 주식/펀트 개미 투자</a></li>
+    <li><a href="#none">3. 씨티 클리어카드</a></li>
+  </ul>
+</div>
+<script>
+function Drag(){
+  var dg = {};
+  this.init = function(dom){
+    dg.wrap = dom;
+    dg.drag = dg.wrap.querySelectorAll("ul li a");
+    dg.drop = dg.wrap.querySelectorAll("ul li");
+  };
+  this.event = function(e){
+    var drg = dg.drag;
+    [].forEach.call(drg, function(elem, idx){
+      moveLength = -(dg.drop[1].offsetTop - dg.drop[0].offsetTop);  //애니메이션 거리 확인
+      elem.addEventListener("mousedown", down);
+    });
+  };
+  down = function(e){
+    window.addEventListener("mousemove", move);
+    window.addEventListener("mouseup", up);
+    e.preventDefault();
+    drag = e.currentTarget;
+    drags = drag.parentNode.parentNode.querySelectorAll("a");
+    drop = drag.parentNode;  //드랍 영역
+    drops = drop.parentNode.querySelectorAll("li");
+    wrap = drop.parentNode.parentNode;
+    wrapT = drop.parentNode.parentNode.offsetTop;
+    dragT = e.currentTarget.offsetTop;
+    dragL = e.currentTarget.offsetLeft;
+    dropT = drop.offsetTop;
+    dropL = drop.offsetLeft;
+    currentX = e.pageX;
+    currentY = e.pageY;
+    [].forEach.call(drags, function(elem, idx){
+      startIdx = [].indexOf.call(drags, drag);
+      endIdx = startIdx;
+    });
+    drag.style.cssText = "top:"+dropT+"px;left:"+dropL+"px";
+    drop.removeChild(drag);  //클릭된 요소 지우기
+    wrap.appendChild(drag);  //클릭된 요소를 띄우기
+    drag.classList.add("click");  //클릭 스타일 적용
+    drop.classList.add("leave");  //드랍 영역 스타일 적용
+  };
+  move = function(e){
+    e.preventDefault();
+    dragW = drag.offsetWidth;
+    dragH = drag.offsetHeight;
+    thisTop = currentY - dragT;
+    thisLeft = currentX - dragL;
+    x = e.pageX - thisLeft;
+    y = e.pageY - thisTop;
+    pointer = e.pageY;
+    drag.style.top = y+dropT+"px";
+    drag.style.left = x+dropL+"px";
+    y = e.pageY - wrapT;  //부모 wrap의 offsetTop값을 빼줌
+    [].forEach.call(drops, function(elem, idx){
+      if(y > drops[idx].offsetTop && y < drops[idx].offsetTop+dragH){
+        endIdx = idx;
+        position_change(endIdx);
+      }
+    });
+    drops[startIdx].classList.add("leave");  //스타일 적용
+  };
+  up = function(e){
+    window.removeEventListener("mousemove", move);
+    window.removeEventListener("mouseup", up);
+    x = e.pageX;
+    y = e.pageY;
+    drag.style.top = 0;
+    drag.style.left = 0;
+    drag.classList.remove("click");
+    drops[endIdx].appendChild(drag);  //드랍
+    drops[endIdx].classList.remove("leave");  //스타일 제거
+  };
+  //위치 이동
+  function position_change(endIdx){
+    if(startIdx != endIdx){
+      child = drops[endIdx].childNodes[0];  //이동될 요소
+      //애니메이션 적용
+      if(child){
+        child.style.cssText = "top:"+drops[endIdx].offsetTop+"px;left:"+drops[endIdx].offsetLeft+"px";
+        drops[endIdx].removeChild(child);  //이동 될 요소 지우기
+        wrap.appendChild(child);  //이동될 요소 뿌리기
+        child.classList.add("trans");
+        child.style.top = drops[startIdx].offsetTop+"px";
+        aniIdx = startIdx;  //트랜지션 앤드에서 사용할 idx
+        child.addEventListener("transitionend", function(){
+          drops[aniIdx].appendChild(child);
+          child.style.cssText = "top:0px;left:0px";
+          child.classList.remove("trans");
+        });
+      }
+      //애니메이션 적용 끝
+      drops[startIdx].classList.remove("leave")  //스타일 제거
+      startIdx = endIdx;
+    }
+  }
+}
+var dragArea = document.querySelectorAll(".dragArea");
+[].forEach.call(dragArea, function(elem, idx){
+  var drag = new Drag();
+  drag.init(elem);
+  drag.event();
+});
+</script>
+</body>
+</html>

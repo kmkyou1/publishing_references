@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>fullPage</title>
+  <style>
+    *{margin:0;padding:0;}
+    li{list-style: none;}
+    body{font-family: arial,sans-serif;height:2000px;}
+    .menu{position:absolute;top:150px;right:50px;width:100px;height:200px;background:#ddd;}
+    .menu.fixed{position:fixed;top:0;}
+  </style>
+</head>
+<body>
+  <div class="menu">
+    메뉴
+  </div>
+  <script>
+  window.addEventListener('scroll', function(){
+
+    var top = document.body.scrollTop;
+    if(top >= 150){
+      console.log(top)
+      document.querySelector('.menu').classList.add('fixed');
+    }
+
+  });
+  </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script type="text/javascript" src="http://kmkyou.cafe24.com/web/my/js/jquery-1.10.2.min.js"></script>
+  <title>연습</title>
+  <style>
+    *{margin:0;padding:0;}
+    li{list-style: none;}
+    .box{position:absolute;width:100px;height:100px;border:1px solid;}
+    button{padding:4px 10px;cursor:pointer;}
+  </style>
+  <script>
+    window.addEventListener("load", function(){
+      var start = null;
+      var element = document.querySelector('.box');
+      function step(timestamp) {
+        if (!start) start = timestamp;
+        var progress = timestamp - start;
+        var prs = progress / 10;
+        var rs = Math.min(prs*3, 300);
+        element.style.left = rs + 'px';
+
+        if (rs < 300) {
+          window.requestAnimationFrame(step);
+        }
+      }
+      window.requestAnimationFrame(step);
+    });
+
+  </script>
+</head>
+<body>
+  <button>GO</button>
+  <div class="box"></div>
+
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
+  <title>연습</title>
+  <style>
+    *{margin:0;padding:0;}
+    li{list-style: none;}
+    body{overflow: hidden;}
+    a{color:#000;text-decoration: none;}
+    .head{position:fixed;left:0;top:0;width:100%;text-align: center;}
+    h1{height:50px;line-height: 50px;}
+    .menuWrap{position:relative;overflow:hidden;overflow-x:auto;-webkit-overflow-scrolling: touch;height:50px;line-height: 50px;background:#ff5000;}
+    .menuWrap ul{overflow:hidden;width:800px;}
+    .menuWrap ul li{float:left;}
+    .menuWrap ul li a{display:block;color:#fff;font-size:1.25em;padding:0 10px;text-align: center;font-weight:bold;user-select: none;}
+  </style>
+  <script>
+  	$(document).ready(function() {
+      // var menu;
+      // var x;
+      // var domLeft;
+      // var touchX;
+      // var second = 0;  //초
+      // var sec;      //셋타임아웃 변수
+      // function stop_watch(){
+      //   sec = setTimeout(stop_watch,10);
+      //   second+=1;
+      //   return second;
+      // }
+      // $(".menuWrap ul").bind("touchstart",function(e){
+      //   menu = e.currentTarget ;
+      //   domLeft = $(this).offset().left;
+      //   x1 = event.touches[0].clientX;
+      //   touchX = x1 - domLeft;
+      //   // console.log("터치 : "+x1);
+      //   stop_watch();
+      // });
+      // $(".menuWrap ul").bind("touchmove",function(e){
+      //   x2 = event.touches[0].clientX;
+      //   x = x2-x1;
+      //   domLeft = event.touches[0].clientX-touchX;
+      //   menu.style.left = domLeft+"px";
+      //   // console.log("터치 : "+x)
+      // });
+      // $(".menuWrap ul").bind("touchend",function(e){
+      //   // console.log("터치 : "+x)
+      //   console.log(second)
+      //   $(".menuWrap ul").animate({left:x+"px"},second*10);
+      //
+      //   clearTimeout(sec);
+      //   second = 0;
+      // });
+
+
+
+    });
+  </script>
+</head>
+<body>
+  <div class="head">
+    <h1>모바일</h1>
+    <div class="menuWrap">
+      <ul>
+        <li><a href="#none">사전</a></li>
+        <li><a href="#">뉴스</a></li>
+        <li><a href="#">증권</a></li>
+        <li><a href="#">부동산</a></li>
+        <li><a href="#">지도</a></li>
+        <li><a href="#">영화</a></li>
+        <li><a href="#">뮤직</a></li>
+        <li><a href="#">책</a></li>
+        <li><a href="#">웹툰</a></li>
+        <li><a href="#">사전</a></li>
+        <li><a href="#">뉴스</a></li>
+        <li><a href="#">증권</a></li>
+        <li><a href="#">부동산</a></li>
+        <li><a href="#">지도</a></li>
+        <li><a href="#">영화</a></li>
+        <li><a href="#">뮤직</a></li>
+        <li><a href="#">책</a></li>
+        <li><a href="#">웹툰</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

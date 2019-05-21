@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, width=device-width, minimal-ui">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>images on Canvas</title>
+  <style>
+    *{margin:0;padding:0;}
+    body{
+      /*padding-bottom:50px;*/
+      text-transform:uppercase;
+      font: normal normal 400 30px/1.375 "Lato",Arial,sans-serif;
+    }
+    li{list-style: none}
+    a{text-decoration: none;}
+    header{
+      transition:top .3s;
+      position:fixed;width:100%;
+      left:0;top:0;line-height:50px;text-align: center;
+    }
+    header.up{top:-50px;}
+    .tmenu ul{overflow: hidden;background-color:rgba( 0, 0, 0, 0.7 );}
+    .tmenu ul li{float:left; width:25%;}
+    .tmenu ul li a{font-size:12px;display: block;line-height:40px;text-align:center; color:#fff;}
+    h1{font-size:20px;color:#fff;font-weight: bold;background:#000;}
+    section.contents{
+      padding:100px 10px 10px 10px;
+      font-size:12px;
+    }
+    section.contents img{width:100%;}
+    footer{font-size:10px;padding:20px;background:#ddd;}
+    .menu{position:relative;transition:bottom .2s;position:fixed;left:0;bottom:0;width:100%;background:#eeeff1;border-top:1px solid #ddd;}
+    .menu.down{bottom:-50px;}
+    .menu ul{overflow: hidden;}
+    .menu ul li{float:left; width:25%;}
+    .menu ul li a{font-size:12px;display: block;line-height: 50px;text-align:center; color:#18161a;}
+    .go_top{display:block;position:absolute;right:20px;bottom:60px;width:39px;height:39px;background:url("img/top.png") no-repeat 0 0;}
+  </style>
+  <script>
+    window.addEventListener("load", function(){
+      // var agt = navigator.userAgent.toLowerCase();
+      var scr = null;
+      var go_top = document.querySelector('.go_top');
+      var last_top = null;
+      // var window_height = window.screen.availHeight;
+      var window_height = window.innerHeight;
+      var scroll_height = document.body.scrollHeight;;
+      var doc_height = document.body.offsetHeight;
+      var foot_top = document.querySelector("footer").offsetTop;
+      var foot_height = document.querySelector("footer").offsetHeight;
+
+      var scrollHeight = doc_height - window_height;
+      console.log("스크롤 높이 = "+ scroll_height);
+      console.log("창 높이 = "+ window_height);
+      console.log("퍼센트 기준 = "+ scrollHeight);
+      //스크롤 이벤트 시작
+      window.addEventListener('scroll', function(e){
+        var s_top = document.body.scrollTop;
+        percent = Math.floor((s_top/scrollHeight)*100);
+        console.log(s_top,scrollHeight);
+        //맨위로 가기 버튼
+        // s_top = s_top-100;
+        if(s_top == scrollHeight){
+          go_top.style.display = "none";
+        }else{
+          go_top.style.display = "block";
+        }
+        if(0 < s_top){
+          document.querySelector(".menu").classList.add('down');
+          // document.querySelector(".menu").style.cssText = ""
+          document.querySelector("header").classList.add('up');
+        }
+        if(last_top > s_top){
+          document.querySelector(".menu").classList.remove('down');
+          document.querySelector("header").classList.remove('up');
+        }
+        //스크롤이 끝났을 때의 스크롤 탑 값을 구해라
+        // console.log(last_top + window_height, document.body.offsetHeight)
+        if((last_top + window_height) >= (document.body.offsetHeight-5)){
+          // s_top = document.body.offsetHeight;
+          // alert("d")
+        }
+        last_top = s_top;
+        //스크롤 탑 값과 스크린 세로 값은 body 세로 값과 같다.
+        // console.log(tmp, window_height,(tmp+window_height), document.body.offsetHeight);
+        // clearTimeout(tt);
+      });
+
+      // var tt = setTimeout(TimeOut,1000);
+      // function TimeOut(){
+      //   go_top.style.display = "none";
+      //   console.log("d");
+      // }
+    });
+    // function callFunction(callback){
+    //   var Num1 = 1;
+    //   var Num2 = 2;
+    //   var result = Num1 + Num2;
+    //   console.log("1. callFunction 실행");
+    //   if(typeof callback === 'function'){
+    //     console.log("2. callFunction 시작");
+    //     callback(result);
+    //   }
+    // }
+    // callFunction(function(msg){
+    //   console.log("3. 콜백함수");
+    //   console.log("4. result ="+ msg);
+    // });
+  </script>
+</head>
+<body>
+  <section class="menu">
+    <ul>
+      <li><a href="#">HOME</a></li>
+      <li><a href="#">카테고리</a></li>
+      <li><a href="#">주문현황</a></li>
+      <li><a href="#">마이페이지</a></li>
+    </ul>
+    <span class="go_top"></span>
+  </section>
+  <header>
+    <h1>mobile</h1>
+    <section class="tmenu">
+      <ul>
+        <li><a href="#">menu01</a></li>
+        <li><a href="#">menu02</a></li>
+        <li><a href="#">menu03</a></li>
+        <li><a href="#">menu04</a></li>
+      </ul>
+    </section>
+  </header>
+  <section class="contents">
+    <img src="img/Tulips.jpg"/>
+    <img src="img/Chrysanthemum.jpg"/>
+    <img src="img/Hydrangeas.jpg"/>
+    <img src="img/Desert.jpg"/>
+    <img src="img/Lighthouse.jpg"/>
+      <img src="img/Tulips.jpg"/>
+      <img src="img/Chrysanthemum.jpg"/>
+      <img src="img/Hydrangeas.jpg"/>
+  </section>
+  <footer>
+    사업자등록번호 : 211-88-41856  통신판매업신고 : 제 2013-서울강남-02403호<br/>
+    서울특별시 강남구 테헤란로 114길 38 동일타워 1,2층 ㈜ 티켓몬스터 (대표자 : 신현성)사업자 정보 확인<br/>
+    고객센터 1544-6240 (평일 오전 8시 ~ 오후 8시 / 주말 및 공휴일 오전 9시 ~ 오후 6시)<br/>
+    COPYRIGHT 2011. TICKETMONSTER INC. ALL RIGHTS RESERVED.
+  </footer>
+</body>
+</html>

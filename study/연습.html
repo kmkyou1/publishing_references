@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script type="text/javascript" src="http://kmkyou.cafe24.com/web/my/js/jquery-1.10.2.min.js"></script>
+  <title>연습</title>
+  <style>
+    *{margin:0;padding:0;}
+    li{list-style: none;}
+    .tabWrap{width:200px;margin-top:30px;}
+    .tabWrap ul{position: relative;}
+    .tabWrap ul:after{content:'';display:block;clear:both;}
+    .tabWrap ul li{float:left;width:50px;list-style: none;}
+    .tabWrap ul li a{display:block;text-align: center;padding:5px 0;border:1px gray solid;border-bottom:0;}
+    .tabWrap ul li div{display:none;width:200px;min-height:100px;padding:5px;border:1px gray solid;}
+    .tabWrap ul li div.tab2{margin-left:-50px;background:gold;}
+    .tabWrap ul li div.tab3{margin-left:-100px;background:#eeeff1;}
+    .tabWrap ul li a.on{background:#eeeff1;font-weight:bold;color:red;}
+    .tabWrap ul li:first-child div{display: block;}
+  </style>
+</head>
+<body>
+  <script>
+  function moveScreen(tabid,src) {
+    $("#ultab").append("<li><a href='#"+tabid+"'>"+tabid+"</a></li>");
+    // $("#tabs").append("<div id='"+tabid+"'><iframe src='"+src +"'></iframe></div>");
+    iframe.attr('src', src);
+  }
+    var ddd = 1 && 2;
+    var Exid = {
+      name : '명교',
+      age : 25,
+      output : function(){
+        return this.name;
+      }
+    }
+
+    //객체를 리턴하는 함수
+    function my(name,age){
+      var info = {
+        name : name,
+        age : age,
+        fn : function(){
+          return this.age;
+        }
+      }
+      return info;
+    }
+    var mymy = my('kmk', 24);
+    // console.log(mymy.fn());
+
+    //생성자 함수
+    function Test(){
+      this.name = 'kmk';
+      this.age = 12;
+      this.fn = function(){
+        return this.name;
+      }
+    }
+    var test = new Test();
+    window.onload = function(){
+      var test = new Test()
+      // console.log(test.name + " : " +test.age)
+      var box = document.querySelector('div');
+      var div = document.createElement('div');
+      var txt = document.createTextNode('DIV 추가')
+      div.appendChild(txt)
+      div.style.cssText = 'width:300px;text-align:center;border:1px solid;padding:10px;background:gold;'
+      box.appendChild(div)
+      box.className += " hi"
+      // console.log(box.className)
+      box.addEventListener('click', function(){
+        event.preventDefault();
+        event.stopPropagation();
+        // console.log("a");
+      }, false);
+      box.querySelector('div').addEventListener('click', function(){
+        event.preventDefault();
+        event.stopPropagation();
+        // console.log("d");
+      }, false);
+      var cname = document.querySelector('p').className;
+      // console.log(cname)
+
+      //탭 콘텐츠 연습
+      function Tab(){
+        this.tab = null;
+        this.tabBtn = null;
+        this.init = function(tabBox){
+          this.tab = tabBox;
+          this.tabBtn = tabBox.querySelectorAll('li > a');
+          this.initEvent();
+        }
+        this.initEvent = function(){
+          var tab = this.tabBtn;
+          var that = this;
+          var active = this.tab.querySelector('.on');
+          [].forEach.call(tab, function(elem, index){
+            goAction = function(){
+              event.preventDefault();
+              active = that.action(this, active);
+              that.action(this, active);
+            }
+            elem.addEventListener('click', goAction);
+            elem.addEventListener('focus', goAction);
+          });
+        }
+        this.action = function(objThis, active){
+          if(active){
+            active.removeAttribute('class');
+            active.parentNode.querySelector('.tabCont').style.display = 'none';
+          }
+          active = objThis;
+          active.setAttribute('class','on');
+          active.parentNode.querySelector('.tabCont').style.display = 'block';
+          return active;
+        }
+      }
+
+      var tab = new Tab();
+      tab.init(document.querySelector('.tabmenu1'));
+
+      var tab1 = new Tab();
+      tab1.init(document.querySelector('.tabmenu2'));
+    }
+
+    // var divs = document.querySelectorAll( 'div' ) ;
+    //   [].forEach.call( divs , function ( div ) {
+    //      div.addEventListener( 'click' , function (e) {
+    //         console.log( e.target ) ;
+    //      }) ;
+    //   }) ;
+    //
+    //   ul =  document.querySelector( 'ul' ) ;
+    //   lis = ul.querySelectorAll( ':scope > li' ) ;
+
+
+      function aaaa (argument) {
+         console.log( arguments , arguments[0] , arguments[1] , arguments.length , arguments.callee.name , arguments.callee ) ;
+         var func = arguments.callee ;
+         setTimeout(function () {
+            func() ;
+         } , 1000 ) ;
+      }
+      // aaaa( 'a' , 'b')
+
+
+  //siblings
+  //  Element.prototype.siblings = function () {
+  //     var elem = this , arr = [] ;
+  //     [].forEach.call( this.parentNode.children , function ( find_elem ) {
+  //        if ( find_elem.tagName == elem.tagName && find_elem != elem ) {
+  //           arr.push( find_elem ) ;
+  //        }
+  //     }) ;
+  //     return arr ;
+  //  } ;
+
+  //  var yaho = document.querySelector( 'li.yaho' ) ;
+  //  var siblings = yaho.siblings();
+  //  console.log( 'siblings : ' , siblings ) ;
+  //  [].forEach.call( yaho.siblings() , function ( elem ) {
+  //     elem.style.border = '1px solid red' ;
+  //  }) ;
+   //
+   //
+  //   var fac1 = function fac2(n){
+  //     if( n<=1 ){
+  //       return 1;
+  //     }
+  //     return n * fac2(n-1);
+  //   }
+  //   console.log( fac1(5) )
+  </script>
+  <p class="one two three">하늘 땅 우주</p>
+  <div style="display:inline-block;padding:50px;background:gray;" class="on off"></div>
+  <div class="tabWrap">
+    <ul class="tabmenu1">
+      <li>
+        <a href="#" class="on">tab1</a>
+        <div class="tabCont tab1">
+          11내용입니다.
+        </div>
+      </li>
+      <li>
+        <a href="#">tab2</a>
+        <div class="tabCont tab2">
+          길어<br/>길어<br/>길어<br/>길어<br/>길어<br/>길어<br/>
+        </div>
+      </li>
+      <li>
+        <a href="#">tab3</a>
+        <div class="tabCont tab3">
+          33내용입니다.
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="tabWrap">
+    <ul class="tabmenu2">
+      <li>
+        <a href="#" class="on">tab1</a>
+        <div class="tabCont tab1">
+          11내용입니다.
+        </div>
+      </li>
+      <li>
+        <a href="#">tab2</a>
+        <div class="tabCont tab2">
+          22내용입니다.
+        </div>
+      </li>
+      <li>
+        <a href="#">tab3</a>
+        <div class="tabCont tab3">
+          길어<br/>길어<br/>길어<br/>길어<br/>길어<br/>길어<br/>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+</body>
+</html>

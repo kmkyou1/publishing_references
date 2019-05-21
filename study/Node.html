@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>images on Canvas</title>
+  <style>
+    *{margin:0;padding:0;}
+    li{list-style: none;border:1px solid;}
+  </style>
+</head>
+<body>
+  <a href="#">Hi</a>
+  <div class="divA"><i>inner</i></div>
+  <div class="divB"><i>divB</i></div>
+  <ul>
+    <li>2</li>
+    <li>3</li>
+  </ul>
+  <script>
+    //element 노드 개체에 대한 참조를 얻음.
+    var a = document.querySelector('a')
+    var arr = [];
+    for(var key in a){
+      arr.push(key)
+    }
+    //text나 comment 노드 값은 .nodeValue 속성에 새로운 문자열 값을 부여해 설정할 수 있다.
+    // a.firstChild.nodeValue = '노드 발루'
+    console.log(a.firstChild)
+    console.log(a.firstChild.nodeValue)
+    //createElement, createTextNode
+    var elemeltNode = document.createElement('div')
+    var txtNode = document.createTextNode('텍스트노드')
+    var divA = document.querySelector('.divA')
+    elemeltNode.appendChild(txtNode)
+    console.log('★  createElement, createTextNode')
+    console.log(elemeltNode, txtNode)
+    divA.outerHTML ='<span></span>'
+    //innerHTML, innerText 등 노드를 생성하고 추가하는데 사용하는 속성들은 돔의 일부/전체를 문자열로 추출하는데 사용된다.
+    console.log('★  innerHTML, innerText')
+    console.log(divA.innerHTML)
+    console.log(divA.textContent)
+
+    //appendChild, insertBefore
+    console.log('★  appendChild, insertBefore')
+    var ul = document.querySelector('ul')
+    var li = document.createElement('li');
+    li.textContent = '1';
+    ul.insertBefore(li, ul.firstChild)  //insertBefore는 첫번째 자식 노드 앞에 엘리먼트 추가
+    console.log(li)
+    console.log(ul)
+    //removeChild, replaceChild
+    console.log('★ removeChild, replaceChild')
+    var divB = document.querySelector('.divB');
+    // divB.parentNode.removeChild(divB)
+    console.log(divB)
+  </script>
+</body>
+</html>

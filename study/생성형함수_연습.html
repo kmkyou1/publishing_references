@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+  <title>연습</title>
+  <style>
+    *{margin:0;padding:0;}
+    li{list-style: none;}
+    .tab{border:1px solid;}
+    .tab ul{overflow: hidden;}
+    .tab ul li{float:left;width:100px;}
+    .tab ul li a{display:block;padding:10px 0;text-align: center;border:1px solid;background:gold;}
+    .tab ul li a.on{background:red;color:#fff;font-weight: bold;}
+  </style>
+</head>
+<body>
+  <div class="tab">
+    <ul>
+      <li><a href="#">TAB1</a></li>
+      <li><a href="#">TAB2</a></li>
+      <li><a href="#">TAB3</a></li>
+    </ul>
+  </div>
+  <script>
+    function Score(name, kor, usa, cha){
+      this.name = name;
+      this.kor = kor;
+      this.usa = usa;
+      this.cha = cha;
+      this.total = function(){
+        return this.kor+this.usa+this.cha;
+      }
+      this.average = function(){
+        return (this.kor+this.usa+this.cha)/3;
+      }
+    }
+    var score = new Score('명교', 90,85,65);
+    console.log(score.name);
+    console.log(score.total());
+    console.log(score.average());
+  </script>
+</body>
+</html>

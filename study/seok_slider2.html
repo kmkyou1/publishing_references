@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		body,p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,dd,table,th,td,form,fieldset,legend,input,textarea,button{
+			margin:0;
+			padding:0;
+		}
+		body,input,textarea,button,table{
+			font-family: '돋움',dotum,sans-serif;
+			font-size: 12px;
+		}
+		ul,ol{
+			list-style: none;
+		}
+		a{
+			color:#000;
+			text-decoration: none;
+		}
+		a:hover,a:active,a:focus{
+			text-decoration: none;
+		}
+
+		.imageSlider{width:400px;position:relative;margin:0 auto;}
+		.imageSlider ul.slider{background:#eee;}
+		.imageSlider ul.slider {position:relative;width:400px;height:200px;overflow:hidden;}
+		.imageSlider ul.slider > li{position:absolute;left:0;top:0;width:400px;height:200px;transition:left 0.5s;}
+		.imageSlider ul.slider > li.ani{transition:left 0.5s;}
+		.imageSlider ul.slider > li:first-child{z-index:1;}
+		.imageSlider ul.slider > li > a{height:200px;line-height:200px;text-align:center;display:block;font-size:24px;color:#fff;}
+		.imageSlider .pagingNav{text-align:center;margin-top:10px;}
+		.imageSlider .pagingNav span{width:20px;height:20px;line-height:20px;background:#ccc;display:inline-block;border-radius:100%;cursor:pointer;}
+		.imageSlider .pagingNav span.active{background:orange;}
+		.imageSlider .pagingNav span i{display:inline-block;text-indent:-99999em}
+		.imageSlider .directionNav{position:relative;overflow:hidden;margin-top:10px;}
+		.imageSlider .directionNav button{padding:10px;}
+		/* .imageSlider .directionNav button:first-child{float:left;}
+		.imageSlider .directionNav button:last-child{float:right;} */
+	</style>
+</head>
+<body>
+	<div class="imageSlider">
+		<ul class="slider">
+			<li><a href="#"><img src="./img/sample01.jpg" alt="" /></a></li>
+			<li><a href="#"><img src="./img/sample02.jpg" alt="" /></a></li>
+			<li><a href="#"><img src="./img/sample03.jpg" alt="" /></a></li>
+			<li><a href="#"><img src="./img/sample04.jpg" alt="" /></a></li>
+			<li><a href="#"><img src="./img/sample05.jpg" alt="" /></a></li>
+			<li><a href="#"><img src="./img/sample06.jpg" alt="" /></a></li>
+		</ul>
+		<div class="pagingNav">
+			<span class="active"><i>1</i></span>
+			<span><i>2</i></span>
+			<span><i>3</i></span>
+			<span><i>4</i></span>
+			<span><i>5</i></span>
+			<span><i>6</i></span>
+		</div>
+		<div class="directionNav">
+			<button class="prev" data-name="prev">prev</button>
+			<button class="next" data-name="next">next</button>
+			<button class="stop" data-name='stop'>stop</button>
+			<button class="play" data-name='play'>play</button>
+		</div>
+	</div>
+	<script>
+		var ImgSlider = (function(){
+			var tag = {}, opt = {};
+
+			function ImgSlider(){
+				// init
+				(function init(){
+					tag.dom = document;
+					tag.sliderWrap = tag.dom.querySelector('div.imageSlider');
+					tag.imgWrap = tag.dom.querySelector('ul.slider');
+					tag.imgList = tag.imgWrap.querySelectorAll('li');
+					tag.pageNav = tag.dom.querySelector('div.pagingNav');
+					tag.navList = tag.pageNav.querySelectorAll('span');
+					tag.directionNav = tag.dom.querySelector('div.directionNav');
+					tag.directionPrev = tag.directionNav.querySelector('button.prev');
+					tag.directionNext = tag.directionNav.querySelector('button.next');
+					tag.stop = tag.directionNav.querySelector('button.stop');
+					tag.play = tag.directionNav.querySelector('button.play');
+
+					opt.currentIndex = 0;
+					opt.index = 0;
+					opt.imgLength = tag.imgList.length-1;
+					opt.imgWidth = tag.imgList[0].clientWidth;
+					opt.direction = null;
+					opt.flag = false;
+					opt.auto = null;
+				})();
+				// event
+				(function initEvent(){
+					tag.play.addEventListener('click', autoPlay, false);
+					tag.stop.addEventListener('click', autoStop, false);
+					tag.directionNext.addEventListener('click', directionMove, false);
+					tag.directionPrev.addEventListener('click', directionMove, false);
+					[].forEach.call(tag.navList, function(elm){
+						elm.addEventListener('click', pageIndex ,false);
+					});
+
+					/*tag.imgWrap.addEventListener('mouseenter',autoStop, false);
+					tag.imgWrap.addEventListener('mouseleave',autoPlay, false);*/
+				})();
+
+				function pageIndex(e){
+					opt.index = [].indexOf.call(tag.navList, e.target);
+					opt.direction = 'next';
+					if(opt.index < opt.currentIndex){
+						opt.direction = 'prev';
+					}
+					imgMove(opt.index, opt.direction);
+				};
+
+				function directionMove(e){
+					var type = e.target.getAttribute('data-name');
+					switch(type){
+						case 'next' : 
+							nextMove();
+						break;
+						case 'prev' :
+							prevMove();
+						break;
+					}
+				};
+
+				function nextMove(){
+					// console.log( `opt.imgLength : ${opt.imgLength}` ) ; 
+					// console.log( `opt.currentIndex : ${opt.currentIndex}` ) ; 
+					// console.log( `result : ${opt.imgLength / opt.currentIndex} , ${opt.imgLength % opt.currentIndex} , ${opt.currentIndex % opt.imgLength}` ) ; 
+					opt.index = opt.currentIndex+1;
+					if(opt.index > opt.imgLength){
+						opt.index = 0;
+					}
+					opt.direction = 'next';
+					imgMove(opt.index, opt.direction);
+					//console.log( opt.index / opt.imgLength , opt.index % opt.imgLength, opt.imgLength % opt.index %) ; 
+					//console.log( opt.index / opt.imgLength ) ; 
+				};
+
+				function prevMove(){
+					opt.index = opt.currentIndex-1;
+					if(opt.index < 0){
+						opt.index = opt.imgLength;
+					}
+					opt.direction = 'prev';
+					imgMove(opt.index, opt.direction);
+				};
+
+				function imgMove(index, direction){
+					console.log(opt.currentIndex, opt.index) ; 
+					var hideImg = tag.imgList[opt.currentIndex]
+					      ,showImg = tag.imgList[opt.index]
+					      ,startX =  opt.imgWidth + 'px'
+					      ,endX =  -opt.imgWidth + 'px'
+					      opt.flag = true;
+
+					if(opt.index == opt.currentIndex){
+						return false;
+					};
+
+					if(opt.flag){
+						tag.directionNext.removeEventListener('click', directionMove ,false);
+						tag.directionPrev.removeEventListener('click', directionMove ,false);
+						[].forEach.call(tag.navList, function(elm){
+							elm.removeEventListener('click', pageIndex ,false);
+						});
+					};
+
+					[].forEach.call(tag.imgList, function(images){
+						images.addEventListener('transitionend', function(){
+							tag.directionNext.addEventListener('click', directionMove ,false);
+							tag.directionPrev.addEventListener('click', directionMove ,false);
+							[].forEach.call(tag.navList, function(elm){
+								elm.addEventListener('click', pageIndex ,false);
+							});
+							opt.flag = false;
+						}, false)
+					});
+
+					if(direction == 'prev'){
+						 startX =  -opt.imgWidth + 'px';
+						 endX =  opt.imgWidth + 'px';
+					};
+
+					showImg.style.cssText = 'transition : left 0s; left:' +  startX;
+
+					setTimeout(function(){
+						hideImg.style.left = endX;
+						showImg.style.cssText = 'transition:left 0.5s; z-index:2; left:0px'; 
+					},100);
+					opt.currentIndex = index;
+					activeNav(index);
+					// console.log('이전 : ' + opt.currentIndex, '현재 : ' + index, '방향 :' + opt.direction, 'startX : ' + startX, 'endtX : '+  endX);
+				};
+
+				function activeNav(index){
+					[].forEach.call(tag.navList, function(elm){
+						elm.classList.remove('active');
+					});
+					tag.navList[index].classList.add('active');
+				};
+
+				function autoPlay(e){
+					opt.auto = setInterval(nextMove, 2000);
+				};
+
+				function autoStop(){
+					clearTimeout(opt.auto);
+				};
+
+			};
+			
+			return ImgSlider;
+		})();
+
+		ImgSlider();
+	</script>
+</body>
+</html>

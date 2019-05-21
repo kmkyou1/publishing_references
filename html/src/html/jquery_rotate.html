@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<head>
+  <meta charset="UTF-8" />
+  <script type="text/javascript" src="../js/jquery-1.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/jQueryRotate.2.3.js"></script>
+  <script type="text/javascript" src="../js/jQueryRotateCompressed.2.3.js"></script>
+  <style>
+    *{margin:0;padding:0;}
+    .roulette{position:relative;width:534px;height:568px;}
+    .roulette #image{position:absolute;top:0;left:0;z-index:50;}
+    .roulette #roll{position:absolute;top:52px;left:19px;}
+  </style>
+</head>
+<body>
+  <div class="roulette">
+    <img src="../img/roulette_img01.png" id="image"/>
+    <img src="../img/roulette.png" id="roll"/>
+  </div>
+  <button class="btn">START!</button>
+  <script>
+    $(document).ready(function(){
+      var product = Array("1번쨰","2","3번쨰","4","5번쨰","6","7번쨰","8");
+        var is_rotating = false;
+        var is_rotated = false;
+    //		var angle_mode = 'middle';	//정중앙으로 최상단 화살표 위치가 멈추도록
+    //		var angle_mode = 'random';	//범위내 랜덤하게 멈추도록
+        var angle_mode = 'random';	//범위내 랜덤하게 멈추도록
+      function call_rotate(img_id, product_num, duration) {
+        if(is_rotating) return;
+        is_rotating = true;
+
+        if(!duration) duration = 3000;	//돌리는 시간 : 1/1000초
+        total_cnt = product.length;
+        single_angle = 360 / total_cnt;
+        min_angle = 360 - (single_angle * (total_cnt - product_num + 1));
+        max_angle = 3600 - (single_angle * (total_cnt - product_num)) - 1;
+        if(angle_mode=='middle') {
+          mid_angle = min_angle + ((max_angle - min_angle) / 2);
+          more_angle = mid_angle;
+        }else if(angle_mode=='random') {
+          i=0;
+          while(true) {
+            i++;
+            tmp = Math.floor(Math.random()*100);
+            if(tmp <= single_angle) {
+              more_angle = min_angle + 50;
+              break;
+            }
+            if(i>10) {
+              console.log("2")
+              mid_angle = min_angle + ((max_angle - min_angle) / 2);
+              more_angle = mid_angle;
+              break;
+            }
+          }
+        }
+        console.log('돌아가는 각도 : ' + more_angle)
+
+        tmp = Math.floor(Math.random()*100);
+        cnt = 5;	//기본 바퀴
+        if(tmp < 50) cnt+=1;	//추가1바퀴
+        else cnt+=2;	//추가2바퀴
+        angle = ( 360 * cnt ) + more_angle;
+
+        $('#'+img_id).rotate({
+          duration: duration,
+          animateTo:angle,
+          callback: function () {
+            is_rotating = false;
+            is_rotated = true;	//한번 페이지 로딩시 한번만 돌아가도록하기 위해. 여러번 돌아가게 하려면 돌리는 이미지를 재 계산해야함. 해당 기능 필요하면 구현하는걸로~~
+            console.log('당첨됨 -> ' + product[product_num-1]);
+          }
+        });
+      }
+      $(".btn").click(function(){
+        getRotateNum();
+      });
+      function getRotateNum() {
+        if(is_rotated) {
+          alert('이미 돌렸음');	//두번 실행 방지
+          return;
+        }
+        var param = {};
+        param.param_name = 'value';
+        call_rotate('roll', 8); return;	//임시로 돌리기 위해
+        //이 아래로는 윗줄 제거하고 사용하면 서버에서 룰렛 값을 가져옴 ( 조작 방지 위함 )
+        $.ajax({
+          url: "http://aaa.aaa.aaa/",
+          dataType: "json",
+          data: param,
+          success: function(data) {
+            num = data.num;	//서버에서 가져오는 숫자. 이 숫자는 1부터 시작한다. 총 있는 상품 갯수만큼의 숫자 한도에서 가져오면 된다. 이 값을 바탕으로 룰렛 돌리는 범위 계산함.
+            error = data.error;
+            if(!error || error=='') call_rotate('roll', num);
+            else alert('서버에러 발생');
+          },
+          error: function(data) {
+            alert('error Process');
+          }
+        });
+      }
+    });
+</script>
+</body>
+</html>

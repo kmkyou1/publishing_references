@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>fullPage</title>
+  <style>
+    *{margin:0;padding:0;}
+    li{list-style: none;}
+    html, body{font-family: arial,sans-serif;}
+    .wrap{overflow:hidden;position:absolute;width:100%;height:100%;}
+    ul.view{position:absolute;top:0;left:0;width:100%;height:100%;transition:top 1s cubic-bezier(0,.01,0,1);}
+    ul.view li{position:relative;overflow:hidden;height:100%;font-size:100px;font-weight:bold;}
+    ul.view li span{position:absolute;left:50%;top:50%;margin:-57px 0 0 -40px;}
+    ul.view li:nth-child(1){background:gold;}
+    ul.view li .box{position:absolute;width:100px;height:100px;}
+    ul.view li:nth-child(1) .box.b1{transition:top .9s cubic-bezier(0.575, -0.250, 0.410, 1.240);top:20%;left:200px;background:#fff;border-radius:100px;}
+    ul.view li:nth-child(1) .box.b1.action{top:100%;}
+    ul.view li:nth-child(2) .box.b2{transition:top .8s cubic-bezier(0.575, -0.250, 0.410, 1.240);top:-100%;right:70px;width:300px;height:400px;background:#fff;border-radius:100px;}
+    ul.view li:nth-child(2) .box.b2.action{top:35%;}
+    ul.view li:nth-child(2){background:brown;}
+    ul.view li:nth-child(3){background:#aaa;}
+    .box.b3{transition:bottom .8s,right 1s;bottom:-20%;right:100px;width:300px;height:400px;background:#fff;border-radius:100px;}
+    .box.b3.action{bottom:50%; right:1000px;}
+    ul.view li.b{background:#ccc;}
+    ul.pager{position:fixed;top:50%;right:20px;margin-top:-35px;}
+    ul.pager li.on a{color:red;font-weight:bold;}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <ul class="view">
+      <li><span>A</span><div class="box b1"></div></li>
+      <li><span>B</span><div class="box b2"></div></li>
+      <li><span>C</span><div class="box b3"></div></li>
+      <li><span>D</span></li>
+    </ul>
+    <ul class="pager">
+      <li class="on"><a href="#">A</a></li>
+      <li><a href="#">B</a></li>
+      <li><a href="#">C</a></li>
+      <li><a href="#">D</a></li>
+    </ul>
+  </div>
+  <script>
+  function Fullpage(){
+    this.pgmap = null;
+    this.item = null;
+    this.pager = null;
+    this.init = function(element){
+      this.pgmap = element;
+      this.item = element.querySelectorAll('li');
+      this.pager = document.querySelector('.pager');
+      this.pagerItem = document.querySelectorAll('.pager li');
+      this.event();
+    };
+    this.event = function(){
+      var that = this;
+      var pgmap = this.pgmap;
+      var item = this.item;
+      var pager = this.pager;
+      var pagerItem = this.pagerItem;
+      //인댁스 구해오기
+      idx = function(){
+        on = pager.querySelector('li.on');
+        index = null;
+        [].forEach.call(pagerItem, function(elem, idx){
+          index = [].indexOf.call(pagerItem, on);
+        });
+        return index;
+      }
+      wheel = function(e){
+        if ( Fullpage.isWheelFlag ) return;
+        Fullpage.isWheelFlag = true ;
+        wheel = e.wheelDelta;
+        index = idx();
+        if(wheel < 0){
+          if(index == pagerItem.length-1){
+            flagReset();
+            return;
+          }
+          pagerItem[index].classList.remove('on');
+          pagerItem[index].nextElementSibling.classList.add('on');
+          pgmap.style.cssText = 'top:-'+100*(index+1)+'%';
+          that.action(index+1);
+        }else{
+          // console.log('up');
+          if(index == 0){
+            flagReset();
+            return;
+          }
+          pagerItem[index].classList.remove('on');
+          pagerItem[index].previousElementSibling.classList.add('on');
+          pgmap.style.cssText = 'top:-'+100*(index-1)+'%';
+          that.action(index-1);
+        }
+      }
+      flagReset = function(){
+        delete Fullpage.isWheelFlag ;
+      }
+      window.addEventListener("mousewheel", wheel, false);
+      pgmap.addEventListener('transitionend', flagReset, false);
+      [].forEach.call(pagerItem, function(elem, idx){
+        elem.addEventListener('click', function(e){
+          on = pager.querySelector('li.on');
+          on.classList.remove('on');
+          elem.classList.add('on');
+          pgmap.style.cssText = 'top:-'+100*(idx)+'%';
+          that.action(idx);
+        });
+      });
+    };
+    this.action = function(idx){
+      console.log(idx);
+      switch(idx){
+        case 0:
+          document.querySelector('.box.b1').classList.remove('action');
+          document.querySelector('.box.b2').classList.remove('action');
+        break;
+        case 1:
+          document.querySelector('.box.b1').classList.add('action');
+          document.querySelector('.box.b2').classList.add('action');
+          document.querySelector('.box.b3').classList.remove('action');
+        break;
+        case 2:
+          document.querySelector('.box.b2').classList.remove('action');
+          document.querySelector('.box.b3').classList.add('action');
+        break;
+        case 3:
+          document.querySelector('.box.b3').classList.remove('action');
+        break;
+      }
+    };
+  };
+  window.onload = function(){
+    var fullpage = new Fullpage();
+    fullpage.init(document.querySelector('.view'));
+  }
+  </script>
+</body>
+</html>

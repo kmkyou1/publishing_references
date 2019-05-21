@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>images on Canvas</title>
+  <style>
+    *{margin:0;padding:0;}
+    li{list-style: none;}
+    a{text-decoration: none;}
+    div{text-align: center;height:30px;background: gold;margin-bottom:10px;}
+    span{display:inline-block;padding:10px;background:red;}
+  </style>
+</head>
+<body>
+  <div id="A">A</div>
+  <div id="B">B</div>
+  <div id="C">C</div>
+  <div id="D">D</div>
+  <div id="E">E</div>
+  <ul><!--comment-->
+    <li id="A">2</li>
+    <li id="B">3</li>
+    <!--//comment-->
+  </ul>
+  <a href="#"></a>
+  <script>
+    var divA = document.querySelector('#A')
+    var divB = document.querySelector('#B')
+    // divA.innerText = 'ddd'
+    // divA.insertAdjacentHTML('beforebegin','<span>비포비긴</span')
+    // divA.insertAdjacentHTML('afterbegin','<span>에프터비긴</span')
+    // divA.insertAdjacentHTML('beforeend','<span>비포앤드</span')
+    // divA.insertAdjacentHTML('afterend','<span>에프터앤드</span')
+    var span = document.createElement('span')
+    var txt = document.createTextNode('꿱꿱꾸엑')
+    span.appendChild(txt)
+    // divA.firstChild.parentNode.removeChild(divA.firstChild)
+    // divB.parentNode.replaceChild(span, divB)
+    divB.firstChild.parentNode.replaceChild(txt, divB.firstChild)
+    var ul = document.querySelector('ul');
+    var ul_child = ul.childNodes;
+    var clone_ul = document.querySelector('ul').cloneNode();
+    var li = document.createElement('li')
+    li.appendChild(txt)
+    clone_ul.appendChild(li)
+    // document.querySelector('ul').insertBefore(li, document.querySelector('ul').firstChild)
+    document.body.insertBefore(clone_ul, divA)
+    Array.prototype.forEach.call(ul_child, function(item){  //childNodes는 자식 요소를 유사배열로가져옴
+      // console.log(item)
+    })
+    console.log(ul.parentNode.nodeName)
+    console.log(ul.firstChild.nodeName)
+    console.log(ul.lastChild.nodeName)
+    console.log(
+      //document.querySelector('a').firstChild.nodeValue
+      // divA.innerText, divB
+      // ul.childNodes
+      Array.isArray(ul.childNodes),
+      Array.isArray(Array.prototype.slice.call(document.querySelector('a'))) // 배열이 아닌 요소 배열로 반환
+    )
+  </script>
+</body>
+</html>

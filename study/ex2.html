@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>images on Canvas</title>
+  <style>
+    *{margin:0;padding:0;}
+    li{list-style: none;}
+    a{text-decoration: none;}
+    div{height:30px;border:1px gold solid;margin-bottom:1px;}
+  </style>
+</head>
+<body>
+  <a href="#">Hi~</a>
+  <div id="A">A</div>
+  <div id="B">B</div>
+  <span id="C">C</span>
+  <div id="D">D</div>
+  <div id="E">E</div>
+  <p>안녕</p>
+  <ul>
+    <li>2</li>
+    <li>3</li>
+  </ul>
+  <script>
+    var nodeAnchor = document.querySelector("a");
+    var props = [];
+    for(var key in nodeAnchor){
+      props.push(key);
+    }
+
+    //텍스트 노드 생성, 엘리먼트 생성, insertBefore,
+    var text = document.createTextNode('1');
+    var li = document.createElement('li');
+    var ul = document.querySelector('ul');
+    li.appendChild(text);
+    ul.insertBefore(li, ul.firstChild);
+
+    //innerHTML, outerHTML, textContent, innerText 각 속성은 값을 지정, 반환할 수 있다.
+    document.getElementById('A').innerHTML ='<i>innerHTML</i>'
+    document.getElementById('C').outerHTML ='ddd'  //앨리먼트를 바꿈
+    document.getElementById('E').textContent = 'kmk'  //텍스트를 삽입한다
+    document.getElementById('B').innerText = '이너텍스트'
+    var elementNode = document.createElement('div');
+    var textNode = document.createTextNode('hi');
+    var elem = document.createElement('strong');
+    var textnode = document.createTextNode('Dude');
+    var p = document.querySelector('p');
+    p.appendChild(elem);
+    document.querySelector('strong').appendChild(textnode)
+
+    //removeChild > 부모 노드에서 삭제할 노드에 대한 참조를 전달
+    var divA = document.getElementById("A");
+    //divA.parentNode.removeChild(divA)
+    var divB = document.querySelector('#B').firstChild;
+    var nodeSpan = document.createElement('span');
+    nodeSpan.innerText = '캄사';
+    divB.parentNode.removeChild(divB)
+    divA.appendChild(nodeSpan)
+    //divA.parentNode.replaceChild(nodeSpan, divA)
+    var txt = document.createTextNode('123');
+    var clone_ul = document.querySelector('ul').cloneNode(true);
+    console.log(elementNode, elementNode.nodeType)
+    console.log(textNode, textNode.nodeType)
+    console.log(
+      clone_ul.innerHTML,
+      //props.sort(),
+      //document.getElementById("A").outerHTML,
+      //document.querySelector('a').firstChild.nodeName,
+      document.querySelector('a').firstChild.nodeType,
+      document.querySelector('a').firstChild.nodeValue
+    )
+  </script>
+</body>
+</html>

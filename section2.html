@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>images on Canvas</title>
+  <style>
+  *{padding:0;margin:0;}
+  p {
+    margin:10px;
+  width: 50px;
+  height: 50px;
+  background-color: teal;
+  transition: all .2s ease-in-out;
+}
+/*p:hover {
+  transform: perspective(500px) translate3d(0px,0px,100px);
+  background-color: blue;
+}*/
+p:hover {
+  transform: scale(1.1);
+  background-color: blue;
+}
+  </style>
+  <script>
+  function test2() {
+		var txt = prompt("글자 입력");
+
+		var txtJS1 = txt.match(/javascript/ig);
+		var txtJS2 = txt.match(/JAVASCRIPT/ig);
+
+		if(txtJS1 || txtJS2){
+			document.write('OK');
+		} else{
+			document.write('no~~~~~');
+		}
+	}
+	test2();
+  </script>
+</head>
+<body>
+  <p>1</p>
+  <p class="transformed">2</p>
+  <p>3</p>
+</body>
+</html>

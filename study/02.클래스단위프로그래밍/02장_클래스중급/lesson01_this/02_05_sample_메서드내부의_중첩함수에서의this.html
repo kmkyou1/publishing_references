@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title></title>
+
+    
+<script>
+    var data=10;
+    function MyClass(){
+        this.data=50;
+        
+        function inner(){
+            this.data=20;
+            data=30;
+            
+            console.log("1. data1 = "+data);
+            console.log("2. this.data = "+this.data);
+            console.log("3. window.data = "+window.data);    
+        }
+        
+        inner();
+    }
+    
+    // 인스턴스 생성
+    var my1 = new MyClass();
+        
+</script>
+
+</head>
+    
+    <body>
+        
+    </body>
+</html>

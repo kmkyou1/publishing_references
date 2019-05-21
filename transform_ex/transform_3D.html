@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
+  <title>transform 3D</title>
+  <style>
+    body { font-size:62.5%;font-family:Arial,sans-serif;}
+    *{padding:0;margin:0;}
+    h1{font-size:1.8em;}
+    /*
+    -webkit-transform: rotate(180deg);
+       -moz-transform: rotate(180deg);
+        -ms-transform: rotate(180deg);
+         -o-transform: rotate(180deg);
+            transform: rotate(180deg);
+    */
+    /*////////////////////////////// 3D롤링 /////////////////////////////////////*/
+    .img_rolling{
+      position:relative;top:0px;
+      margin:0px auto;width:120px;height:200px;border:1px solid;background:#fff;
+      perspective:450px;
+      transform-style:preserve-3d;
+      transform: rotateX(-15deg)
+    }
+    .img_rolling .btn{position:absolute;top:50%;width:100%;}
+    .img_rolling .btn a{position:absolute;top:0;display:block;width:70px;color:#000;font-size:2em;}
+    .img_rolling .btn a:nth-child(1){left:-250px;}
+    .img_rolling .btn a:nth-child(2){right:-250px;}
+    .img_rolling ul{
+      position:relative;top:30px;
+      transform-style:preserve-3d;
+      transition:transform .5s;
+      /*animation:rolling;*/
+      animation-duration: 7s;
+      /*animation-delay: 2s;딜레이 시간 이후 애니메이션됨*/
+      animation-iteration-count: infinite;/*infinite:연속, 회전수 입력*/
+      animation-timing-function: linear;
+      animation-direction: default;/*reverse:반대로 회전, alternate:좌우 한번씩 회전 */
+      /*
+      한줄로 애니메이션 쓰기
+      animation: example 5s linear 2s infinite alternate;
+      */
+    }
+    .img_rolling ul li{
+      list-style:none;
+      position:absolute;top:0px;left:0;
+      width:100%;
+      /*backface-visibility: hidden;*/
+    }
+    .img_rolling ul li.show{border:1px red solid;}
+    .img_rolling ul li img{
+      width:100%;vertical-align:top;
+      transform-style:preserve-3d;
+    }
+    .img_rolling ul li:nth-child(1){
+      transform: rotateY(0deg) translateZ(180px);
+    }
+    .img_rolling ul li:nth-child(2){
+      transform: rotateY(45deg) translateZ(180px);
+    }
+    .img_rolling ul li:nth-child(3){
+      transform: rotateY(90deg) translateZ(180px);
+    }
+    .img_rolling ul li:nth-child(4){
+      transform: rotateY(135deg) translateZ(180px);
+    }
+    .img_rolling ul li:nth-child(5){
+      transform: rotateY(180deg) translateZ(180px);
+    }
+    .img_rolling ul li:nth-child(6){
+      transform: rotateY(225deg) translateZ(180px);
+    }
+    .img_rolling ul li:nth-child(7){
+      transform: rotateY(270deg) translateZ(180px);
+    }
+    .img_rolling ul li:nth-child(8){
+      transform: rotateY(315deg) translateZ(180px);
+    }
+    @keyframes rolling {
+      from{
+        transform: rotateY(0deg);
+      }to{
+        transform: rotateY(360deg);
+      }
+    }
+    a{text-decoration:none;}
+    .btn_body{perspective:300px;}
+    .btn_area{
+      /*transform: scale(2,4);*/
+      position:relative;margin:100px auto 0 auto;
+      width:150px;height:70px;
+      transition:transform .5s; /*jquery 로 css 애니메이션 주려면 필요함*/
+      transform-style:preserve-3d;
+      transform-origin: center middle;
+    }
+    .btn_area.spin{animation: spin 2s linear infinite;}
+    .btn_area.over{animation: over 3s linear infinite;}
+    .btn_area.out{animation: out .5s linear forwards;}
+    .btn_area .btn{
+      position:absolute;top:0;left:0;width:100%;
+      display:block;display:block;height:70px;line-height:70px;
+      color:#000;text-align:center;font-size:4em;font-weight:bold;
+      border:1px gray solid;
+      background-color: rgba( 255, 255, 255, 0.5 );
+    }
+    .btn_area .up{
+      transform: rotateX(90deg) translateZ(35px);
+    }
+    .btn_area .front{
+      transform: rotateX(0deg) translateZ(35px);
+    }
+    .btn_area .back{
+      transform: rotateX(180deg) translateZ(35px);
+    }
+    .btn_area .down{
+      transform: rotateX(270deg) translateZ(35px);
+    }
+    .btn_area .left{
+      width:70px;
+      transform: rotateY(270deg) translateZ(35px);
+    }
+    .btn_area .right{
+      width:70px;
+      transform: rotateY(90deg) translateZ(115px);
+    }
+    @keyframes over {
+      from{
+        transform: rotateX(0deg);
+      }to{
+        transform: rotateX(-360deg);
+      }
+    }
+    @keyframes out {
+      from{
+        transform: rotateX(-90deg);
+      }to{
+        transform: rotateX(0deg);
+      }
+    }
+    @keyframes spin {
+      from{
+        transform:rotateY(0deg) rotateX(-90deg);
+      }to{
+        transform:rotateY(360deg) rotateX(-90deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <script>
+    $(document).ready(function(){
+      //3d 이미지 롤링
+      var deg = 0;
+      $(".img_rolling .btn a").eq(0).click(function(){
+        deg += 45;
+        $(".img_rolling ul").css({'transform':'rotateY('+ deg +'deg)'});
+      });
+      $(".img_rolling .btn a").eq(1).click(function(){
+        deg -= 45;
+        $(".img_rolling ul").css({'transform':'rotateY('+ deg +'deg)'});
+      });
+      $(".img_rolling ul li").click(function(){
+        //alert($(this).index())
+      });
+      /*
+      setTimeout(timeout, 3000);
+      function timeout(){
+        $(".img_rolling .btn a").eq(1).trigger("click");
+        setTimeout(timeout, 3000);
+      }
+      */
+      //3d 이미지 롤링 끝
+      $(".btn_area").hover(function(){
+        $(this).addClass("over");
+        $(this).css("animation-play-state","running");//animation-play-state: paused|running|initial|inherit;
+        //$(this).css("animation-iteration-count", "infinite");
+        //$(this).css("-webkit-transform", "rotateX(-360deg)");
+        //$(this).stop().animate({opacity:0.5});
+        //$(this).css({'transform':'rotateX(-180deg)'});
+      },function(){
+        //$(this).animate({opacity:1});
+        //$(this).css({'transform':'rotateX(0deg)'});
+        $(this).css("animation-play-state","paused");
+        //alert($(this).css("transform"));
+      });
+      $(".btn_area").click(function(){
+        $(this).removeClass("over");
+        $(this).toggleClass("spin");
+      });
+    });
+  </script>
+  <div class="img_rolling">
+    <ul>
+      <li class="show"><img src="img/Lighthouse.jpg"/></li>
+      <li><img src="img/Chrysanthemum.jpg"/></li>
+      <li><img src="img/Desert.jpg"/></li>
+      <li><img src="img/Hydrangeas.jpg"/></li>
+      <li><img src="img/Jellyfish.jpg"/></li>
+      <li><img src="img/Tulips.jpg"/></li>
+      <li><img src="img/Jellyfish.jpg"/></li>
+      <li><img src="img/Tulips.jpg"/></li>
+    </ul>
+    <div class="btn">
+      <a href="#none"><<뒤로</a>
+      <a href="#none">앞으로>></a>
+    </div>
+  </div>
+  <div class="btn_body">
+    <div class="btn_area">
+      <a href="#none" class="btn up">위</a>
+      <a href="#none" class="btn front">앞</a>
+      <a href="#none" class="btn back">뒤</a>
+      <a href="#none" class="btn down">아래</a>
+      <a href="#none" class="btn left">좌</a>
+      <a href="#none" class="btn right">우</a>
+    </div>
+  </div>
+</body>
+</html>

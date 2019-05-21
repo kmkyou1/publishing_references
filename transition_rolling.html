@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script type="text/javascript" src="http://kmkyou.cafe24.com/web/my/js/jquery-1.10.2.min.js"></script>
+  <title>연습</title>
+  <style>
+    *{margin:0;padding:0;}
+    li{list-style: none;}
+    .tab{border:1px solid;}
+    .tab ul{overflow: hidden;}
+    .tab ul li{float:left;width:100px;}
+    .tab ul li a{display:block;padding:10px 0;text-align: center;border:1px solid;background:gold;}
+    .tab ul li a.on{background:red;color:#fff;font-weight: bold;}
+  </style>
+</head>
+<body>
+  <div class="tab">
+    <ul>
+      <li><a href="#">TAB1</a></li>
+      <li><a href="#">TAB2</a></li>
+      <li><a href="#">TAB3</a></li>
+    </ul>
+  </div>
+  <script>
+    function Tab(){
+      var active;
+      this.init = function(dom){
+        setInit(dom);
+        setEvent();
+      }
+      setInit = function(dom){
+        this.tab = dom;
+        this.item = this.tab.querySelectorAll('li');
+      }
+      setEvent = function(){
+        [].forEach.call(this.item, function(elem, idx){
+          elem.addEventListener('click',function(){
+            if(active){
+              active.querySelector('a').classList.remove('on');
+            }
+            active = elem;
+            active.querySelector('a').classList.add('on');
+          });
+        });
+      }
+    }
+    var tab = new Tab();
+    tab.init(document.querySelector('.tab'));
+  </script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>images on Canvas</title>
+  <style>
+    *{margin:0;padding:0;}
+    ul{margin-bottom:10px;}
+    ul li{display:inline-block;}
+    ul li a{font-size:11px;display:block;padding:10px;text-align: center;border:1px solid;text-decoration: none;}
+    ul li a.on{color:#fff;background:blue;}
+  </style>
+</head>
+<body>
+  <ul class="tabmenu">
+    <li><a href="#" class="on zz">menu1</a></li>
+    <li><a href="#" class="item zz">menu2</a></li>
+    <li><a href="#" class="item zz">menu3</a></li>
+    <li><a href="#" class="item zz">menu4</a></li>
+    <li><a href="#" class="item zz">menu5</a></li>
+  </ul>
+  <ul class="tabmenu1">
+    <li><a href="#">menu1</a></li>
+    <li><a href="#">menu2</a></li>
+    <li><a href="#" class="on">menu3</a></li>
+    <li><a href="#">menu4</a></li>
+    <li><a href="#">menu5</a></li>
+  </ul>
+  <ul class="tabmenu2">
+    <li><a href="#">menu1</a></li>
+    <li><a href="#">menu2</a></li>
+    <li><a href="#">menu3</a></li>
+    <li><a href="#">menu4</a></li>
+    <li><a href="#" class="on">menu5</a></li>
+  </ul>
+  <script>
+    function Tabmenu(){
+      this.tab = null;
+      this.tabItem = null;
+    }
+    Tabmenu.prototype.init = function(tab){
+      this.tab = tab;
+      this.tabItem = tab.children;
+    }
+    Tabmenu.prototype.initEvent = function(){
+      var tabItem = this.tabItem;
+      var that = this.tab;
+      var active = null;
+      // tabItem = Array.prototype.slice.call(tabItem); //Array로 반환
+      [].forEach.call(tabItem, function(elem, idx){
+        elem.addEventListener('click', function(){
+          // on = that.querySelector('.on');
+          // onIndex = [].indexOf.call( tabItem , on.parentNode );
+          // tabItem[onIndex].firstChild.removeAttribute('class');
+          if(active){
+            active.firstChild.removeAttribute('class');
+          }else{
+            that.querySelector('.on').removeAttribute('class');
+          }
+          active = this;
+          active.firstChild.className += " on";
+        });
+      });
+    };
+    window.onload = function(){
+      var tabmenu = new Tabmenu();
+      var tab = document.querySelector('.tabmenu');
+      tabmenu.init(tab);
+      tabmenu.initEvent();
+
+      var tabmenu1 = new Tabmenu();
+      var tab1 = document.querySelector('.tabmenu1');
+      tabmenu.init(tab1);
+      tabmenu.initEvent();
+
+      var tabmenu2 = new Tabmenu();
+      var tab2 = document.querySelector('.tabmenu2');
+      tabmenu.init(tab2);
+      tabmenu.initEvent();
+    }
+
+    // var lis = document.querySelectorAll( 'li' ) ; 
+    // var li = document.querySelector( 'li.yaho' ); 
+    // [].forEach.call( lis , function ( elem , idx ) {
+    //           console.log( elem , idx ) ; 
+    // }) ; 
+    // var arr = [].indexOf.call( lis , li ) ; 
+    // console.log(arr)
+
+
+</script>
+</body>
+</html>

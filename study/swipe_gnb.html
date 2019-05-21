@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
+  <title>연습</title>
+  <style>
+    *{margin:0;padding:0;}
+    li{list-style:none;}
+    a{text-decoration:none;}
+    section{margin:0 auto;width:320px;border:1px solid;}
+    .gnbWrap{position:relative;height:30px;}
+    .gnbWrap ul{position:absolute;top:0;left:0;overflow:hidden;background:#ccc;}
+    .gnbWrap ul.animation{transition:left .2s;}
+    .gnbWrap ul li{float:left;}
+    .gnbWrap ul li a{display:block;text-align:center;padding:0 15px;line-height: 30px;color:#000;font-size:14px;}
+
+  </style>
+  <script>
+    $(document).ready(function(){
+      function GnbSlide(){
+        var gb = {};
+        this.init = function(elem){
+          gb.screen = elem;              //.gnbWrap
+          gb.gnb = elem.find('.gnb');    //ul
+          gb.lis = elem.find('.gnb li'); //li
+          //ul가로사이즈 적용
+          var wd = 0;
+          for(var i = 0;i<=gb.lis.length -1;i++){
+            wd += gb.lis[i].offsetWidth;
+          }
+          gb.gnb.width(wd);
+          this.action();
+        };
+        this.action = function(){
+          gb.gnb.bind('mousedown', function(e) {
+            e.preventDefault();
+            var evt = e.originalEvent;
+            var wrapLeft = gb.screen.offset().left;
+            var gnb = e.currentTarget;
+            var gnbLeft = gnb.offsetLeft;
+            var startX = evt.clientX - gb.gnb.offset().left;
+            var x = 0;
+            $(window).bind('mousemove', function(e) {
+              var evt = e.originalEvent;
+              var moveX = evt.clientX - gnbLeft;
+              x = evt.clientX - startX - wrapLeft;
+              console.log(x);
+              gnb.style.left = x+"px";
+            });
+            $(window).bind('mouseup', function(e) {
+              gnbLeft = gnb.offsetLeft;  //mouseup 시 마지막 left값 얻기
+              console.log(wrapLeft,gnbLeft);
+              if(x > 0){
+                gb.gnb.addClass("animation");
+                gnb.style.left = "0px";
+              //  gb.gnb.removeClass("animation");
+              }
+              $(window).unbind('mousemove');
+              $(window).unbind('mouseup');
+            });
+          });
+
+        };
+
+      }
+      var gnbslide = new GnbSlide();
+      gnbslide.init($(".gnbWrap"));
+    });
+  	$(document).ready(function() {
+      var domLeft;
+      var domTop;
+      var touchX = null;
+      var touchY = null;
+      var moveStartLeft = null;
+      var moveStartTop = null;
+      var x = null
+      var y = null;
+      var zindex = 0;
+      //모바일 터치 컨트롤
+  		$(".drag").bind('touchstart', function(e) {
+        var circle = e.currentTarget ;
+        domLeft = $(this).offset().left;
+        domTop = $(this).offset().top;
+        touchX = event.touches[0].clientX;
+        touchY = event.touches[0].clientY;
+        moveStartX = touchX - domLeft;  //left 무빙 시작 위치
+        moveStartY = touchY - domTop;   //top 무빙 시작 위치
+        zindex++;
+        circle.style.zIndex = zindex;
+  			e.preventDefault();	//	이벤트취소
+  		});
+  		$(".drag").bind('touchmove', function(e) {
+        var circle = e.currentTarget ;
+  			var event = e.originalEvent;
+  			event.preventDefault();
+        x = event.touches[0].clientX - moveStartX;
+        y = event.touches[0].clientY - moveStartY;
+        circle.style.left = x+"px";
+        circle.style.top = y+"px";
+  		});
+      $(".drag").bind('mousedown', function(e) {
+        zindex++;
+        var circle = e.currentTarget ;
+        //브라우저의 사이즈 확인
+        var windowWidth = $(window).width();
+        var windowHeight = $(window).height();
+        //dom의 상하좌우 위치값 확인
+        var domWidth = $(this).width();
+        var domHeight = $(this).height();
+        var domTop = $(this).offset().top;
+        var domLeft = $(this).offset().left;
+        touchX = event.clientX;
+        touchY = event.clientY;
+        moveStartX = touchX - domLeft;  //left 무빙 시작 위치
+        moveStartY = touchY - domTop;  //top 무빙 시작 위치
+        circle.style.zIndex = zindex;
+        $(window).bind('mousemove', function(e) {
+    			var event = e.originalEvent;
+          x = event.clientX - moveStartX;
+          y = event.clientY - moveStartY;
+          domTop = y;
+          domLeft = x;
+          domRight = domLeft+domWidth;
+          domBottom = domTop+domHeight;
+          if(domTop < 0){
+            y = 0;
+          }
+          if(domRight > windowWidth){
+            x = windowWidth - domWidth;
+          }
+          if(domBottom > windowHeight){
+            y = windowHeight - domHeight;
+          }
+          if(domLeft < 0){
+            x = 0;
+          }
+          circle.style.left = x+"px";
+          circle.style.top = y+"px";
+    		});
+        $(window).bind('mouseup', function(e) {
+          tx = event.clientX;
+          ty = event.clientY;
+          $(window).unbind('mousemove');
+          $(window).unbind('mouseup');
+        });
+      });
+      /////////////////////////////////마우스 컨트롤 end////////////////////////////////
+  	});
+  </script>
+</head>
+<body>
+  <section>
+    <div class="gnbWrap">
+      <ul class="gnb">
+        <li><a href="#">홈</a></li>
+        <li><a href="#">TV베스트</a></li>
+        <li><a href="#">TV편성표</a></li>
+        <li><a href="#">설특가</a></li>
+        <li><a href="#">기획전</a></li>
+        <li><a href="#">이벤트</a></li>
+      </ul>
+    </div>
+  </section>
+</body>
+
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>canvas</title>
+  <style>
+    *{margin:0;padding:0;}
+    html, body{height:100%;overflow: hidden;}
+    form{
+      display:block;position:absolute;bottom:0;left:0;width:100%;padding-bottom:50px;margin-right:50px;text-align: center;
+    }
+    canvas{background:#000;}
+    input[type=range]{
+      -webkit-appearance: none;
+      width: 40%;
+      height: 10px;
+      background: gray;
+      border: none;
+      border-radius: 3px;
+    }
+    input[type=range]::-webkit-slider-runnable-track {  /*bar 스타일*/
+      width: 100%;
+      height: 10px;
+      background: gray;
+      border: none;
+      border-radius: 3px;
+    }
+    input[type=range]::-webkit-slider-thumb {  /*버튼 스타일*/
+        -webkit-appearance: none;
+        border: none;
+        height: 30px;
+        width: 30px;
+        border-radius: 20%;
+        background: goldenrod;
+        margin-top: -10px;
+    }
+    input[type=range]:focus {
+        outline: none;
+    }
+    input[type=range]:focus::-webkit-slider-runnable-track {
+        background: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <form oninput="setOpt()">
+    <input type="range" title="빗방울 수" id="maxLength" multiple value="10" min="0" max="500" step="1"/>
+    <input type="range" title="속도" id="speed" multiple value="0.9" min="0" max="2" step="0.01"/>
+  </form>
+    <canvas id="canvas2"></canvas>
+    <script>
+      var canvas2 = document.getElementById("canvas2");
+      var ctx2 = canvas2.getContext("2d");
+      var cvsW = canvas2.width = window.innerWidth;
+      var cvsH = canvas2.height = window.innerHeight;
+      var speed = document.getElementById("speed").value;  //비내리는 속도
+      var maxLength = document.getElementById("maxLength").value;
+      var init = [];
+
+      function setInit(){
+        for(var i=0;i<=maxLength;i++){
+          init.push({
+            moveToX : Math.random() * cvsW,
+            moveToY : 0,
+            lineToX : -3 + (Math.random() * 3) + 1.5,
+            lineToY : Math.random() * (20-10)+10
+          });
+        }
+      }
+
+      function setOpt(){
+        speed = document.getElementById("speed").value;
+        maxLength = document.getElementById("maxLength").value;
+      }
+
+      ctx2.strokeStyle = "gray";
+      ctx2.lineWidth = 1;
+
+      function drow(){
+        ctx2.clearRect(0,0,cvsW,cvsH);
+        ctx2.beginPath();
+        for(var i=0;i<=maxLength;i++){
+          var p = init[i];
+          ctx2.moveTo(p.moveToX, p.moveToY);
+          ctx2.lineTo(p.moveToX+p.lineToX, p.moveToY+p.lineToY);
+        }
+        ctx2.stroke();
+        move();
+      }
+
+      function move(){
+        for(var i=0;i<=maxLength;i++){
+          var p = init[i];
+          p.moveToX += (p.lineToX*speed);
+          p.moveToY += (p.lineToY*speed);
+          if(p.moveToY > cvsH){
+            p.moveToX = Math.random() * cvsW;
+            p.moveToY = 0;
+            setInit();  //게이지 / 계속 초기 세팅할 시 너무 느려짐
+          }
+        }
+        window.requestAnimationFrame(drow);
+      }
+      setInit();
+      drow();
+    </script>
+</body>
+</html>

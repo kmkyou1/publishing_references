@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>메뉴 좌우 넘기기</title>
+  <style>
+    *{margin:0;padding:0;}
+    li{list-style: none;}
+    .wrap{position:relative;overflow: hidden;margin:100px auto;width:650px;height:40px;border:1px solid;background: #eee;}
+    .wrap ul{
+      overflow:hidden;position:absolute;top:0;left:0;height:40px;
+      /* transition: left .5s cubic-bezier(0.165, 0.840, 0.440, 1.000); */
+    }
+    .wrap ul li{float:left;}
+    .wrap ul li a{display:block;width:100px;text-align: center;line-height:40px;text-decoration: none;color:#000;}
+    .wrap ul li a:hover{font-weight:bold;text-decoration: underline;color:red;}
+  </style>
+  <script>
+  window.addEventListener("load", function(){
+    // console.log(298*100/100)
+    var cursor = {
+      wrap : document.querySelector('.wrap'),
+      bar : document.querySelector('ul'),
+      lis : document.querySelectorAll('.wrap ul li'),
+      wrap_width : null,
+      wrap_left : null,
+      bar_width : null,
+      bar_left : null,
+      init : function(){  //ul의 width 값을 li 개수에 따라서 지정
+        var li_wd = this.bar.firstElementChild.offsetWidth;  //li 개당 width 값
+        bar_width = this.lis.length * li_wd;                 //li * li개수로 ul 가로 값 지정
+        this.bar.style.width = bar_width+"px";
+      },
+      resize : function(){  //윈도우 리사이징 시 wrap left 위치 세팅
+        var that = this;
+        window.addEventListener("resize", function(){
+          wrap_left = that.wrap.offsetLeft;
+        });
+      },
+      action : function(){
+        var that = this;
+        bar = that.bar;
+        wrap_width = that.wrap.offsetWidth;
+        wrap_left = that.wrap.offsetLeft;
+        bar_left = that.bar.offsetLeft;
+        function mouseover(){
+          that.wrap.addEventListener("mousemove", function(e){
+            var cursor = e.clientX - wrap_left;       //메뉴 영역에서 현재 커서의 left 값 0부터 설정
+            var per = (cursor/wrap_width) * 100;      //메뉴 영역에서 커서 위치 비율 파악
+            var move_range = bar_width - wrap_width;  //left move 범위 계산
+            var left = (move_range * per / 100);      //move_range에 대한 커서 위치 비율 대입해 left px 계산
+            if(per < 10){
+              left = 0;
+            }
+            if(per > 90){
+              left = move_range;
+            }
+            bar.style.left = -left +"px";
+          });
+        }
+        that.wrap.addEventListener("mouseover", mouseover);
+      }
+    }
+    cursor.init();
+    cursor.resize();
+    cursor.action();
+  });
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <ul>
+      <li><a href="#">banner1</a></li>
+      <li><a href="#">banner2</a></li>
+      <li><a href="#">banner3</a></li>
+      <li><a href="#">banner4</a></li>
+      <li><a href="#">banner5</a></li>
+      <li><a href="#">banner6</a></li>
+      <li><a href="#">banner7</a></li>
+      <li><a href="#">banner8</a></li>
+      <li><a href="#">banner9</a></li>
+      <li><a href="#">banner10</a></li>
+      <li><a href="#">banner11</a></li>
+      <li><a href="#">banner12</a></li>
+    </ul>
+  </div>
+</body>
+</html>

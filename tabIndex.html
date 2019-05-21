@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>tabIndex</title>
+  <style>
+    *{margin:0;padding:0;}
+    .tabWrap{display: inline-block;height:200px;margin-top:30px;}
+    .tabWrap ul{position: relative;}
+    .tabWrap ul:after{content:'';display:block;clear:both;}
+    .tabWrap ul li{float:left;width:50px;list-style: none;}
+    .tabWrap ul li a{
+      position:relative;z-index:10;display:block;text-align: center;height:30px;line-height: 30px;border-left:1px gray solid;border-top:1px gray solid;border-right:1px gray solid;
+      color:#000;text-decoration:none;font-family:arial, sans-serif;font-size:12px;margin-left:-1px;
+    }
+    .tabWrap ul li:first-child a{margin-left:0;}
+    .tabWrap ul li div{display:none;position:absolute;top:30px;left:0;width:100%;min-height:100px;border:1px gray solid;box-sizing: border-box;background:#eeeff1;font-size:12px;padding:5px;}
+    .tabWrap ul li a.on{text-transform:uppercase;margin-top:-5px;height:35px;line-height: 35px;background:#eeeff1;font-weight:bold;color:red;}
+    .tabWrap ul li:first-child div{display: block;}
+  </style>
+</head>
+<body>
+  <div class="tabWrap">
+    <ul class="tabmenu1">
+      <li>
+        <a href="#" class="on">tab1</a>
+        <div class="tabCont">
+          11내용입니다.
+        </div>
+      </li>
+      <li>
+        <a href="#">tab2</a>
+        <div class="tabCont">
+          길어<br/>길어<br/>길어<br/>길어<br/>길어<br/>길어<br/>
+        </div>
+      </li>
+      <li>
+        <a href="#">tab3</a>
+        <div class="tabCont">
+          33내용입니다.
+        </div>
+      </li>
+      <li>
+        <a href="#">tab4</a>
+        <div class="tabCont">
+          4내용입니다.<br/>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="tabWrap">
+    <ul class="tabmenu2">
+      <li>
+        <a href="#" class="on">tab1</a>
+        <div class="tabCont">
+          11내용입니다.
+        </div>
+      </li>
+      <li>
+        <a href="#">tab2</a>
+        <div class="tabCont">
+          22내용입니다.
+        </div>
+      </li>
+      <li>
+        <a href="#">tab3</a>
+        <div class="tabCont">
+          길어<br/>길어<br/>길어<br/>길어<br/>길어<br/>길어<br/>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="tabWrap">
+    <ul class="tabmenu2">
+      <li>
+        <a href="#" class="on">tab1</a>
+        <div class="tabCont">
+          11내용입니다.
+        </div>
+      </li>
+      <li>
+        <a href="#">tab2</a>
+        <div class="tabCont">
+          22내용입니다.
+        </div>
+      </li>
+      <li>
+        <a href="#">tab3</a>
+        <div class="tabCont">
+          길어<br/>길어<br/>길어<br/>길어<br/>길어<br/>길어<br/>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="tabWrap">
+    <ul class="tabmenu3">
+      <li>
+        <a href="#" class="on">tab1</a>
+        <div class="tabCont">
+          11내용입니다.
+        </div>
+      </li>
+      <li>
+        <a href="#">tab2</a>
+        <div class="tabCont">
+          길어<br/>길어<br/>길어<br/>길어<br/>길어<br/>길어<br/>
+        </div>
+      </li>
+      <li>
+        <a href="#">tab1</a>
+        <div class="tabCont">
+          11내용입니다.
+        </div>
+      </li>
+      <li>
+        <a href="#">tab2</a>
+        <div class="tabCont">
+          길어<br/>길어<br/>길어<br/>길어<br/>길어<br/>길어<br/>
+        </div>
+      </li>
+      <li>
+        <a href="#">tab1</a>
+        <div class="tabCont">
+          11내용입니다.
+        </div>
+      </li>
+      <li>
+        <a href="#">tab2</a>
+        <div class="tabCont">
+          길어<br/>길어<br/>길어<br/>길어<br/>길어<br/>길어<br/>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <script>
+  //탭 콘텐츠 연습
+  function Tab(){
+    this.tab = null;
+    this.tabBtn = null;
+    this.init = function(tabBox){
+      this.tab = tabBox;
+      this.tabBtn = tabBox.querySelectorAll('li > a');
+      this.initEvent();
+    }
+    this.initEvent = function(){
+      var tab = this.tabBtn;
+      var that = this;
+      var active = this.tab.querySelector('.on');
+      for(var i=0;i<=tab.length-1;i++){
+        function goAction(currentThis){
+          active = that.action(currentThis, active);
+          that.action(currentThis, active);
+        }
+        // tab[i].onclick = function(){goAction(this)};
+        tab[i].onfocus = function(){goAction(this)};
+        tab[i].onmouseover = function(){goAction(this)};
+      };
+    }
+    this.action = function(objThis, active){
+      if(active){
+        active.removeAttribute('class');
+        active.parentNode.querySelector('.tabCont').style.display = 'none';
+      }
+      active = objThis;
+      active.setAttribute('class','on');
+      active.parentNode.querySelector('.tabCont').style.display = 'block';
+      return active;
+    }
+  }
+
+  var tabs = [] ;
+  /* window.onload = function(){
+    var tab1 = new Tab();
+    tab1.init(document.querySelector('.tabmenu1'));
+    var tab2 = new Tab();
+    tab2.init(document.querySelector('.tabmenu2'));
+    var tab3 = new Tab();
+    tab3.init(document.querySelector('.tabmenu3'));
+  }*/
+
+  function TabPlugin ( className ) {
+    if ( className == undefined ) {
+      [].forEach.call( document.querySelectorAll( 'div.tabWrap > ul' ) , function ( elem ) {
+        var tab = new Tab ;
+        tab.init( elem )  ;
+        // tabs.push( tab ) ;
+      }) ;
+    } else {
+      [].forEach.call( document.querySelectorAll( 'div' + className + ' > ul' ) , function ( elem ) {
+        var tab = new Tab ;
+        tab.init( elem )  ;
+        // tabs.push( tab ) ;
+      }) ;
+    }
+  }
+
+  TabPlugin.prototype = {
+    hello : function () {
+      console.log( 'hello' ) ;
+    } ,
+    setTab : function ( num ) {
+      // num 탭이열린다.
+
+    }
+  } ;
+
+  var tabPlugin = {} ;
+  window.addEventListener( 'load' , function () {
+    tabPlugin = new TabPlugin ;
+    tabPlugin.hello() ;
+    tabPlugin.setTab( 3 ) ;
+    // console.log(tabs)
+  }) ;
+
+  </script>
+</body>
+</html>

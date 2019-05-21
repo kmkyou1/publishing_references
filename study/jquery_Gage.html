@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
+  <title>연습</title>
+  <style>
+    *{margin:0;padding:0;}
+    .bar{
+      margin-top:100px;
+      border:1px #eee solid;
+    }
+    .bar i{
+      display:block;
+      width:0%;
+      height:5px;
+      border-radius: 10px;
+      color:transparent;
+      background:#2e8ffc;
+      transition: width 3s linear;
+    }
+  </style>
+  <script>
+  	$(document).ready(function() {
+      //게이지
+      var startTime = new Date().getTime();
+      var nowTime;
+      var maxSec = 3000;  //최대 시간 3초 설정
+      var gage = $(".bar i");
+      // timeOut();
+      function timeOut(){
+        var intv = setTimeout(timeOut,1);  //0.001초
+        nowTime = new Date().getTime();
+        endTime = startTime + maxSec;
+        rs = endTime - nowTime;
+        console.log(rs);
+        per = (rs/maxSec)*100;  //300에 대한 퍼센트 계산
+        if(nowTime >= startTime+maxSec){
+          // timestamp = 0;
+          clearTimeout(intv);
+        }
+        gage.css("width", per+"%");
+      }
+      gage.css("width", "100%");
+  	});
+  </script>
+</head>
+<body>
+  <p>timeStamp: <span id="time">-</span></p>
+  <div class="bar">
+    <i>게이지</i>
+  </div>
+</body>
+</html>

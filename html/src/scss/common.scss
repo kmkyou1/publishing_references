@@ -1,0 +1,53 @@
+@charset "UTF-8";
+// import scss
+@import "./mixins/mixins";
+body{font-family:Arial,sans-serif;background:#ddd;}
+*{margin:0;padding:0;}
+header{
+  height:100px;line-height:100px;background:#000;text-align: center;
+  h1{
+    font-weight:bold;
+    color:#fff;
+  }
+}
+div.box{
+  @include size(500px,100px);
+  @include opacity(0.4);
+  background:gold;
+  border:1px solid;
+}
+@include ip-txt-pw{
+  width:100px;height:30px;border:1px red solid;
+}
+@for $i from 1 through 10{
+  ul li:nth-child(#{$i}){background:#dd#{$i*10}#{$i*10};}
+}
+.door{
+  $wd:400px;
+  position:relative;
+  margin:0 auto;width:$wd;height:200px;border:10px solid;
+  background:url(../img/Tulips.jpg) no-repeat 0 0;
+  background-size:cover;
+  perspective:1900px;
+  div{
+    position:absolute;top:0;border:1px solid;
+    opacity:.8;
+    box-sizing: border-box;;
+    transform-style:preserve-3d;
+    transition:transform .8s;
+  }
+  .left{
+    left:0;width:$wd/2;height:100%;background:#aaa;
+    transform-origin: center left;
+    //transform: rotateY(-100deg)
+  }
+  .right{
+    right:0;width:$wd/2;height:100%;background:#bbb;
+    transform-origin: center right;
+    //transform: rotateY(100deg)
+  }
+  &:hover{
+    .left{transform: rotateY(-130deg);}
+    .right{transform: rotateY(130deg);}
+  }
+}

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+  <title>연습</title>
+  <style>
+    *{margin:0;padding:0;}
+    body{}
+    li{list-style:none;}
+    h2{font-weight: normal;font-size: 13px;font-weight:bold;}
+    h3 a{font-weight:normal;}
+    a{display:block;padding:10px 15px;text-align: right;text-decoration: none;color:#000;}
+    a.on{background:#000;color:#fff;}
+    .menu_wrap{float:left;margin-right:50px;}
+    .menu{width:150px;}
+    .menu > li{margin-bottom:1px;}
+    .menu > li > h2{background:#ddd;}
+    .menu ul{display:none;}
+    .menu ul.show{display:block;}
+    .menu ul.hide{display:none;}
+    .menu > li > h2 + ul{}
+    .menu > li > h2 + ul li a{font-size:11px;font-weight:bold;padding:5px 15px;border-top:1px #ccc dashed;box-shadow:inset 0px 0px 6px rgba(0,0,0,0.1);}
+    .menu > li > h2 + ul li:first-child a{border-top:0;}
+    .menu > li > h2 + ul li a:hover{text-decoration: underline;font-weight:bold;}
+    .menu > li > h2 + ul > li h3 + ul{background:#eeeff1;}
+    .menu > li > h2 + ul > li h3 + ul li a{border-bottom:0;font-size: 11px;font-weight:normal;box-shadow:none;}
+  </style>
+  <script>
+    function ToggleMenu(){
+      var tMenu = {};
+      var active_Dp2 = null;
+      var active_Dp3 = null;
+      this.init = function(dom){
+        setInit(dom);
+        setEvent();
+      }
+      setInit = function (elem){
+        tMenu.menuBody = elem;
+        tMenu.mMenu = tMenu.menuBody.querySelectorAll('.mTxt');
+      }
+      setEvent = function(){
+        [].forEach.call(tMenu.mMenu ,function(elem, idx){
+          elem.addEventListener('click', clickEvent);
+        });
+      }
+      action = function(depth){
+        console.log("dd");
+      }
+      clickEvent = function(e){
+        var This = e.target.parentNode;
+        var sub = This.nextElementSibling;  //서브 펼침 메뉴
+        if(sub){
+          tName = This.tagName;
+          cName = sub.classList.contains('show');
+          switch(tName){
+            case 'H2':
+              if(active_Dp2){
+                active_Dp2.classList.remove("show");
+              }
+              active_Dp2 = sub;
+              active_Dp2.classList.add("show");
+              if(cName){
+                active_Dp2.classList.remove("show");
+              }
+              action(2);
+            break;
+            case 'H3':
+              if(active_Dp3){
+                active_Dp3.classList.remove("show");
+              }
+              active_Dp3 = sub;
+              active_Dp3.classList.add("show");
+              if(cName){
+                active_Dp3.classList.remove("show");
+                console.log('ok');
+              }
+            break;
+          }
+        }
+      }
+    }
+    //플러그인 설정
+    var tabs = [] ;
+    function TabPlugin () {
+      [].forEach.call( document.querySelectorAll( '.menu' ) , function ( elem ) {
+        var toggleMenu = new ToggleMenu();
+        toggleMenu.init( elem )  ;
+        tabs.push( toggleMenu ) ;
+      });
+    }
+    window.onload = function(){
+      tabPlugin = new TabPlugin();
+    }
+   
+  </script>
+</head>
+<body>
+  <div class="menu_wrap">
+    <ul class="menu">
+      <li>
+        <h2 class="mTxt"><a href="#">menu01</a></h2>
+        <ul>
+          <li>
+            <h3 class="mTxt"><a href="#">2depth</a></h3>
+            <ul>
+              <li><a href="#">3depth</a></li>
+              <li><a href="#">3depth</a></li>
+              <li><a href="#">3depth</a></li>
+            </ul>
+          </li>
+          <li><h3 class="mTxt"><a href="#">2depth?</a></h3></li>
+          <li>
+            <h3 class="mTxt"><a href="#">2depth</a></h3>
+            <ul>
+              <li><a href="#">3depth</a></li>
+              <li><a href="#">3depth</a></li>
+              <li><a href="#">3depth</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <h2 class="mTxt"><a href="#">menu02</a></h2>
+        <ul>
+          <li><a href="#">2depth</a></li>
+          <li><a href="#">2depth</a></li>
+          <li><a href="#">2depth</a></li>
+        </ul>
+      </li>
+      <li>
+        <h2 class="mTxt"><a href="#">menu03</a></h2>
+        <ul>
+          <li><a href="#">2depth</a></li>
+          <li><a href="#">2depth</a></li>
+          <li><a href="#">2depth</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="menu_wrap">
+    <ul class="menu">
+      <li>
+        <h2 class="mTxt"><a href="#">menu01</a></h2>
+        <ul>
+          <li><a href="#">menu01_1</a></li>
+          <li><a href="#">menu01_2</a></li>
+          <li><a href="#">menu01_3</a></li>
+        </ul>
+      </li>
+      <li>
+        <h2 class="mTxt"><a href="#">menu02</a></h2>
+        <ul>
+          <li><h3 class="mTxt"><a href="#">menu02_1</a></h3></li>
+          <li>
+            <h3 class="mTxt"><a href="#">2depth</a></h3>
+            <ul>
+              <li><a href="#">3depth</a></li>
+              <li><a href="#">3depth</a></li>
+              <li><a href="#">3depth</a></li>
+            </ul>
+          </li>
+          <li><a href="#">menu02_3</a></li>
+        </ul>
+      </li>
+      <li>
+        <h2 class="mTxt"><a href="#">menu03</a></h2>
+        <ul>
+          <li><a href="#">menu03_1</a></li>
+          <li><a href="#">menu03_2</a></li>
+          <li><a href="#">menu03_3</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="menu_wrap">
+    <ul class="menu">
+      <li>
+        <h2 class="mTxt"><a href="#">menu01</a></h2>
+        <ul>
+          <li>
+            <h3 class="mTxt"><a href="#">2depth</a></h3>
+            <ul>
+              <li><a href="#">3depth</a></li>
+              <li><a href="#">3depth</a></li>
+              <li><a href="#">3depth</a></li>
+            </ul>
+          </li>
+          <li><h3 class="mTxt"><a href="#">2depth?</a></h3></li>
+          <li>
+            <h3 class="mTxt"><a href="#">2depth</a></h3>
+            <ul>
+              <li><a href="#">3depth</a></li>
+              <li><a href="#">3depth</a></li>
+              <li><a href="#">3depth</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <h2 class="mTxt"><a href="#">menu02</a></h2>
+        <ul>
+          <li>
+            <h3 class="mTxt"><a href="#">2depth</a></h3>
+            <ul>
+              <li><a href="#">3depth</a></li>
+              <li><a href="#">3depth</a></li>
+              <li><a href="#">3depth</a></li>
+            </ul>
+          </li>
+          <li>
+            <h3 class="mTxt"><a href="#">2depth</a></h3>
+            <ul>
+              <li><a href="#">3depth</a></li>
+              <li><a href="#">3depth</a></li>
+              <li><a href="#">3depth</a></li>
+            </ul>
+          </li>
+          <li><a href="#">2depth</a></li>
+          <li><a href="#">2depth</a></li>
+        </ul>
+      </li>
+      <li>
+        <h2 class="mTxt"><a href="#">menu03</a></h2>
+        <ul>
+          <li><a href="#">2depth</a></li>
+          <li>
+            <h3 class="mTxt"><a href="#">2depth</a></h3>
+            <ul>
+              <li><a href="#">3depth</a></li>
+              <li><a href="#">3depth</a></li>
+              <li><a href="#">3depth</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <h2 class="mTxt"><a href="#">menu04</a></h2>
+        <ul>
+          <li><a href="#">2depth</a></li>
+          <li>
+            <h3 class="mTxt"><a href="#">2depth</a></h3>
+            <ul>
+              <li><a href="#">3depth</a></li>
+              <li><a href="#">3depth</a></li>
+              <li><a href="#">3depth</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script type="text/javascript" src="http://kmkyou.cafe24.com/web/my/js/jquery-1.10.2.min.js"></script>
+  <title>연습</title>
+  <style>
+    *{margin:0;padding:0;}
+    li{list-style:none;float:left;}
+    a{display:block;width:100px;padding:10px 0;text-align: center;text-decoration: none;}
+    a.on{background:#000;color:#fff;}
+  </style>
+  <script>
+    var tabDom ;
+    window.onload = function(){
+      tab = new Tab(document.querySelector('.tab'));
+      tab.init();
+    }
+    function Tab ( elem ){
+      var tabDom = {};
+      var active = null;
+      this.init = function initFunc (){
+        domSet(elem);
+        evtSet();
+      }
+      function domSet ( mother ){
+        tabDom.tabMenu = mother ;
+        tabDom.tabItem = tabDom.tabMenu.querySelectorAll( 'li' );
+        console.log( tab ) ;
+      }
+      function evtSet(){
+        [].forEach.call( tabDom.tabItem , function ( elem_li , idx) {
+          elem_li.addEventListener( 'click' , clickHandler );
+        }) ;
+      }
+      function clickHandler(e) {
+        if(active){
+          active.querySelector('a').classList.remove('on');
+        }
+        active = this;
+        active.querySelector('a').classList.add('on');
+        console.log(this)
+      }
+    }
+  </script>
+</head>
+<body>
+  <ul class="tab">
+    <li><a href="#">menu01</a></li>
+    <li><a href="#">menu02</a></li>
+    <li><a href="#">menu03</a></li>
+    <li><a href="#">menu04</a></li>
+    <li><a href="#">menu05</a></li>
+  </ul>
+</body>
+</html>

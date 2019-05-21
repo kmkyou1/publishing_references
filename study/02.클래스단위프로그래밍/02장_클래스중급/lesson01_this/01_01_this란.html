@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title></title>
+
+    
+<script>
+/*
+
+01. this란?
+    this는 일반적으로 메서드를 호출한 객체가 저장되어 있는 속성입니다.
+ 
+ */
+    function MyClass(){
+        this.property1 = "value1";
+    }
+    
+    MyClass.prototype.method1=function(){
+        alert(this.property1);
+    }
+       
+    var my1 = new MyClass();
+    my1.method1();
+ 
+ 
+ 
+ /*
+ 02. this가 만들어지는 경우
+ 
+ 1) 일반함수에서 this
+ 2) 중첩함수에서 this
+ 3) 이벤트에서 this
+ 4) 메서드에서 this
+ 5) 메서드 내부의 중첩 함수에서 this
+ 
+  */
+</script>
+
+</head>
+    
+    <body>
+        
+    </body>
+</html>

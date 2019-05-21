@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>bxSlider</title>
+<link href="css/jquery.bxslider.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
+<script src="js/jquery.bxslider.js"></script>
+<style>
+h1 {color:white;}
+*{margin:0;padding:0;}
+.bar{
+  border-radius:10px;
+  background:#eee;
+}
+.bar i{
+  display:block;
+  width:0%;
+  height:10px;
+  border-radius:10px;
+  color:transparent;
+  background:#2e8ffc;
+  transition: width .5s linear;
+}
+.bar1{
+  margin:10px 0;
+  overflow: hidden;
+  border-radius: 5px;
+  background:#eee;
+}
+.bar1 i{
+  display:block;
+  width:0%;
+  height:5px;
+  border-radius: 5px;
+  color:transparent;
+  background:gold;
+
+}
+.bar1 i.pull{
+  animation:gage 2s infinite linear;
+}
+@keyframes gage { /* CSS3 */
+	100% { width:103%; }
+}
+.txt{position:absolute;width:100%;text-align: center;} 
+</style>
+<script type="text/javascript">
+//<![CDATA[
+$(document).ready(function(){
+      var length  = null; //배너 개수
+      var gage = $(".bar i");// 게이지
+      var gage1 = $(".bar1 i");// 게이지
+      var per  = null;
+      function per_cal(curr, max){
+        val = (curr/max)*100;
+        return val;
+      }
+     $('.bxslider').bxSlider({
+        mode: 'horizontal',// 가로 방향 수평 슬라이드
+        speed: 500,        // 이동 속도를 설정
+        pause: 2000,
+        pager: true,      // 현재 위치 페이징 표시 여부 설정
+        moveSlides: 1,     // 슬라이드 이동시 개수
+        // slideWidth: 100,   // 슬라이드 너비
+        minSlides: 4,      // 최소 노출 개수
+        maxSlides: 4,      // 최대 노출 개수
+        // slideMargin: 5,    // 슬라이드간의 간격
+        auto: true,         // 자동 실행 여부
+        autoHover: true,   // 마우스 호버시 정지 여부
+        controls: true,    // 이전 다음 버튼 노출 여부
+        onSliderLoad : function(currentIndex){  //최초 배너 로드 시 실행
+          length = this.getSlideCount();  //배너 개수
+          var idx = currentIndex + 1;
+          per = per_cal(idx,length);
+          gage.css("width", per+"%");
+          bar();
+        },
+        onSlideBefore : function($slideElement, oldIndex, newIndex){  //슬라이드 되기 직전 실행
+          var idx = newIndex+1;
+          per = per_cal(idx,length);
+          gage.css("width", per+"%");
+          bar();
+        }
+    });
+    function bar(){
+      var ga = document.querySelector(".bar1 i");
+      ga.classList.add("pull");
+    }
+    $(".bx-wrapper").hover(function(){
+      var ga = document.querySelector(".bar1 i");
+      ga.classList.remove("pull");
+    });
+});
+//]]>
+</script>
+</head>
+<body>
+  <div style="max-width:1000px;">
+    <ul class="bxslider">
+      <li>
+          <div class="txt"><h1>첫 번째 이미지</h1></div>
+          <img src="images/img01.jpg" />
+      </li>
+      <li>
+          <div class="txt"><h1>두 번째 이미지</h1></div>
+          <img src="images/img02.jpg" />
+      </li>
+      <li>
+          <div class="txt"><h1>세 번째 이미지</h1></div>
+          <img src="images/img03.jpg" />
+      </li>
+      <li>
+          <div class="txt"><h1>네 번째 이미지</h1></div>
+          <img src="images/img04.jpg" />
+      </li>
+      <li>
+          <div class="txt"><h1>다섯 번째 이미지</h1></div>
+          <img src="images/img04.jpg" />
+      </li>
+    </ul>
+    <div class="bar1"><i>게이지</i></div>
+    <div class="bar"><i>게이지</i></div>
+  </div>
+</body>
+</html>

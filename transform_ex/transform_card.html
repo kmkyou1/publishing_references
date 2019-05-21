@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
+  <title>transform 3D</title>
+  <style>
+    body { font-size:62.5%;font-family:Arial,sans-serif;}
+    *{padding:0;margin:0;}
+    h1{font-size:1.8em;}
+    /*
+    -webkit-transform: rotate(180deg);
+       -moz-transform: rotate(180deg);
+        -ms-transform: rotate(180deg);
+         -o-transform: rotate(180deg);
+            transform: rotate(180deg);
+    */
+    .card_game{position:relative;text-align:center;padding:50px 0 100px 0;}
+    .clock{font-size:3em;text-align:center;font-weight:bold;}
+    .card_ul{
+      display:inline-block;
+      margin-top:20px;width:590px;
+      text-align:center;
+    }
+    .card_ul li{
+	    -webkit-perspective: 1050px;
+      perspective:1050px;
+      position:relative;width:100px;height:140px;
+      display:inline-block;margin:10px 10px 0 0;cursor:pointer;
+    }
+    .card_ul li div.card_wrap{
+      position:absolute;top:0;left:0;
+      width:100%;height:100%;border:1px gray solid;border-radius:5px;
+  	  -webkit-transform-style:preserve-3d;
+  		transform-style:preserve-3d;
+  	  -webkit-transform-origin: center center;
+  	  -moz-transform-origin: center center;
+  		transform-origin: center center;
+    }
+    .card_ul li .card_front{
+      position:absolute;top:0;left:0;width:100%;height:100%;
+      font-size:50px;line-height:140px;border-radius:5px;
+      background:skyblue url(img/card_back.jpg) no-repeat 0 0;
+      background-size:100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+    }
+    .card_ul li .card_back{
+      position:absolute;top:0;left:0;width:100%;height:100%;background:#fff;
+      box-shadow: inset 0 0 25px hsla(0,0%,0%,.08), inset 0 0 25px hsla(0,0%,0%,.08);
+      font-size:50px;line-height:150px;border-radius:5px;
+	    -webkit-transform: rotateY(180deg);
+      -moz-transform: rotateY(180deg);
+      transform:rotateY(180deg);
+      -webkit-backface-visibility: hidden;
+	    backface-visibility: hidden;
+    }
+    .card_ul li:hover .card_wrap{
+      /*animation: card .5s linear forwards;*/
+    }
+    .card_ul li .card_wrap.ani{
+	    animation: card .5s linear forwards
+    }
+    .card_ul li .card_wrap.card_out{
+	    -webkit-animation: card_out .2s linear forwards
+    }
+    .line{position:absolute;top:0;left:0;width:100%;height:100%;background:#ff452c;border:1px solid red;border-radius:5px;opacity:.4; }
+    .success{
+      color:#ff452c;z-index:100;font-weight:bold;position:absolute;top:50%;left:50%;margin:-100px 0 0 -170px;font-size:15em;
+      text-shadow:3px 3px 10px #000;
+    }
+    @keyframes card{
+      0%{
+	      -webkit-transform: rotateY(0deg);
+        -moz-transform: rotateY(0deg);
+        transform:rotateY(0deg);
+      }
+      50%{
+  		  -webkit-transform:rotateY(180deg) translateZ(-100px);
+  		  -moz-transform:rotateY(180deg) translateZ(-100px);
+  			transform:rotateY(180deg) translateZ(-100px);
+      }
+      60%{
+		    -webkit-transform:rotateY(180deg);
+		    -moz-transform:rotateY(180deg);
+        transform:rotateY(180deg);
+      }
+      100%{
+	    	-webkit-transform:rotateY(180deg);
+		    -moz-transform:rotateY(180deg);
+        transform:rotateY(180deg);
+      }
+    }
+    @keyframes card_out{
+      0%{
+		    -webkit-transform:rotateY(180deg);
+		    -moz-transform:rotateY(180deg);
+        transform:rotateY(180deg);
+      }
+      50%{
+	      -webkit-transform:rotateY(180deg) translateZ(-100px);
+		    -moz-transform:rotateY(180deg) translateZ(-100px);
+        transform:rotateY(180deg) translateZ(-100px);
+      }
+      100%{
+	      -webkit-transform: rotateY(0deg);
+        -moz-transform: rotateY(0deg);
+        -ms-transform: rotateY(0deg);
+        -o-transform: rotateY(0deg);
+        transform:rotateY(0deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <script>
+    $(document).ready(function(){
+      //초시계
+      var sec=0;
+      var msec=0;
+  	  record(sec)
+  	  function record(sec){
+    		if(sec == 0){
+    			$(".clock").text(msec.toFixed(2))
+    		}else{
+    			$(".clock").text(sec+" : "+msec.toFixed(2))
+    		}
+  	  }
+      function Timer(){
+        sTime = setTimeout(function() {
+          if(msec < 60){
+            msec+=0.01;
+          }else{
+            msec = 0
+            sec += 1
+          }
+          record(sec)
+          Timer();
+        },10);
+      }
+      //Timer();
+      //같은그림 찾기
+      //카드 뿌리기
+      var array=[];
+      var ran_array=[];
+      for(i=0;i<10;i++){//카드 10번까지
+        no = i+1;
+        array[i*2] = no;
+        array[(i*2)+1] = no;
+      }
+      //배열 순서 섞기
+      function shuffle(o){
+        o.sort(function(){return 0.5-Math.random()});
+        return o;
+      };
+      ran_array = shuffle(array);
+      //배열 순서 섞기 끝
+      for(i=0; i<ran_array.length;i++){
+        var innerHTML="";
+        innerHTML+="<li>";
+        innerHTML+="<div class='card_wrap'>";
+        innerHTML+="<div class='card_front'></div>";
+        innerHTML+="<div class='card_back'>"+ran_array[i]+"</div>";
+        innerHTML+="</div>";
+        innerHTML+="</li>";
+        $(".card_ul").append(innerHTML);
+      }
+      var first = 0;
+      var second = 0;
+      var firstIndex;
+      var secondIndex;
+      $(".card_ul").bind("click", function(){
+        Timer();//타이머 호출;
+        $(".card_ul").unbind("click");
+      });
+      $(".card_ul li").bind("click",function(){
+        var sort = $(this).attr("class");
+        var card = $(this).find(".card_wrap");
+        var cardVal = $(this).find(".card_back").text();
+        var index = $(this).index();
+        if(sort == "ok"){
+          //이미 맞춘 카드
+        }else{
+          if(first == 0 && second == 0){
+            first = Number(cardVal);
+            firstIndex = index;
+            card.addClass("ani").removeClass("card_out");
+          }else if(first != 0 && second == 0){
+            secondIndex = index;
+            if(firstIndex == secondIndex){
+              alert("다른 카드를 선택하세요.");
+            }else{
+              second = Number(cardVal);
+              card.addClass("ani").removeClass("card_out");
+              if(first == second){
+                first = 0;
+                second = 0;
+                $(".card_ul li").eq(firstIndex).addClass("ok");
+                $(".card_ul li").eq(secondIndex).addClass("ok");
+                setTimeout(function(){
+                  $(".card_ul li").eq(firstIndex).append("<div class='line'></div>");
+                  $(".card_ul li").eq(secondIndex).append("<div class='line'></div>");
+                  $(".line").animate({opacity:0},800);
+                },400);
+                if($(".card_ul li.ok").length == ran_array.length){//모든 카드를 맞췄음 비교
+      					  setTimeout(function(){
+        					  clearTimeout(sTime);
+        					  $(".card_ul").prepend("<em class='success'>성공</em>");
+      				    },400);
+                }
+              }else{
+                setTimeout(function(){
+                  first = 0;
+                  second = 0;
+                  $(".card_ul li").eq(firstIndex).find(".card_wrap").removeClass("ani").addClass("card_out");
+                  $(".card_ul li").eq(secondIndex).find(".card_wrap").removeClass("ani").addClass("card_out");
+                },500);
+              }
+            }
+          }
+        }
+        console.log(first+"["+firstIndex+"]"+" : "+second+"["+secondIndex+"]")
+      });
+      //$(".card_ul").prepend("<em class='success'>성공</em>");
+      /*var dd = ["Banana", "Orange", "Apple", "Mango"]
+      dd.push("World");
+      // Prints "Hello", "World"
+      console.log(dd);*/
+      var then = new Date();
+      function display(){
+        setTimeout(display(),1000);
+        now = new Date();
+        ms=now.getTime()-then.getTime();
+        console.log(ms/1000)
+      }
+      display();
+    });
+  </script>
+  <div class="card_game">
+    <div class="clock"></div>
+    <ul class="card_ul">
+      <!--
+        <li>
+          <div class="card_wrap">
+            <div class="card_front"></div>
+            <div class="card_back">1</div>
+          </div>
+        </li>
+    -->
+    </ul>
+  </div>
+</body>
+</html>

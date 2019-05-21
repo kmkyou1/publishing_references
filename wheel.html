@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+		<title></title>
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+		<style type="text/css">
+			 * {margin:0;padding:0;list-style:none;font-size:12px;}
+			 a{text-decoration:none;}
+			 .hide{position:absolute;top:-9999px;width:0;height:0;font-size:0;line-height:0;overflow:hidden;visibility:hidden;}
+
+			 .contents_top{width:100%;height:100px;position:fixed;border-bottom:1px solid #ccc;z-index:1000;}
+			 .contents_top.fixed{background:#fff;}
+			 .main_visual{position:relative;}
+			 .main_visual ul{width:100%;position:absolute;top:0;left:0;z-index:1;}
+			 .area_A{background:#000;}
+			 .area_A div{min-width:1200px;max-width:1920px;margin:0 auto;height:1080px;background: url('./images/visual.jpg') no-repeat center 0;}
+			 .area_B{background:#f1eff0;}
+			 .area_B div{height:1080px;background: url('./images/visual2.jpg') no-repeat center 0;}
+			 .area_C{background:#ccc;}
+			 .area_C div{height:1080px;}
+			 .header{width:1200px;margin:0 auto;}
+			 .header:after{content:"";display:block;clear:both;}
+			 .header .logo{width:196px;height:27px;margin:36px 0 0 -69px;background: url('./images/logo.png') no-repeat 0 0;}
+			 .contents_top.fixed .header .logo{background-position:0 -27px;}
+			 .header .gnb{width:880px;margin:-22px auto 0 auto;}
+			 .header .gnb > ul:after{content:"";display:block;clear:both;}
+			 .header .gnb > ul > li{position:relative;float:left;padding:0 15px;}
+			 .header .gnb > ul > li > a{width:145px;text-align:center;display:inline-block;font-weight:bold;color:#fff;font-size:17px;}
+			 .contents_top.fixed .header .gnb > ul > li > a{color:#777;}
+			 .header .gnb > ul > li > a:after{content:"";width:0;height:2px;position:relative;top:35px;left:0;background:#ff6501;display:block;-webkit-transition: color 0.1s linear;transition: color 0.1s linear;}
+			 .header .gnb > ul > li > a.on:after{content:"";width:100%;height:2px;position:relative;top:35px;left:0;background:#ff6501;display:block; -webkit-transition: all 0.1s linear; transition: all 0.1s linear;}
+			 .header .gnb div.depth2{width:174px;height:207px;position:absolute;top:22px;left:0;z-index:101;text-align:center;display:none;}
+			 .header .gnb div.depth2 ul{height:100px;position:absolute;top:-5px;left:0;z-index:101;margin-top:75px;border-left: 1px solid #ccc;}
+			 .header .gnb li:first-child div.depth2 ul{border:none;}
+			 .header .gnb div.depth2 ul li{padding:0 15px 10px 15px;}
+			 .header .gnb div.depth2 ul li a{display:inline-block;width:145px;line-height:17px;color:#101010;}
+			 .header .gnb div.depth2 ul li a:hover,
+			 .header .gnb div.depth2 ul li a:focus{text-decoration:underline solid #ff6501;}
+			 .bg_white{position:absolute;top:101px;left:0;z-index:100;width:100%;height:170px;background:#fff;display:none;}
+		</style>
+</head>
+
+<body>
+	<div id="wrap">
+		<div class="contents_top">
+			<div class="header">
+				<div class="logo"><h1 class="hide">여천NCC</h1></div>
+				<div class="gnb">
+					<ul>
+						<li>
+							<a href="#">About YNCC</a>
+							<div class="depth2">
+								<ul>
+									<li><a href="#">Company Introduction</a></li>
+									<li><a href="#">Greetings from the CEO's</a></li>
+									<li><a href="#">Investor Information</a></li>
+									<li><a href="#">How to get here</a></li>
+								</ul>
+							</div>
+						</li>
+						<li>
+							<a href="#">Products</a>
+							<div class="depth2">
+								<ul>
+									<li><a href="#">Intro to Plants</a></li>
+									<li><a href="#">Intro to Products</a></li>
+									<li><a href="#">Production Capacity</a></li>
+									<li><a href="#">Easy Petrochemical</a></li>
+								</ul>
+							</div>
+						</li>
+						<li>
+							<a href="#">EQSH</a>
+							<div class="depth2">
+								<ul>
+									<li><a href="#">EQSH Integrated<br />Management<br />Overview</a></li>
+									<li><a href="#">ESH Management</a></li>
+								</ul>
+							</div>
+						</li>
+						<li>
+							<a href="#">Recruit</a>
+							<div class="depth2">
+								<ul>
+									<li><a href="#">HR System</a></li>
+									<li><a href="#">Job Introduction</a></li>
+								</ul>
+							</div>
+						</li>
+						<li>
+							<a href="#">Media Center</a>
+							<div class="depth2">
+								<ul>
+									<li><a href="#">Multimedia</a></li>
+									<li><a href="#">Brochure</a></li>
+								</ul>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="all_gnb"></div>
+				<span class="bg_white"></span>
+			</div>
+		</div>
+		<div class="contents_area">
+			<div class="main_visual">
+				<ul>
+					<li class="area_A"><div><span class="hide">메인비주얼</span></div></li>
+					<li class="area_B"><div><span class="hide">컨텐츠비주얼</span></div></li>
+					<li class="area_C"><div><span class="hide">컨텐츠비주얼</span></div></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		/* GNB */
+		function GnbLine(){
+			var $gnbLink = $('.header .gnb > ul > li > a');
+			$gnbLink.mouseenter(function(){
+				$(this).addClass('on');
+				$('.contents_top').addClass('fixed');
+				$(this).parent('li').siblings('li').children('a').removeClass('on');
+				$('.depth2 , .bg_white').clearQueue().stop();
+				$('.depth2 , .bg_white').slideDown();
+			});
+			$('.contents_top').mouseleave(function(){
+				$(this).removeClass('on');
+				$('.depth2 , .bg_white').slideUp();
+			});
+
+			var $depth2 = $('.header .gnb .depth2');
+			$depth2.mouseenter(function(){
+				$(this).parent('li').children('a').addClass('on');
+			});
+			$depth2.mouseleave(function(){
+				$(this).parent('li').children('a').removeClass('on');
+			});
+		}
+
+		/* GNB 스크롤 했을때 */
+		// function gnbScroll(){
+		// 	if($(window).scrollTop() > 120){
+		// 		$('.contents_top').addClass('fixed');
+		// 	} else if ($(window).scrollTop() < 120){
+		// 		$('.contents_top').removeClass('fixed');
+		// 	}
+		// }
+
+		/* 마우스 휠 */
+
+		function wheel(){
+			var wheelFlag = 0;	//스크롤 중복을 제어하기 위한 변수
+			var bodyScroll = 0;	//스크롤 이동 테스트를 위한 값
+			$("html, body").on('mousewheel DOMMouseScroll', function(e) {
+				if(wheelFlag == 1) return;	//wheelFlag 값이 1이면 되돌려 보냄. 초기 wheelFlag 값은 0 이기 때문에 아래 실행문이 실행됨.
+				var E = e.originalEvent;
+				wheel = E.wheelDelta;
+				if(wheel<0){
+					action("down");
+				}else{
+					action("up");
+				}
+				//콘텐츠 높이가 모두 1080이라는 조건으로 테스트....
+				function action(eve){
+					wheelFlag = 1;	//wheelFlag 값을 1로 줘서 연속되는 휠 이벤트를 억제.
+					if(eve == 'down'){
+						bodyScroll += 1080;
+					}else if(eve == 'up'){
+						bodyScroll -= 1080;
+					}
+					$("html, body").animate({scrollTop:bodyScroll}, 300, function(){
+						wheelFlag = 0;	//스크롤 이동이 끝나면 다시 wheelFlag 값을 0으로 초기화 시켜서 휠이벤트가 돌아가도록 재설정함.
+					});
+				}
+			});
+		}
+
+		$(document).ready(function(){
+			GnbLine();
+			wheel();
+
+			// $(window).scroll(function(){
+			// 	gnbScroll();
+			// });
+		});
+	</script>
+</body>
+</html>

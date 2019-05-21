@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+
+	<style>
+		/*
+		$triangleHeight: 38px;
+		$triangleWidth: 98px;
+		*/
+		table {
+			width: 500px;
+			border-collapse: collapse;
+		}
+		table td {
+			border: 1px solid #ccc;
+		}
+		.triangle {
+			position: relative;
+			height: 38px;
+		}
+		.triangle:before , .triangle:after {
+			content: ''; display: block;
+			position: absolute; z-index: -2;
+			width: 0; height: 0;
+			border-style: solid;
+			border-left-width: 0px;
+			border-top-width: 0px;
+		}
+		.triangle:before {
+			border-right-width: 98px;
+			border-bottom-width: 38px;
+			border-color: transparent black white white;
+		}
+		.triangle:after {
+			border-right-width: 98px;
+			border-bottom-width: 38px;
+			border-color: transparent white transparent transparent;
+		}
+
+		.triangle .th {
+			font-size: 11px;
+			font-family: dotum;
+			position: absolute;
+		}
+
+		.triangle .th.type1 {
+			right: 5px; top: 5px;
+		}
+
+		.triangle .th.type2 {
+			left: 5px; bottom: 5px;
+		}
+
+
+		.arrow {
+			width: 0px;
+			height: 0px;
+			font-size: 0px;
+			line-height: 0px;
+			border: 5px solid transparent;
+			border-top-color: green;
+		}
+	</style>
+
+<table>
+	<colgroup>
+		<col style="width: 100px; ">
+		<col style="width: *; ">
+	</colgroup>
+	<tr>
+		<td>
+			<div class="triangle">
+				<span class="th type1">안녕</span>
+				<span class="th type2">Hi</span>
+			</div>
+		</td>
+		<td>
+			블라블라<br />
+			블라블라<br />
+		</td>
+	</tr>
+</table>
+
+<div class="arrow"></div>
+
+</body>
+</html>

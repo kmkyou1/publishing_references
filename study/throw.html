@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
+  <title>연습</title>
+  <style>
+    #msg{text-align:center;margin-top:400px;}
+    .drag{
+      z-index:1;position:absolute;top:0;left:0;width:80px;height:80px;opacity:.8;border-radius:80px;cursor:pointer;
+      /*transition: left .5s;*/
+    }
+    .box1{background:black;}
+    .box2{background:gold;}
+    .box3{background:blue;}
+    .box4{background:green;}
+  </style>
+  <script>
+    // fetch_unix_timestamp = function(){
+    // 	// return parseInt(new Date().getTime().toString().substring(0, 10));
+    //   var sec = Math.floor(new Date().getTime() * 1000)
+    //   sec = sec.toString().substring(8,12) * 0.01;
+    // 	return sec;
+    // }
+    // timestamp = fetch_unix_timestamp();
+    // console.log(timestamp)
+
+  	$(document).ready(function() {
+      var zindex = 0;
+      //드래그 시간 체크 1/100 초
+      var sec=0;
+      var timer;
+      function timeout(){
+        sec += 0.01;
+        timer = setTimeout(timeout,10);
+      }
+      $(".drag").bind('mousedown', function(e) {
+        var circle = e.currentTarget ;
+        var windowWidth = $(window).width();
+        var windowHeight = $(window).height();
+        //dom의 상하좌우 위치값 확인
+        var domWidth = $(this).width();
+        var domHeight = $(this).height();
+        var domTop = $(this).offset().top;
+        var domLeft = $(this).offset().left;
+        touchX = event.clientX;
+        touchY = event.clientY;
+        moveStartX = touchX - domLeft;  //left 무빙 시작 위치
+        moveStartY = touchY - domTop;  //top 무빙 시작 위치
+        var s = domLeft; //드래그 시작 위치
+        var e;           //드래그 마지막 위치
+        var len;         //드래그 거리
+        var h;           //드래그 속도
+        zindex++;
+        circle.style.zIndex = zindex;
+        //zindex 적용 end
+        timeout();
+        $(window).bind('mousemove', function(e) {
+    			var event = e.originalEvent;
+          x = event.clientX - moveStartX;
+          y = event.clientY - moveStartY;
+          domLeft = x;
+          domTop = y;
+          domRight = domLeft+domWidth;
+          domBottom = domTop+domHeight;
+          if(domLeft < 0){
+            domLeft = 0;
+          }
+          if(domRight > windowWidth){
+            domLeft = windowWidth - domWidth;
+          }
+          if(domTop < 0){
+            domTop = 0;
+          }
+          if(domTop+domHeight > windowHeight){
+            domTop = windowHeight - domHeight;
+          }
+          circle.style.left = domLeft+"px";
+          circle.style.top = domTop+"px";
+        });
+        $(window).bind('mouseup', function(e) {
+          $(window).unbind('mousemove');
+          $(window).unbind('mouseup');
+          x = event.clientX;
+          y = event.clientY;
+          //거리
+          var a = touchX-x;
+          var b = touchY-y;
+          var distance = Math.sqrt( Math.abs(a*a) + Math.abs(b*b) );
+          // console.log("start : "+touchX)
+          // console.log("end : "+x)
+          // console.log("거리 : "+Math.floor(distance)+"px , 시간 : "+sec.toFixed(2))
+          console.log(Math.floor(distance), sec.toFixed(2) +" = "+sec.toFixed(2)/Math.floor(distance))
+          clearTimeout(timer);
+          sec = 0;  //셋타임아웃 카운터 초기화
+          circle.style.left = domLeft+"px";
+          // circle.style.top = y+"px";
+          // function move() {
+          //   domLeft += 1;
+          //   domTop += 1;
+          //   for(var i=0;i<=distance;i++){
+          //     if(domLeft < distance){
+          //       window.cancelAnimationFrame(move);
+          //     }else{
+          //       circle.style.left = domLeft+"px";
+          //       circle.style.top = domTop+"px";
+          //     }
+          //   }
+          //   window.requestAnimationFrame(move);
+          // }
+          // handle = window.requestAnimationFrame(move);
+        });
+      });
+      /////////////////////////////////마우스 컨트롤 end////////////////////////////////
+  	});
+  </script>
+</head>
+<body>
+  <div class="drag box1"></div>
+</body>
+</html>

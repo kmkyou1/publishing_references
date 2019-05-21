@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>images on Canvas</title>
+  <style>
+    *{margin:0;padding:0;}
+    ul{text-align:center;}
+    li{list-style: none;background:#ccc;margin-bottom:10px;}
+    img{vertical-align: top;}
+    a{text-decoration: none;}
+    div{text-align: center;height:30px;background: gold;margin-bottom:10px;}
+    span{display:inline-block;padding:10px;background:red;}
+  </style>
+</head>
+<body>
+  <ul>
+    <!--comment-->
+    <li id="A"></li>
+    <li id="B"></li>
+    <!--//comment-->
+  </ul>
+  <div class="big brown bear" data-foo-foo="foo" data-bar-bar="bar" style="height:200px;"></div>
+  <a href="javascript:void(0);" title='title'  class="yes" style="margin:0" foo="boo">링크요</a>
+  <input type="checkbox" class="chbox">
+  <script>
+    var ul = document.querySelector('ul');
+    var li_A = ul.querySelector('#A');
+    var txt = document.createElement('span')
+    var inside = document.querySelector('html').contains(document.querySelector('body'))
+    var li = document.createElement('li');
+    var atts = document.querySelector('.yes');
+    var chbox = document.querySelector('.chbox');
+    var div = document.querySelector('div')
+    li_A.innerText ='dd'
+    li.innerText = '라스트'
+    // ul.insertBefore(li, ul.firstChild)
+    ul.appendChild(li)
+
+    document.querySelector('#B').innerText = '감솨'
+    // atts.setAttribute('href','http://www.daum.net')
+    //classList, dataset = IE 10부터 지원
+    div.dataset.dt = 'dt'
+    console.log(div)
+    console.log(div.dataset.fooFoo)
+    div.classList.add('new')
+    // div.classList.remove('brown')
+    console.log("div.classList.contains('new') ? "+div.classList.contains('new'))
+    console.log("div.className : "+ div.className)
+    console.log(div.classList)
+    console.log("체크박스 hasAttribute('checked') : "+chbox.hasAttribute('checked'))
+    for(var i=0;i<atts.attributes.length;i++){
+      console.log(atts.attributes[i].nodeName+" = "+atts.attributes[i].nodeValue)
+    }
+
+    console.log("hasAttribute('href') = "+atts.hasAttribute('href'))
+    console.log(li_A.previousElementSibling)
+    console.log(li_A.nextElementSibling)
+    console.log(ul.children)
+    console.log(li_A.parentElement)
+    console.log(ul.childElementCount)
+    console.log(li_A.firstElementChild)
+    console.log(inside)
+  </script>
+</body>
+</html>

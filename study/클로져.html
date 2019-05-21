@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script type="text/javascript" src="http://kmkyou.cafe24.com/web/my/js/jquery-1.10.2.min.js"></script>
+  <title>클로져</title>
+  <style>
+    *{margin:0;padding:0;}
+    button{padding:0 10px;}
+  </style>
+</head>
+<body>
+  <a href="#" class="plus">더하기</a>
+  <input type="text" style="width:30px;" id="id_val"/>
+  <button type="button" class="set">set</button>
+<script>
+  function Test(){
+    var idx = 0;
+    return{ //리턴이 {}를 만나면 클로져 생성, 함수는 기본적으로 return을 가지고 있음 그래서 아무것도 리턴안하면 기본으로 undefined뜸
+      get : function(){
+        console.log(idx)
+      },
+      set : function(val){
+        idx = Number(val);
+      },
+      plus : function(){
+        idx += 1;
+        console.log(idx)
+      }
+    }
+  }
+  var test = new Test;
+  document.querySelector('.plus').addEventListener("click", function(){
+    test.plus();
+  });
+  document.querySelector('.set').addEventListener("click", function(){
+    test.set(document.querySelector('#id_val').value);
+  });
+</script>
+
+
+</body>
+</html>
